@@ -13,7 +13,7 @@
 - `--dry-run` processing plan output
 - local web manager for task launching and inspection
 - synthetic benchmark that generates report and storyboard artifacts without copyrighted media
-- release-prep and social-preview helper scripts
+- release-prep flow that now bundles release notes, benchmark proof, launch copy, and social-preview assets
 
 ## What Is Still Scaffolded
 
@@ -24,20 +24,21 @@
 
 ## Current Risks
 
-- old repo messaging overstated legal certainty and shipped scope
-- GitHub license detection was likely degraded by a non-standard `LICENSE`
-- the install story needed packaging metadata and a cleaner editable-install path
-- community support path was thin because Discussions were not yet part of the workflow
+- benchmark-backed showcase content still needs to be published externally
+- repository social preview still needs to be refreshed in GitHub settings
+- Level 1 remains the only fully shipped transformation path
+- more reproducible showcase demos are still needed
 
 ## Recent Completed Work
 
 - `2026-03-17`: committed social preview generator in `616c203`
 - `2026-03-17`: cleaned up duplicate local repository clone
+- `2026-03-17`: pushed repo hardening changes in `6b8650f`, enabled GitHub Discussions, restored MIT license detection, and generated a release-proof bundle for `v0.3.0`
 
 ## Next Recommended Actions
 
-1. publish the new governance and status docs
-2. enable GitHub Discussions and point README/support docs to it
-3. refresh the repository social preview in GitHub settings
-4. prepare a `v0.3.0` release around credibility, benchmark flow, and docs
-5. create 2-3 reproducible showcase demos with committed outputs
+1. refresh the repository social preview in GitHub settings using the generated SVG
+2. publish the new benchmark-driven launch thread in English and Chinese
+3. create 2-3 reproducible showcase demos with committed outputs
+4. tag and ship `v0.3.0`
+5. collect user feedback through Discussions and fold it into the next release

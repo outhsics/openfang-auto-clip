@@ -78,6 +78,9 @@ python3 scripts/run_demo_benchmark.py
 # 生成 GitHub social preview 图
 python3 scripts/generate_social_preview.py --report examples/benchmark/sample_benchmark_report.json --lang zh
 
+# 生成带 benchmark 证据的 release bundle
+python3 scripts/release_prep.py v0.3.0 --report tmp/demo-benchmark-v030/benchmark_report.json
+
 # 启动本地 Web 管理器
 ./start_web_manager.sh
 

@@ -25,7 +25,7 @@ Examples:
 ## Release flow
 
 1. Merge validated work into `main`
-2. Run `python3 scripts/release_prep.py vX.Y.Z`
+2. Run `python3 scripts/release_prep.py vX.Y.Z --report tmp/demo-benchmark-vXYZ/benchmark_report.json`
 3. Commit any final changelog updates
 4. Create and push the tag
 
@@ -34,6 +34,14 @@ git tag v0.3.0
 git push origin main
 git push origin v0.3.0
 ```
+
+The release-prep script now bundles:
+
+- `release_notes.md`
+- copied benchmark report
+- preview and storyboard images when present
+- `launch_post.md`
+- English and Chinese social preview SVGs
 
 When the tag reaches GitHub, `.github/workflows/release.yml` will:
 

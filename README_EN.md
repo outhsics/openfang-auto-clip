@@ -78,6 +78,9 @@ python3 scripts/run_demo_benchmark.py
 # Generate GitHub social preview assets
 python3 scripts/generate_social_preview.py --report examples/benchmark/sample_benchmark_report.json
 
+# Prepare a release bundle with benchmark proof
+python3 scripts/release_prep.py v0.3.0 --report tmp/demo-benchmark-v030/benchmark_report.json
+
 # Start the local web manager
 ./start_web_manager.sh
 

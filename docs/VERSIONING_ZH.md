@@ -25,7 +25,7 @@ vMAJOR.MINOR.PATCH
 ## 发布流程
 
 1. 将已验证的变更合入 `main`
-2. 运行 `python3 scripts/release_prep.py vX.Y.Z`
+2. 运行 `python3 scripts/release_prep.py vX.Y.Z --report tmp/demo-benchmark-vXYZ/benchmark_report.json`
 3. 如有需要，补充 changelog
 4. 创建并推送 tag
 
@@ -34,6 +34,14 @@ git tag v0.3.0
 git push origin main
 git push origin v0.3.0
 ```
+
+`release_prep.py` 现在会把下面这些东西一起打包：
+
+- `release_notes.md`
+- benchmark report 副本
+- preview 和 storyboard 图片（如果存在）
+- `launch_post.md`
+- 中英文 social preview SVG
 
 当 tag 推到 GitHub 后，`.github/workflows/release.yml` 会自动：
 

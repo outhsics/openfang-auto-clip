@@ -13,7 +13,7 @@ This file is the handoff anchor for future AI sessions. Read it before making pr
 
 - Last updated: `2026-03-17`
 - Current focus: make the repo more credible, easier to evaluate, and easier to continue across AI sessions
-- Public repo snapshot on `2026-03-17`: `20 stars`, `3 forks`, `1 open issue`, `Discussions disabled when audited`
+- Public repo snapshot on `2026-03-17`: `20 stars`, `3 forks`, `1 open issue`, `Discussions enabled after repo hardening`
 
 ## Non-Negotiable Positioning Rules
 
@@ -26,8 +26,8 @@ This file is the handoff anchor for future AI sessions. Read it before making pr
 
 1. tighten repository credibility signals
 2. improve installation and evaluation flow
-3. convert roadmap ideas into smaller verified milestones
-4. grow community touchpoints with Discussions, issues, and release artifacts
+3. ship benchmark-backed release bundles and showcase assets
+4. convert roadmap ideas into smaller verified milestones
 
 ## Update Protocol
 
@@ -40,4 +40,4 @@ At the end of every substantial AI session:
 
 ## Session Log
 
-- `2026-03-17`: removed duplicate local clone, added social preview generator in commit `616c203`, then added governance files, packaging metadata, persistent handoff docs, and grounded README/transformation docs.
+- `2026-03-17`: removed duplicate local clone, added social preview generator in commit `616c203`, then added governance files, packaging metadata, persistent handoff docs, grounded README/transformation docs, and a benchmark-backed release bundle flow.
