@@ -40,4 +40,4 @@ At the end of every substantial AI session:
 
 ## Session Log
 
-- `2026-03-17`: removed duplicate local clone, added social preview generator in commit `616c203`, then added governance files, packaging metadata, persistent handoff docs, grounded README/transformation docs, created a benchmark-backed release bundle flow, and published `v0.3.0`.
+- `2026-03-17`: removed duplicate local clone, added social preview generator in commit `616c203`, then added governance files, packaging metadata, persistent handoff docs, grounded README/transformation docs, created a benchmark-backed release bundle flow, published `v0.3.0`, and added showcase demo docs plus bilingual launch copy generation.

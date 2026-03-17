@@ -19,6 +19,7 @@ English | [简体中文](README.md)
 - Read the status snapshot in [PROJECT_STATUS.md](PROJECT_STATUS.md)
 - Run the synthetic benchmark from [examples/benchmark/README.md](examples/benchmark/README.md)
 - Inspect the sample operator output in [examples/demo/README.md](examples/demo/README.md)
+- Browse reusable launch demos in [examples/showcases/README.md](examples/showcases/README.md)
 - Review transformation scope in [docs/TRANSFORMATION.md](docs/TRANSFORMATION.md)
 - Review the growth plan in [OPEN_SOURCE_PLAN.md](OPEN_SOURCE_PLAN.md)
 - Use [AI_CONTEXT.md](AI_CONTEXT.md) for future AI handoff

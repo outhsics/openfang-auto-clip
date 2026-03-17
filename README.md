@@ -19,6 +19,7 @@
 - 先看项目状态快照：[PROJECT_STATUS.md](PROJECT_STATUS.md)
 - 先跑不依赖外部素材的 benchmark：[examples/benchmark/README_ZH.md](examples/benchmark/README_ZH.md)
 - 看一次真实输出结构示例：[examples/demo/README_ZH.md](examples/demo/README_ZH.md)
+- 看可复用的 launch / demo 场景：[examples/showcases/README_ZH.md](examples/showcases/README_ZH.md)
 - 看转换能力边界：[docs/TRANSFORMATION_ZH.md](docs/TRANSFORMATION_ZH.md)
 - 看开源增长计划：[OPEN_SOURCE_PLAN.md](OPEN_SOURCE_PLAN.md)
 - 以后让别的 AI 接手时先看：[AI_CONTEXT.md](AI_CONTEXT.md)

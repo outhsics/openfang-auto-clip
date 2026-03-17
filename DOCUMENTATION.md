@@ -44,6 +44,7 @@ This repository now keeps English and Chinese documentation in paired files wher
 
 - [examples/benchmark/README.md](examples/benchmark/README.md) / [examples/benchmark/README_ZH.md](examples/benchmark/README_ZH.md)
 - [examples/demo/README.md](examples/demo/README.md) / [examples/demo/README_ZH.md](examples/demo/README_ZH.md)
+- [examples/showcases/README.md](examples/showcases/README.md) / [examples/showcases/README_ZH.md](examples/showcases/README_ZH.md)
 
 ## Notes
 

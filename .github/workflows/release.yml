@@ -44,6 +44,7 @@ jobs:
             "preview.png" \
             "storyboard.png" \
             "launch_post.md" \
+            "launch_post_zh.md" \
             "github_social_preview.svg" \
             "github_social_preview_zh.svg" \
             "bundle_manifest.json"; do

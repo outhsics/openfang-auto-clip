@@ -203,8 +203,11 @@ def build_showcase_bundle(report: dict, report_path: Path, target_dir: Path) -> 
         if copied_path is not None:
             created_paths.append(copied_path)
 
-    launch_markdown = generate_launch_kit.build_launch_markdown(report)
-    created_paths.append(generate_launch_kit.write_launch_kit(launch_markdown, target_dir))
+    launch_markdown = generate_launch_kit.build_launch_markdown(report, language="en")
+    created_paths.append(generate_launch_kit.write_launch_kit(launch_markdown, target_dir, "en"))
+
+    launch_markdown_zh = generate_launch_kit.build_launch_markdown(report, language="zh")
+    created_paths.append(generate_launch_kit.write_launch_kit(launch_markdown_zh, target_dir, "zh"))
 
     social_preview_svg = generate_social_preview.build_social_preview_svg(report, language="en")
     created_paths.append(generate_social_preview.write_social_preview(social_preview_svg, target_dir, "en"))

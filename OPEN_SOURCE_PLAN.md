@@ -63,5 +63,6 @@ The repo is unlikely to reach `1000 stars` as "another shorts automation tool". 
 
 1. publish one benchmark-driven launch thread in English and one in Chinese
 2. refresh the repo social preview in GitHub settings
-3. collect operator feedback and fold it into the next release
-4. turn Level 2 into one small verifiable milestone instead of a broad promise
+3. convert the new showcase docs into recorded walkthroughs or screenshots
+4. collect operator feedback and fold it into the next release
+5. turn Level 2 into one small verifiable milestone instead of a broad promise

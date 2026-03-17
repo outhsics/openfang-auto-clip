@@ -35,11 +35,12 @@
 - `2026-03-17`: cleaned up duplicate local repository clone
 - `2026-03-17`: pushed repo hardening changes in `6b8650f`, enabled GitHub Discussions, restored MIT license detection, and generated a release-proof bundle for `v0.3.0`
 - `2026-03-17`: published GitHub release `v0.3.0` with benchmark report, preview, storyboard, launch post, and social preview assets
+- `2026-03-17`: added 3 showcase demo guides under `examples/showcases/` and extended launch-kit generation to support Chinese copy
 
 ## Next Recommended Actions
 
 1. refresh the repository social preview in GitHub settings using the generated SVG
 2. publish the benchmark-driven launch thread in English and Chinese
-3. create 2-3 reproducible showcase demos with committed outputs
-4. collect user feedback through Discussions and fold it into the next release
-5. start scoping the smallest shippable Level 2 milestone
+3. collect user feedback through Discussions and fold it into the next release
+4. start scoping the smallest shippable Level 2 milestone
+5. turn one showcase into a screen-recorded product walkthrough

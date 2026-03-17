@@ -82,6 +82,7 @@ class ReleasePrepTests(unittest.TestCase):
         self.assertIn("preview.png", created_names)
         self.assertIn("storyboard.png", created_names)
         self.assertIn("launch_post.md", created_names)
+        self.assertIn("launch_post_zh.md", created_names)
         self.assertIn("github_social_preview.svg", created_names)
         self.assertIn("github_social_preview_zh.svg", created_names)
         self.assertIn("bundle_manifest.json", created_names)
