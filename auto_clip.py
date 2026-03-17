@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 """
-OpenFang Auto Clip - Copyright-Safe Video Editor
-Automated video editing with AI-powered copyright-safe transformation
+OpenFang Auto Clip local CLI.
 
-This tool transforms long-form videos into short-form content while
-ensuring copyright safety through AI-powered content regeneration.
-
-License: MIT
+This tool downloads source media, applies local transformation steps,
+and generates short-form clips plus reports.
 """
 
 import os
@@ -33,7 +30,7 @@ class TransformLevel(Enum):
     NONE = 0  # No transformation (not recommended for commercial use)
     VISUAL = 1  # Visual remix (fastest, moderate safety)
     SCRIPT = 2  # Script regeneration (slower, high safety)
-    COMPLETE = 3  # Complete recreation (slowest, 100% safety)
+    COMPLETE = 3  # Complete recreation (concept scaffold)
 
 
 # ============================================================================
@@ -282,12 +279,12 @@ def sanitize_filename(filename: str) -> str:
 
 class CopyrightTransformer:
     """
-    AI-powered copyright-safe content transformer
+    Local transformation helper with scaffolded higher-level flows
 
-    Provides 3 levels of transformation to ensure copyright safety:
+    Provides 3 transformation levels:
     - Level 1: Visual remix (style transfer, effects)
     - Level 2: Script regeneration (new content, same message)
-    - Level 3: Complete recreation (100% original)
+    - Level 3: Complete recreation (concept path)
     """
 
     def __init__(self, config: dict):
@@ -467,7 +464,7 @@ class CopyrightTransformer:
         """
         Level 3: Complete Recreation
 
-        Creates 100% original content from scratch:
+        Concept path for full recreation:
         1. Deep analysis of original structure
         2. Original script generation
         3. AI-generated visuals
@@ -480,7 +477,7 @@ class CopyrightTransformer:
         print("   • AI-generated visuals")
         print("   • Original music")
         print("   • Professional voiceover")
-        print("   • 100% copyright safe ✅✅✅")
+        print("   • Concept path for the highest separation from the source")
         print()
         print("⚠️  Note: This feature requires:")
         print("   - Advanced AI models (DALL-E, Midjourney)")
@@ -492,7 +489,7 @@ class CopyrightTransformer:
 
         return {
             "status": "not_implemented",
-            "message": "Complete recreation requires enterprise setup. Contact support@example.com"
+            "message": "Complete recreation is still a roadmap item. See docs/TRANSFORMATION.md"
         }
 
 
@@ -613,7 +610,7 @@ def process_video(url: str, transform_level: int = 1, config: dict = None) -> di
         config = load_config()
 
     print("=" * 70)
-    print("🎬 OpenFang Auto Clip - Copyright-Safe Video Editor")
+    print("🎬 OpenFang Auto Clip - Local Video Repurposing CLI")
     print("=" * 70)
     print()
 
@@ -671,7 +668,7 @@ def process_video(url: str, transform_level: int = 1, config: dict = None) -> di
         print("=" * 70)
         print(f"📁 Output directory: {clips_dir}")
         print(f"📹 Clips created: {len(created_clips)}")
-        print(f"🛡️  Copyright safety: Level {transform_level}")
+        print(f"🛡️  Transformation level: {transform_level}")
         print()
         print("Clips:")
         for clip in created_clips:
@@ -702,7 +699,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="OpenFang Auto Clip - Copyright-Safe Video Editor",
+        description="OpenFang Auto Clip - Local Video Repurposing CLI",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -712,7 +709,7 @@ Examples:
   # Copyright-safe transformation (Level 1)
   %(prog)s "URL" --transform 1
 
-  # Complete recreation (Level 3, 100% safe)
+  # Complete recreation scaffold (Level 3)
   %(prog)s "URL" --transform 3
 
   # Custom duration
@@ -722,7 +719,7 @@ Transformation Levels:
   0 - No transformation (not recommended)
   1 - Visual remix (fast, moderate safety) ✅
   2 - Script regeneration (slow, high safety) ✅✅
-  3 - Complete recreation (slowest, 100% safe) ✅✅✅
+  3 - Complete recreation (concept scaffold) ⚠️
 
 For more information, see README.md or docs/TRANSFORMATION.md
         """

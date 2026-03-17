@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=58"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openfang-auto-clip"
+version = "0.2.1"
+description = "Local-first video repurposing pipeline with reproducible benchmark and clip export."
+readme = "README_EN.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "OpenFang Auto Clip Contributors" }]
+dependencies = [
+  "Flask>=3.0.0",
+  "requests>=2.31.0",
+  "yt-dlp>=2024.1.1",
+  "openai-whisper>=20231117",
+]
+keywords = [
+  "video",
+  "ffmpeg",
+  "clips",
+  "automation",
+  "benchmark",
+  "openfang",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Multimedia :: Video",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0"]
+
+[project.scripts]
+openfang-auto-clip = "auto_clip:main"
+
+[tool.setuptools]
+py-modules = ["auto_clip", "web_manager"]
+packages = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

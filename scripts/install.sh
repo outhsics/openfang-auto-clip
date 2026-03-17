@@ -58,7 +58,7 @@ source "$VENV_DIR/bin/activate"
 # Install Python dependencies
 echo "📚 Installing Python dependencies..."
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install -e . --no-build-isolation
 
 # Create directories
 echo "📁 Creating directories..."
