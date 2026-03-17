@@ -36,6 +36,7 @@ This repository now keeps English and Chinese documentation in paired files wher
 ## docs/ guides
 
 - [docs/INSTALLATION.md](docs/INSTALLATION.md) / [docs/INSTALLATION_ZH.md](docs/INSTALLATION_ZH.md)
+- [docs/launch/README.md](docs/launch/README.md) / [docs/launch/README_ZH.md](docs/launch/README_ZH.md)
 - [docs/SOCIAL_PREVIEW.md](docs/SOCIAL_PREVIEW.md) / [docs/SOCIAL_PREVIEW_ZH.md](docs/SOCIAL_PREVIEW_ZH.md)
 - [docs/TRANSFORMATION.md](docs/TRANSFORMATION.md) / [docs/TRANSFORMATION_ZH.md](docs/TRANSFORMATION_ZH.md)
 - [docs/VERSIONING.md](docs/VERSIONING.md) / [docs/VERSIONING_ZH.md](docs/VERSIONING_ZH.md)
