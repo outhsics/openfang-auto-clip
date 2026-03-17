@@ -4,7 +4,7 @@
 
 - Date: `2026-03-17`
 - Repository: `outhsics/openfang-auto-clip`
-- Public signals at review time: `20 stars`, `3 forks`, `1 open issue`, latest release `v0.2.0` dated `2026-02-28`
+- Public signals at review time: `20 stars`, `3 forks`, `1 open issue`, latest release `v0.3.0` published on `2026-03-17`
 
 ## What Ships Today
 
@@ -34,11 +34,12 @@
 - `2026-03-17`: committed social preview generator in `616c203`
 - `2026-03-17`: cleaned up duplicate local repository clone
 - `2026-03-17`: pushed repo hardening changes in `6b8650f`, enabled GitHub Discussions, restored MIT license detection, and generated a release-proof bundle for `v0.3.0`
+- `2026-03-17`: published GitHub release `v0.3.0` with benchmark report, preview, storyboard, launch post, and social preview assets
 
 ## Next Recommended Actions
 
 1. refresh the repository social preview in GitHub settings using the generated SVG
-2. publish the new benchmark-driven launch thread in English and Chinese
+2. publish the benchmark-driven launch thread in English and Chinese
 3. create 2-3 reproducible showcase demos with committed outputs
-4. tag and ship `v0.3.0`
-5. collect user feedback through Discussions and fold it into the next release
+4. collect user feedback through Discussions and fold it into the next release
+5. start scoping the smallest shippable Level 2 milestone

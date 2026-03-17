@@ -61,7 +61,7 @@ The repo is unlikely to reach `1000 stars` as "another shorts automation tool". 
 
 ## Near-Term Execution
 
-1. finish the `v0.3.0` release and attach the generated proof bundle
-2. publish one benchmark-driven launch thread in English and one in Chinese
-3. refresh the repo social preview in GitHub settings
-4. collect operator feedback and fold it into the next release
+1. publish one benchmark-driven launch thread in English and one in Chinese
+2. refresh the repo social preview in GitHub settings
+3. collect operator feedback and fold it into the next release
+4. turn Level 2 into one small verifiable milestone instead of a broad promise
