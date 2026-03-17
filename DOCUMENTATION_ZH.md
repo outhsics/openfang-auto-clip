@@ -29,6 +29,7 @@
 ## docs/ 下的文档
 
 - [docs/INSTALLATION.md](docs/INSTALLATION.md) / [docs/INSTALLATION_ZH.md](docs/INSTALLATION_ZH.md)
+- [docs/SOCIAL_PREVIEW.md](docs/SOCIAL_PREVIEW.md) / [docs/SOCIAL_PREVIEW_ZH.md](docs/SOCIAL_PREVIEW_ZH.md)
 - [docs/TRANSFORMATION.md](docs/TRANSFORMATION.md) / [docs/TRANSFORMATION_ZH.md](docs/TRANSFORMATION_ZH.md)
 - [docs/VERSIONING.md](docs/VERSIONING.md) / [docs/VERSIONING_ZH.md](docs/VERSIONING_ZH.md)
 
