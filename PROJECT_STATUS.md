@@ -40,8 +40,8 @@
 
 ## Next Recommended Actions
 
-1. refresh the repository social preview in GitHub settings using the generated SVG
-2. publish the benchmark-driven launch thread in English and Chinese
-3. turn one showcase into a screen-recorded product walkthrough
-4. collect user feedback through Discussions and fold it into the next release
-5. start scoping the smallest shippable Level 2 milestone
+1. pause outward promotion and keep launch assets dormant for now
+2. start scoping the smallest shippable Level 2 milestone
+3. improve the real product surface instead of adding more promotional copy
+4. collect product feedback only from direct evaluators or internal use
+5. revisit promotion only after the next clear product jump

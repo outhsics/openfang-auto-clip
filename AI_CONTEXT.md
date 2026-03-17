@@ -24,10 +24,10 @@ This file is the handoff anchor for future AI sessions. Read it before making pr
 
 ## Current Priority Queue
 
-1. tighten repository credibility signals
+1. pause promotion and prioritize product quality
 2. improve installation and evaluation flow
-3. ship benchmark-backed release bundles and showcase assets
-4. convert roadmap ideas into smaller verified milestones
+3. convert roadmap ideas into smaller verified milestones
+4. strengthen the most visible product paths before doing more distribution work
 
 ## Update Protocol
 
@@ -41,3 +41,4 @@ At the end of every substantial AI session:
 ## Session Log
 
 - `2026-03-17`: removed duplicate local clone, added social preview generator in commit `616c203`, then added governance files, packaging metadata, persistent handoff docs, grounded README/transformation docs, created a benchmark-backed release bundle flow, published `v0.3.0`, and added showcase demo docs plus bilingual launch copy generation and platform-specific launch templates.
+- `2026-03-17`: product strategy updated to pause outward promotion and focus on product polish before any broader launch.
