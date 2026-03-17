@@ -175,11 +175,22 @@ def copy_release_artifact(source: Path, target_dir: Path) -> Path | None:
     return target_path
 
 
+def copy_release_artifact_as(source: Path, target_dir: Path, target_name: str) -> Path | None:
+    """Copy an artifact into the release bundle using a fixed target name."""
+    if not source.exists():
+        return None
+
+    target_dir.mkdir(parents=True, exist_ok=True)
+    target_path = target_dir / target_name
+    shutil.copy2(source, target_path)
+    return target_path
+
+
 def build_showcase_bundle(report: dict, report_path: Path, target_dir: Path) -> list[Path]:
     """Generate release-ready showcase assets from a benchmark report."""
     created_paths: list[Path] = []
 
-    copied_report = copy_release_artifact(report_path, target_dir)
+    copied_report = copy_release_artifact_as(report_path, target_dir, "benchmark_report.json")
     if copied_report is not None:
         created_paths.append(copied_report)
 

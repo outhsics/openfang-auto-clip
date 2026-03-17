@@ -38,13 +38,22 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          assets=()
+          for asset in \
+            "benchmark_report.json" \
+            "preview.png" \
+            "storyboard.png" \
+            "launch_post.md" \
+            "github_social_preview.svg" \
+            "github_social_preview_zh.svg" \
+            "bundle_manifest.json"; do
+            asset_path="dist/releases/${GITHUB_REF_NAME}/${asset}"
+            if [ -f "${asset_path}" ]; then
+              assets+=("${asset_path}")
+            fi
+          done
+
           gh release create "${GITHUB_REF_NAME}" \
             --title "OpenFang Auto Clip ${GITHUB_REF_NAME}" \
             --notes-file "dist/releases/${GITHUB_REF_NAME}/release_notes.md" \
-            "dist/releases/${GITHUB_REF_NAME}/benchmark_report.json" \
-            "dist/releases/${GITHUB_REF_NAME}/preview.png" \
-            "dist/releases/${GITHUB_REF_NAME}/storyboard.png" \
-            "dist/releases/${GITHUB_REF_NAME}/launch_post.md" \
-            "dist/releases/${GITHUB_REF_NAME}/github_social_preview.svg" \
-            "dist/releases/${GITHUB_REF_NAME}/github_social_preview_zh.svg" \
-            "dist/releases/${GITHUB_REF_NAME}/bundle_manifest.json"
+            "${assets[@]}"
