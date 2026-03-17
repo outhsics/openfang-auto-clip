@@ -40,4 +40,11 @@ jobs:
         run: |
           gh release create "${GITHUB_REF_NAME}" \
             --title "OpenFang Auto Clip ${GITHUB_REF_NAME}" \
-            --notes-file "dist/releases/${GITHUB_REF_NAME}/release_notes.md"
+            --notes-file "dist/releases/${GITHUB_REF_NAME}/release_notes.md" \
+            "dist/releases/${GITHUB_REF_NAME}/benchmark_report.json" \
+            "dist/releases/${GITHUB_REF_NAME}/preview.png" \
+            "dist/releases/${GITHUB_REF_NAME}/storyboard.png" \
+            "dist/releases/${GITHUB_REF_NAME}/launch_post.md" \
+            "dist/releases/${GITHUB_REF_NAME}/github_social_preview.svg" \
+            "dist/releases/${GITHUB_REF_NAME}/github_social_preview_zh.svg" \
+            "dist/releases/${GITHUB_REF_NAME}/bundle_manifest.json"

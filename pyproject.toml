@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openfang-auto-clip"
-version = "0.2.1"
+version = "0.3.0"
 description = "Local-first video repurposing pipeline with reproducible benchmark and clip export."
 readme = "README_EN.md"
 requires-python = ">=3.9"

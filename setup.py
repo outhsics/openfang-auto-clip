@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="openfang-auto-clip",
-    version="0.2.1",
+    version="0.3.0",
     description="Local-first video repurposing pipeline with reproducible benchmark and clip export.",
     py_modules=["auto_clip", "web_manager"],
     packages=["src"],
