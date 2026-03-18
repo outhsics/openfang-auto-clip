@@ -25,7 +25,7 @@
 
 ## 当前边界
 
-- Level 2 / Level 3 仍属于脚手架或 roadmap
+- Level 2 已交付 transcript-to-script 脚本包里程碑，Level 3 仍属于 roadmap
 - 不提供托管云端服务
 - 商业可信度仍需靠案例和 demo 继续加强
 

@@ -28,6 +28,7 @@
 
 - 用 `yt-dlp` 下载源视频
 - 跑一个可用的本地 Level 1 FFmpeg 视觉混音路径
+- 在提供 transcript 的前提下生成一个 Level 2 脚本再生包
 - 按简单本地策略切成 9:16 短视频片段
 - 提供 `--doctor` 和 `--dry-run` 方便先验环境与流程
 - 提供本地 Web 管理界面做任务启动和查看
@@ -42,7 +43,7 @@
 | Web 管理器 | 可用 | 本地操作台，不是 SaaS |
 | Synthetic benchmark | 可用 | 无需外部素材 |
 | Social preview / release 素材 | 可用 | 已有脚本 |
-| Level 2 脚本重写 | 脚手架 | 还不是生产能力 |
+| Level 2 脚本重写 | 部分可用 | 已能生成 transcript-to-script 包，但还不能自动重建成片 |
 | Level 3 完全重制 | 脚手架 | 还不是生产能力 |
 | Hosted SaaS / 公共 API | 不提供 | 当前定位是 local-first |
 
@@ -60,6 +61,7 @@ pip install -e .
 python3 scripts/run_demo_benchmark.py
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --dry-run
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 1 --duration 45
+./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 2 --transcript path/to/source.srt
 ```
 
 如果你想用仓库自带安装脚本，见 [docs/INSTALLATION_ZH.md](docs/INSTALLATION_ZH.md)。
@@ -75,6 +77,9 @@ python3 scripts/run_demo_benchmark.py
 
 # 运行 synthetic benchmark
 python3 scripts/run_demo_benchmark.py
+
+# 基于 transcript 生成 Level 2 脚本包
+./auto_clip.sh "URL" --transform 2 --transcript path/to/source.srt
 
 # 生成 GitHub social preview 图
 python3 scripts/generate_social_preview.py --report examples/benchmark/sample_benchmark_report.json --lang zh
@@ -107,7 +112,7 @@ python3 -m unittest discover -s tests
 - 一个本地优先的 operator workflow
 - 一个可复现 benchmark 和 clip generation 仓库
 - 一个今天已经能跑通 Level 1 的工具
-- 一个对 Level 2 / 3 有路线但还没完成的项目
+- 一个已经交付 Level 2 第一阶段脚本包、但还没完成成片重建的项目
 
 不应该继续这样说：
 

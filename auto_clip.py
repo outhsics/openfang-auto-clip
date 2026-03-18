@@ -23,6 +23,7 @@ from enum import Enum
 
 OUTPUT_DIR = Path.home() / ".openfang" / "clips"
 CONFIG_FILE = Path.home() / ".openfang" / "auto_clip_config.json"
+TRANSCRIPT_EXTENSIONS = (".txt", ".md", ".srt", ".vtt", ".json")
 
 
 class TransformLevel(Enum):
@@ -150,6 +151,7 @@ def build_processing_plan(
     url: str,
     transform_level: int,
     config: dict,
+    transcript_path: Optional[str] = None,
     now: Optional[datetime] = None,
 ) -> dict:
     """Build a dry-run plan for the requested processing job."""
@@ -157,7 +159,7 @@ def build_processing_plan(
     timestamp = now.strftime("%Y%m%d_%H%M%S")
     level = TransformLevel(transform_level)
 
-    return {
+    plan = {
         "url": url,
         "transform_level": transform_level,
         "transform_label": level.name.lower(),
@@ -168,6 +170,21 @@ def build_processing_plan(
         "config_file": str(CONFIG_FILE.resolve()),
         "created_at": now.isoformat(),
     }
+
+    if level == TransformLevel.SCRIPT:
+        resolved_transcript = None
+        if transcript_path:
+            resolved_transcript = str(resolve_explicit_transcript_path(transcript_path))
+
+        plan["transcript_path"] = resolved_transcript
+        plan["script_package_ready"] = resolved_transcript is not None
+        plan["requirements"] = [
+            "Provide a transcript file via --transcript or a sidecar transcript next to the source video",
+            "Review the generated narration draft before recording voiceover",
+            "Rebuild visuals separately after approving the new script package",
+        ]
+
+    return plan
 
 
 def save_dry_run_plan(plan: dict) -> Path:
@@ -192,8 +209,291 @@ def print_dry_run_plan(plan: dict, plan_path: Path) -> None:
     print(f"Downloads dir: {plan['downloads_dir']}")
     print(f"Projected output dir: {plan['projected_output_dir']}")
     print(f"Config file: {plan['config_file']}")
+    if "transcript_path" in plan:
+        print(f"Transcript: {plan['transcript_path'] or 'not provided'}")
+        print(f"Level 2 package ready: {'yes' if plan['script_package_ready'] else 'no'}")
     print()
     print(f"Plan saved to: {plan_path}")
+
+
+def resolve_explicit_transcript_path(transcript_path: str) -> Path:
+    """Resolve and validate an explicitly provided transcript path."""
+    candidate = Path(transcript_path).expanduser()
+    if not candidate.is_absolute():
+        candidate = (Path.cwd() / candidate).resolve()
+    if not candidate.exists():
+        raise FileNotFoundError(f"Transcript file not found: {candidate}")
+    return candidate
+
+
+def resolve_transcript_path(video_path: str, transcript_path: Optional[str] = None) -> Optional[Path]:
+    """Resolve an explicit transcript path or infer a sidecar transcript next to the video."""
+    if transcript_path:
+        return resolve_explicit_transcript_path(transcript_path)
+
+    video_file = Path(video_path)
+    candidates = []
+    for extension in TRANSCRIPT_EXTENSIONS:
+        candidates.append(video_file.with_suffix(extension))
+        candidates.append(video_file.parent / f"{video_file.stem}.transcript{extension}")
+
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate.resolve()
+
+    return None
+
+
+def normalize_transcript_text(text: str) -> str:
+    """Collapse transcript text into a review-friendly single string."""
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def read_transcript_text(transcript_path: Path) -> str:
+    """Read transcript text from txt, markdown, subtitle, or JSON files."""
+    raw_text = transcript_path.read_text(encoding="utf-8", errors="ignore")
+    suffix = transcript_path.suffix.lower()
+
+    if suffix in {".srt", ".vtt"}:
+        lines = []
+        for line in raw_text.splitlines():
+            stripped = line.strip()
+            if not stripped or stripped.isdigit() or "-->" in stripped or stripped.upper() == "WEBVTT":
+                continue
+            lines.append(stripped)
+        return normalize_transcript_text(" ".join(lines))
+
+    if suffix == ".json":
+        data = json.loads(raw_text)
+        if isinstance(data, dict):
+            if isinstance(data.get("text"), str):
+                return normalize_transcript_text(data["text"])
+
+            segments = data.get("segments")
+            if isinstance(segments, list):
+                combined = " ".join(
+                    segment.get("text", "")
+                    for segment in segments
+                    if isinstance(segment, dict)
+                )
+                return normalize_transcript_text(combined)
+
+        if isinstance(data, list):
+            combined = " ".join(
+                item.get("text", "")
+                for item in data
+                if isinstance(item, dict)
+            )
+            if combined.strip():
+                return normalize_transcript_text(combined)
+
+        raise ValueError(f"Unsupported transcript JSON shape: {transcript_path}")
+
+    return normalize_transcript_text(raw_text)
+
+
+def detect_transcript_language(text: str) -> str:
+    """Roughly detect whether the transcript is primarily Chinese or English."""
+    cjk_chars = re.findall(r"[\u4e00-\u9fff]", text)
+    latin_chars = re.findall(r"[A-Za-z]", text)
+    return "zh" if len(cjk_chars) >= max(12, len(latin_chars) // 2) else "en"
+
+
+def split_transcript_sentences(text: str) -> List[str]:
+    """Split transcript text into normalized candidate sentences."""
+    chunks = re.split(r"(?<=[。！？!?])\s*|(?<=[.])\s+|\n+", text)
+    sentences = []
+    seen = set()
+
+    for chunk in chunks:
+        normalized = normalize_transcript_text(chunk)
+        if len(normalized) < 12:
+            continue
+        dedupe_key = normalized.lower()
+        if dedupe_key in seen:
+            continue
+        seen.add(dedupe_key)
+        sentences.append(normalized)
+
+    return sentences
+
+
+def shorten_phrase(text: str, language: str, *, max_words: int = 12, max_chars: int = 42) -> str:
+    """Trim a sentence into a concise phrase for script and on-screen text."""
+    compact = normalize_transcript_text(text).strip(" .,!?:;，。！？；：")
+    if language == "zh":
+        return compact if len(compact) <= max_chars else f"{compact[: max_chars - 1]}…"
+
+    words = compact.split()
+    if len(words) <= max_words:
+        return compact
+    return " ".join(words[:max_words]) + "..."
+
+
+def build_level2_script_sections(points: List[str], language: str, duration: int) -> List[dict]:
+    """Convert extracted transcript points into a deterministic script draft."""
+    hook_duration = max(6, int(duration * 0.2))
+    closing_duration = max(6, int(duration * 0.18))
+    body_total = max(duration - hook_duration - closing_duration, len(points) * 6)
+    body_duration = max(6, int(body_total / max(len(points), 1)))
+
+    if language == "zh":
+        sections = [
+            {
+                "section": "开场",
+                "duration": hook_duration,
+                "narration": f"这条短视频不用原句复述，先用新的讲法讲清核心点：{points[0]}。",
+                "on_screen_text": shorten_phrase(points[0], language, max_chars=18),
+                "visual_direction": "用标题卡点明主题，再切到新的讲述视角。",
+            }
+        ]
+        for index, point in enumerate(points, start=1):
+            sections.append(
+                {
+                    "section": f"重点 {index}",
+                    "duration": body_duration,
+                    "narration": f"第{index}点，{point}。把这个点拆开讲，避免沿用原视频节奏。",
+                    "on_screen_text": shorten_phrase(point, language, max_chars=18),
+                    "visual_direction": "用新的 B-roll、图示或屏幕录制支撑这一段。",
+                }
+            )
+        sections.append(
+            {
+                "section": "收尾",
+                "duration": duration - sum(section["duration"] for section in sections),
+                "narration": f"总结一下，把上面几个重点收束成一句自己的结论，再给出下一步动作。",
+                "on_screen_text": "总结与行动",
+                "visual_direction": "回到主持人口播或总结卡片，不复用原片尾结构。",
+            }
+        )
+        return sections
+
+    sections = [
+        {
+            "section": "Hook",
+            "duration": hook_duration,
+            "narration": f"Retell the core idea from a fresh angle: {points[0]}.",
+            "on_screen_text": shorten_phrase(points[0], language),
+            "visual_direction": "Open with a fresh title card and new framing, not the original pacing.",
+        }
+    ]
+    for index, point in enumerate(points, start=1):
+        sections.append(
+            {
+                "section": f"Beat {index}",
+                "duration": body_duration,
+                "narration": f"Point {index}: {point}. Expand it in your own voice instead of mirroring the source wording.",
+                "on_screen_text": shorten_phrase(point, language),
+                "visual_direction": "Use new B-roll, diagrams, or screen capture to support this point.",
+            }
+        )
+    sections.append(
+        {
+            "section": "Close",
+            "duration": duration - sum(section["duration"] for section in sections),
+            "narration": "Close with your own takeaway and a next action instead of reusing the source ending.",
+            "on_screen_text": "Fresh takeaway",
+            "visual_direction": "End on a summary card or direct-to-camera close.",
+        }
+    )
+    return sections
+
+
+def build_level2_script_package(video_info: dict, transcript_text: str, transcript_path: Path, config: dict) -> dict:
+    """Build a transcript-to-script package for the first Level 2 milestone."""
+    sentences = split_transcript_sentences(transcript_text)
+    if not sentences:
+        raise ValueError("Transcript did not contain enough readable sentences to build a script package")
+
+    language = detect_transcript_language(transcript_text)
+    selected_points = [shorten_phrase(sentence, language, max_words=16, max_chars=48) for sentence in sentences[:4]]
+    target_duration = config.get("default_duration", 60)
+    script_sections = build_level2_script_sections(selected_points, language, target_duration)
+
+    return {
+        "milestone": "level2_transcript_to_script_package",
+        "language": language,
+        "source": {
+            "title": video_info.get("title", Path(video_info.get("path", "source")).stem),
+            "video_path": video_info.get("path"),
+            "transcript_path": str(transcript_path),
+            "sentence_count": len(sentences),
+        },
+        "source_outline": [
+            {"index": index, "summary": point}
+            for index, point in enumerate(selected_points, start=1)
+        ],
+        "script_sections": script_sections,
+        "production_checklist": [
+            "Review the narration and remove any wording that still feels too close to the source",
+            "Record a new voiceover or TTS track from the rewritten script",
+            "Replace visuals with new footage, diagrams, captures, or generated assets",
+            "Re-time captions and pacing after the new voiceover is approved",
+        ],
+        "limitations": [
+            "This milestone generates a script package, not a fully rebuilt output video",
+            "Voiceover, new visuals, and final edit still need operator review and assembly",
+        ],
+    }
+
+
+def render_level2_script_markdown(package: dict) -> str:
+    """Render the Level 2 script package into a human-reviewable markdown file."""
+    lines = [
+        "# Level 2 Script Package",
+        "",
+        f"- Source title: {package['source']['title']}",
+        f"- Transcript: {package['source']['transcript_path']}",
+        f"- Language: {package['language']}",
+        f"- Milestone: {package['milestone']}",
+        "",
+        "## Source Outline",
+        "",
+    ]
+
+    for point in package["source_outline"]:
+        lines.append(f"{point['index']}. {point['summary']}")
+
+    lines.extend(["", "## Script Draft", ""])
+    for section in package["script_sections"]:
+        lines.extend(
+            [
+                f"### {section['section']} ({section['duration']}s)",
+                f"- Narration: {section['narration']}",
+                f"- On-screen text: {section['on_screen_text']}",
+                f"- Visual direction: {section['visual_direction']}",
+                "",
+            ]
+        )
+
+    lines.extend(["## Production Checklist", ""])
+    for item in package["production_checklist"]:
+        lines.append(f"- {item}")
+
+    lines.extend(["", "## Current Limits", ""])
+    for item in package["limitations"]:
+        lines.append(f"- {item}")
+
+    lines.append("")
+    return "\n".join(lines)
+
+
+def save_level2_script_package(video_info: dict, package: dict) -> Tuple[Path, List[Path]]:
+    """Persist the Level 2 script package as JSON plus a review markdown draft."""
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    source_title = sanitize_filename(video_info.get("title", "source")) or "source"
+    package_dir = OUTPUT_DIR / "script_packages" / f"{timestamp}_{source_title}"
+    package_dir.mkdir(parents=True, exist_ok=True)
+
+    package_json_path = package_dir / "script_package.json"
+    with open(package_json_path, "w", encoding="utf-8") as handle:
+        json.dump(package, handle, ensure_ascii=False, indent=2)
+
+    draft_path = package_dir / "script_draft.md"
+    with open(draft_path, "w", encoding="utf-8") as handle:
+        handle.write(render_level2_script_markdown(package))
+
+    return package_dir, [package_json_path, draft_path]
 
 
 def download_video(url: str, output_dir: Path) -> dict:
@@ -291,7 +591,14 @@ class CopyrightTransformer:
         self.config = config
         self.api_url = config.get('openfang_api', 'http://127.0.0.1:4200')
 
-    def transform(self, video_path: str, level: TransformLevel) -> dict:
+    def transform(
+        self,
+        video_path: str,
+        level: TransformLevel,
+        *,
+        video_info: Optional[dict] = None,
+        transcript_path: Optional[str] = None,
+    ) -> dict:
         """
         Apply copyright-safe transformation
 
@@ -312,7 +619,7 @@ class CopyrightTransformer:
         if level == TransformLevel.VISUAL:
             return self._transform_visual(video_path)
         elif level == TransformLevel.SCRIPT:
-            return self._transform_script(video_path)
+            return self._transform_script(video_path, video_info=video_info, transcript_path=transcript_path)
         elif level == TransformLevel.COMPLETE:
             return self._transform_complete(video_path)
 
@@ -424,40 +731,64 @@ class CopyrightTransformer:
         except:
             return False
 
-    def _transform_script(self, video_path: str) -> dict:
+    def _transform_script(
+        self,
+        video_path: str,
+        *,
+        video_info: Optional[dict] = None,
+        transcript_path: Optional[str] = None,
+    ) -> dict:
         """
-        Level 2: Script Regeneration
+        Level 2: transcript-to-script package milestone.
 
-        Analyzes the original content and generates new script
-        with the same core message but different expression.
-
-        This is more complex and requires:
-        1. Transcription
-        2. LLM analysis of key concepts
-        3. Script regeneration
-        4. Voiceover synthesis
-        5. Visual matching
+        This milestone does not rebuild the full video yet.
+        It turns a transcript into a reusable script package:
+        1. load transcript
+        2. extract source beats
+        3. draft a new narration structure
+        4. save a reviewable markdown + JSON package
         """
-        print("📝 Applying Level 2: Script Regeneration")
-        print("   • Extract key concepts")
-        print("   • Generate new script")
-        print("   • AI voiceover")
-        print("   • Match visuals to script")
-        print("   • High copyright safety ✅✅")
+        print("📝 Applying Level 2: Transcript-to-Script Package")
+        print("   • Load transcript or subtitle file")
+        print("   • Extract source beats")
+        print("   • Draft a fresh narration structure")
+        print("   • Save JSON + Markdown review package")
+        print("   • Does not render new voiceover or rebuilt video yet")
         print()
-        print("⚠️  Note: This feature requires additional setup:")
-        print("   - Whisper transcription")
-        print("   - LLM API access")
-        print("   - Voiceover TTS (ElevenLabs, etc.)")
-        print("   - Stock footage or AI image generation")
-        print()
-        print("📖 See docs/TRANSFORMATION.md for setup guide")
+        transcript_file = resolve_transcript_path(video_path, transcript_path)
+        if transcript_file is None:
+            return {
+                "status": "needs_transcript",
+                "message": "Level 2 currently requires a transcript file. Use --transcript PATH or place a sidecar transcript next to the source video.",
+            }
 
-        # For now, return not implemented
-        # This would be implemented in a future version
+        transcript_text = read_transcript_text(transcript_file)
+        if not transcript_text:
+            return {
+                "status": "error",
+                "message": f"Transcript file was empty after parsing: {transcript_file}",
+            }
+
+        package = build_level2_script_package(
+            video_info or {"path": video_path, "title": Path(video_path).stem},
+            transcript_text,
+            transcript_file,
+            self.config,
+        )
+        package_dir, saved_files = save_level2_script_package(video_info or {"title": Path(video_path).stem}, package)
+
+        print(f"✅ Script package ready: {package_dir}")
+        for saved_file in saved_files:
+            print(f"   • {saved_file.name}")
+
         return {
-            "status": "not_implemented",
-            "message": "Script regeneration requires additional setup. See docs/TRANSFORMATION.md"
+            "status": "success",
+            "level": 2,
+            "milestone": package["milestone"],
+            "package_dir": str(package_dir),
+            "saved_files": [str(saved_file) for saved_file in saved_files],
+            "transcript_path": str(transcript_file),
+            "message": "Transcript-to-script package generated successfully",
         }
 
     def _transform_complete(self, video_path: str) -> dict:
@@ -594,7 +925,12 @@ def analyze_highlights_simple(video_info: dict, config: dict) -> List[dict]:
 # MAIN WORKFLOW
 # ============================================================================
 
-def process_video(url: str, transform_level: int = 1, config: dict = None) -> dict:
+def process_video(
+    url: str,
+    transform_level: int = 1,
+    config: dict = None,
+    transcript_path: Optional[str] = None,
+) -> dict:
     """
     Main video processing workflow
 
@@ -614,18 +950,64 @@ def process_video(url: str, transform_level: int = 1, config: dict = None) -> di
     print("=" * 70)
     print()
 
+    total_steps = 3 if transform_level == TransformLevel.SCRIPT.value else 5
+
     try:
         # Step 1: Download video
-        print("Step 1/5: Downloading video...")
+        print(f"Step 1/{total_steps}: Downloading video...")
         video_info = download_video(url, OUTPUT_DIR / "downloads")
         video_path = video_info['path']
 
         # Step 2: Apply copyright transformation
-        print("\nStep 2/5: Applying copyright-safe transformation...")
+        print(f"\nStep 2/{total_steps}: Applying copyright-safe transformation...")
         transformer = CopyrightTransformer(config)
         level = TransformLevel(transform_level)
 
-        transform_result = transformer.transform(video_path, level)
+        transform_result = transformer.transform(
+            video_path,
+            level,
+            video_info=video_info,
+            transcript_path=transcript_path,
+        )
+
+        if level == TransformLevel.SCRIPT:
+            if transform_result.get("status") != "success":
+                raise RuntimeError(transform_result.get("message", "Level 2 script package generation failed"))
+
+            print(f"\nStep 3/{total_steps}: Writing script package report...")
+            package_dir = Path(transform_result["package_dir"])
+            report = {
+                'video': video_info,
+                'transformation': {
+                    'level': transform_level,
+                    'result': transform_result
+                },
+                'clips': [],
+                'created_at': datetime.now().isoformat(),
+                'mode': 'script_package',
+                'output_dir': str(package_dir)
+            }
+
+            report_path = package_dir / "report.json"
+            with open(report_path, 'w') as f:
+                json.dump(report, f, indent=2)
+
+            print("\n" + "=" * 70)
+            print("✅ LEVEL 2 PACKAGE READY")
+            print("=" * 70)
+            print(f"📁 Package directory: {package_dir}")
+            print(f"📝 Transcript: {transform_result['transcript_path']}")
+            print("Artifacts:")
+            for saved_file in transform_result["saved_files"]:
+                print(f"  • {Path(saved_file).name}")
+            print()
+            print("💡 Next steps:")
+            print("  1. Review script_draft.md")
+            print("  2. Record or synthesize a fresh voiceover")
+            print("  3. Rebuild visuals around the approved script")
+            print()
+
+            return report
 
         # Use transformed video if successful
         if transform_result.get('status') == 'success':
@@ -633,12 +1015,12 @@ def process_video(url: str, transform_level: int = 1, config: dict = None) -> di
             print(f"✅ Using transformed video")
 
         # Step 3: Analyze and detect highlights
-        print("\nStep 3/5: Analyzing video for highlights...")
+        print(f"\nStep 3/{total_steps}: Analyzing video for highlights...")
         highlights = analyze_highlights_simple(video_info, config)
         print(f"✅ Found {len(highlights)} potential clips")
 
         # Step 4: Create clips
-        print("\nStep 4/5: Creating video clips...")
+        print(f"\nStep 4/{total_steps}: Creating video clips...")
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         clips_dir = OUTPUT_DIR / "clips" / timestamp
         clips_dir.mkdir(parents=True, exist_ok=True)
@@ -646,7 +1028,7 @@ def process_video(url: str, transform_level: int = 1, config: dict = None) -> di
         created_clips = create_clips(video_path, highlights, clips_dir, config)
 
         # Step 5: Generate report
-        print("\nStep 5/5: Generating report...")
+        print(f"\nStep 5/{total_steps}: Generating report...")
         report = {
             'video': video_info,
             'transformation': {
@@ -709,6 +1091,9 @@ Examples:
   # Copyright-safe transformation (Level 1)
   %(prog)s "URL" --transform 1
 
+  # Generate a Level 2 script package from a transcript
+  %(prog)s "URL" --transform 2 --transcript path/to/source.srt
+
   # Complete recreation scaffold (Level 3)
   %(prog)s "URL" --transform 3
 
@@ -718,7 +1103,7 @@ Examples:
 Transformation Levels:
   0 - No transformation (not recommended)
   1 - Visual remix (fast, moderate safety) ✅
-  2 - Script regeneration (slow, high safety) ✅✅
+  2 - Script package from transcript (partial milestone) ✅
   3 - Complete recreation (concept scaffold) ⚠️
 
 For more information, see README.md or docs/TRANSFORMATION.md
@@ -731,6 +1116,8 @@ For more information, see README.md or docs/TRANSFORMATION.md
     parser.add_argument('--transform', type=int, choices=[0, 1, 2, 3], default=1,
                        help='Copyright transformation level (default: 1)')
     parser.add_argument('--config', help='Path to config file')
+    parser.add_argument('--transcript',
+                       help='Transcript or subtitle file for Level 2 (.txt, .md, .srt, .vtt, .json)')
     parser.add_argument('--dry-run', action='store_true',
                        help='Validate inputs and write a processing plan without downloading media')
     parser.add_argument('--doctor', action='store_true',
@@ -755,13 +1142,13 @@ For more information, see README.md or docs/TRANSFORMATION.md
         parser.error("url is required unless --doctor is used")
 
     if args.dry_run:
-        plan = build_processing_plan(args.url, args.transform, config)
+        plan = build_processing_plan(args.url, args.transform, config, transcript_path=args.transcript)
         plan_path = save_dry_run_plan(plan)
         print_dry_run_plan(plan, plan_path)
         sys.exit(0)
 
     # Process video
-    result = process_video(args.url, args.transform, config)
+    result = process_video(args.url, args.transform, config, transcript_path=args.transcript)
 
     if result:
         print("\n🎉 Success!")

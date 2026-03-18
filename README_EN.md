@@ -28,6 +28,7 @@ English | [简体中文](README.md)
 
 - downloads a source video with `yt-dlp`
 - applies a working local Level 1 FFmpeg remix path
+- builds a Level 2 transcript-to-script package when a transcript is provided
 - slices output into 9:16 clips with a simple local strategy
 - provides `--doctor` and `--dry-run` commands for safer evaluation
 - includes a local web manager for task launching and inspection
@@ -42,7 +43,7 @@ English | [简体中文](README.md)
 | Web manager | Working | Local-only operator console |
 | Synthetic benchmark | Working | No external media required |
 | Social preview + release assets | Working | Helper scripts are in-repo |
-| Level 2 script regeneration | Scaffolded | Not production-ready |
+| Level 2 script regeneration | Partial | Transcript-to-script package works; rebuilt video remains manual |
 | Level 3 complete recreation | Scaffolded | Not production-ready |
 | Hosted SaaS / public API | Not offered | This repo is local-first |
 
@@ -60,6 +61,7 @@ pip install -e .
 python3 scripts/run_demo_benchmark.py
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --dry-run
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 1 --duration 45
+./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 2 --transcript path/to/source.srt
 ```
 
 If you prefer the bundled installer, see [docs/INSTALLATION.md](docs/INSTALLATION.md).
@@ -75,6 +77,9 @@ If you prefer the bundled installer, see [docs/INSTALLATION.md](docs/INSTALLATIO
 
 # Run the synthetic benchmark
 python3 scripts/run_demo_benchmark.py
+
+# Generate a Level 2 script package from a transcript
+./auto_clip.sh "URL" --transform 2 --transcript path/to/source.srt
 
 # Generate GitHub social preview assets
 python3 scripts/generate_social_preview.py --report examples/benchmark/sample_benchmark_report.json
@@ -107,7 +112,7 @@ OpenFang Auto Clip should be described as:
 - a local-first operator workflow
 - a reproducible benchmark and clip-generation repo
 - a practical Level 1 remix tool today
-- a roadmap for deeper transformation flows, not a finished commercial suite
+- an early Level 2 script-package workflow, not a finished regeneration suite
 
 It should not be described as:
 

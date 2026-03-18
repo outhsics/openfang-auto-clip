@@ -7,7 +7,7 @@ This guide describes the current transformation paths in OpenFang Auto Clip and 
 | Level | Status | Summary |
 |------|--------|---------|
 | 1 | Working | Local FFmpeg-based visual remix |
-| 2 | Scaffolded | Script-regeneration path is not implemented end to end |
+| 2 | Partial | Transcript-to-script package is shipped; full rebuilt output is not |
 | 3 | Scaffolded | Complete recreation is still a concept path |
 
 ## Level 1
@@ -41,21 +41,26 @@ Important limits:
 
 ## Level 2
 
-Level 2 is a roadmap path for script regeneration.
+Level 2 now ships a first milestone for script regeneration.
 
-The intended flow is:
+The current local milestone is:
 
-1. transcribe source material
-2. extract key concepts
-3. write a new script
-4. generate new voiceover
-5. rebuild visuals around the new script
+1. read a transcript or subtitle file
+2. extract source beats
+3. draft a fresh narration structure
+4. write a JSON + Markdown script package for operator review
+
+Example:
+
+```bash
+./auto_clip.sh "URL" --transform 2 --transcript path/to/source.srt
+```
 
 Current status:
 
-- the CLI exposes the level
-- the implementation returns `not_implemented`
-- treat it as planned work, not a shipped capability
+- the CLI can generate a transcript-to-script package today
+- the package includes source outline, narration draft, and production checklist
+- voiceover synthesis, rebuilt visuals, and final video assembly are still manual follow-up work
 
 ## Level 3
 
@@ -78,7 +83,8 @@ Current status:
 
 - local evaluation: Level 1
 - product demos: Level 1 plus the synthetic benchmark
-- roadmap conversations: Level 2 and Level 3
+- early script-regeneration work: Level 2
+- roadmap conversations: Level 3
 
 ## Compliance Guidance
 

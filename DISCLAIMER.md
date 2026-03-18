@@ -30,5 +30,5 @@ You are responsible for:
 When describing the project publicly:
 
 - describe Level 1 as a working local remix path
-- describe Level 2 and Level 3 as scaffolded or roadmap work
+- describe Level 2 as an early script-package milestone and Level 3 as roadmap work
 - avoid language such as `100% safe`, `zero risk`, or `guaranteed fair use`

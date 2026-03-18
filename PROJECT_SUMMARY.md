@@ -25,7 +25,7 @@
 
 ## Current Boundaries
 
-- Level 2 and Level 3 are still scaffolded or roadmap items
+- Level 2 now ships a transcript-to-script package milestone, while Level 3 remains roadmap-only
 - no hosted cloud offering
 - commercial credibility still depends on stronger demos and user proof
 

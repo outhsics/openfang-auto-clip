@@ -9,6 +9,7 @@
 ## What Ships Today
 
 - local CLI for downloading a video, applying Level 1 remix, and generating vertical clips
+- local Level 2 transcript-to-script package generation when a transcript is available
 - `--doctor` environment check
 - `--dry-run` processing plan output
 - local web manager for task launching and inspection
@@ -17,7 +18,7 @@
 
 ## What Is Still Scaffolded
 
-- Level 2 script regeneration
+- Level 2 end-to-end rebuilt video generation
 - Level 3 complete recreation
 - hosted SaaS or public API offering
 - automatic cross-platform publishing
@@ -27,6 +28,7 @@
 - benchmark-backed showcase content still needs to be published externally
 - repository social preview still needs to be refreshed in GitHub settings
 - Level 1 remains the only fully shipped transformation path
+- Level 2 still stops at script package output and needs real operator validation
 - more reproducible showcase demos are still needed
 
 ## Recent Completed Work
@@ -37,11 +39,12 @@
 - `2026-03-17`: published GitHub release `v0.3.0` with benchmark report, preview, storyboard, launch post, and social preview assets
 - `2026-03-17`: added 3 showcase demo guides under `examples/showcases/` and extended launch-kit generation to support Chinese copy
 - `2026-03-17`: added durable platform copy under `docs/launch/v0.3.0/` for X, LinkedIn, and XiaoHongShu
+- `2026-03-17`: shipped the first Level 2 milestone by turning `--transform 2` into a transcript-to-script package flow with JSON and Markdown output
 
 ## Next Recommended Actions
 
 1. pause outward promotion and keep launch assets dormant for now
-2. start scoping the smallest shippable Level 2 milestone
-3. improve the real product surface instead of adding more promotional copy
-4. collect product feedback only from direct evaluators or internal use
+2. tighten the Level 2 transcript-to-script package with real operator feedback
+3. improve installation and evaluation flow instead of adding more promotional copy
+4. raise clip-quality signal on the Level 1 path
 5. revisit promotion only after the next clear product jump

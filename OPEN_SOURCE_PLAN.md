@@ -62,7 +62,7 @@ The repo is unlikely to reach `1000 stars` as "another shorts automation tool". 
 ## Near-Term Execution
 
 1. pause public promotion until the product surface is stronger
-2. turn Level 2 into one small verifiable milestone instead of a broad promise
+2. tighten the shipped Level 2 transcript-to-script milestone with real operator validation
 3. strengthen the highest-friction product paths: evaluation, clip quality, and local operation
 4. collect operator feedback and fold it into the next release
 5. resume promotion only when there is a visibly stronger product delta
