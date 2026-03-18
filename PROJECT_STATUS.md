@@ -9,7 +9,7 @@
 ## What Ships Today
 
 - local CLI for downloading a video, applying Level 1 remix, and generating vertical clips
-- local Level 2 transcript-to-script package generation when a transcript is available
+- local Level 2 transcript-to-script package generation with timed source anchors and shot plan when a transcript is available
 - `--doctor` environment check
 - `--dry-run` processing plan output
 - local web manager for task launching and inspection
@@ -40,11 +40,12 @@
 - `2026-03-17`: added 3 showcase demo guides under `examples/showcases/` and extended launch-kit generation to support Chinese copy
 - `2026-03-17`: added durable platform copy under `docs/launch/v0.3.0/` for X, LinkedIn, and XiaoHongShu
 - `2026-03-17`: shipped the first Level 2 milestone by turning `--transform 2` into a transcript-to-script package flow with JSON and Markdown output
+- `2026-03-18`: tightened the Level 2 milestone with timed transcript anchors, production blueprint output, shot plan, and review rubric
 
 ## Next Recommended Actions
 
 1. pause outward promotion and keep launch assets dormant for now
-2. tighten the Level 2 transcript-to-script package with real operator feedback
+2. validate the Level 2 script package on real operator transcripts and refine output quality
 3. improve installation and evaluation flow instead of adding more promotional copy
 4. raise clip-quality signal on the Level 1 path
 5. revisit promotion only after the next clear product jump

@@ -48,7 +48,8 @@ The current local milestone is:
 1. read a transcript or subtitle file
 2. extract source beats
 3. draft a fresh narration structure
-4. write a JSON + Markdown script package for operator review
+4. attach timed source anchors, shot plan, and review rubric
+5. write JSON + Markdown handoff artifacts for operator review
 
 Example:
 
@@ -59,7 +60,7 @@ Example:
 Current status:
 
 - the CLI can generate a transcript-to-script package today
-- the package includes source outline, narration draft, and production checklist
+- the package includes timed source outline, narration draft, shot plan, review rubric, and production checklist
 - voiceover synthesis, rebuilt visuals, and final video assembly are still manual follow-up work
 
 ## Level 3

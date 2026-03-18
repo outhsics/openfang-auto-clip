@@ -43,3 +43,4 @@ At the end of every substantial AI session:
 - `2026-03-17`: removed duplicate local clone, added social preview generator in commit `616c203`, then added governance files, packaging metadata, persistent handoff docs, grounded README/transformation docs, created a benchmark-backed release bundle flow, published `v0.3.0`, and added showcase demo docs plus bilingual launch copy generation and platform-specific launch templates.
 - `2026-03-17`: product strategy updated to pause outward promotion and focus on product polish before any broader launch.
 - `2026-03-17`: shipped the first Level 2 milestone by generating a local transcript-to-script package from `--transform 2 --transcript ...`, with JSON and Markdown outputs instead of returning `not_implemented`.
+- `2026-03-18`: tightened Level 2 by preserving timed transcript anchors and adding shot-plan, review-rubric, and production-blueprint outputs for operator handoff.

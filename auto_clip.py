@@ -249,47 +249,150 @@ def normalize_transcript_text(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
-def read_transcript_text(transcript_path: Path) -> str:
-    """Read transcript text from txt, markdown, subtitle, or JSON files."""
+def parse_subtitle_timestamp(raw_value: str) -> float:
+    """Parse an SRT or VTT timestamp into seconds."""
+    normalized = raw_value.strip().replace(",", ".")
+    parts = normalized.split(":")
+    if len(parts) != 3:
+        raise ValueError(f"Unsupported subtitle timestamp: {raw_value}")
+
+    hours = int(parts[0])
+    minutes = int(parts[1])
+    seconds = float(parts[2])
+    return hours * 3600 + minutes * 60 + seconds
+
+
+def format_seconds_label(seconds: Optional[float]) -> Optional[str]:
+    """Format a float second value into a compact timestamp label."""
+    if seconds is None:
+        return None
+
+    total_milliseconds = max(0, int(round(seconds * 1000)))
+    hours, remainder = divmod(total_milliseconds, 3_600_000)
+    minutes, remainder = divmod(remainder, 60_000)
+    whole_seconds, milliseconds = divmod(remainder, 1000)
+    return f"{hours:02d}:{minutes:02d}:{whole_seconds:02d}.{milliseconds:03d}"
+
+
+def build_transcript_payload(transcript_path: Path) -> dict:
+    """Read transcript content into normalized text plus optional timed segments."""
     raw_text = transcript_path.read_text(encoding="utf-8", errors="ignore")
     suffix = transcript_path.suffix.lower()
 
     if suffix in {".srt", ".vtt"}:
-        lines = []
+        segments = []
+        current_times = None
+        current_lines: List[str] = []
+
         for line in raw_text.splitlines():
             stripped = line.strip()
-            if not stripped or stripped.isdigit() or "-->" in stripped or stripped.upper() == "WEBVTT":
+            if not stripped or stripped.isdigit() or stripped.upper() == "WEBVTT":
+                if current_times and current_lines:
+                    segments.append(
+                        {
+                            "start": current_times[0],
+                            "end": current_times[1],
+                            "text": normalize_transcript_text(" ".join(current_lines)),
+                        }
+                    )
+                    current_times = None
+                    current_lines = []
                 continue
-            lines.append(stripped)
-        return normalize_transcript_text(" ".join(lines))
+
+            if "-->" in stripped:
+                start_raw, end_raw = [part.strip() for part in stripped.split("-->", 1)]
+                current_times = (
+                    parse_subtitle_timestamp(start_raw),
+                    parse_subtitle_timestamp(end_raw),
+                )
+                continue
+
+            current_lines.append(stripped)
+
+        if current_times and current_lines:
+            segments.append(
+                {
+                    "start": current_times[0],
+                    "end": current_times[1],
+                    "text": normalize_transcript_text(" ".join(current_lines)),
+                }
+            )
+
+        combined = " ".join(segment["text"] for segment in segments)
+        return {"text": normalize_transcript_text(combined), "segments": segments}
 
     if suffix == ".json":
         data = json.loads(raw_text)
         if isinstance(data, dict):
             if isinstance(data.get("text"), str):
-                return normalize_transcript_text(data["text"])
+                segments = data.get("segments")
+                if isinstance(segments, list):
+                    normalized_segments = []
+                    for segment in segments:
+                        if not isinstance(segment, dict):
+                            continue
+                        text = normalize_transcript_text(segment.get("text", ""))
+                        if not text:
+                            continue
+                        normalized_segments.append(
+                            {
+                                "start": float(segment["start"]) if "start" in segment else None,
+                                "end": float(segment["end"]) if "end" in segment else None,
+                                "text": text,
+                            }
+                        )
+                    return {
+                        "text": normalize_transcript_text(data["text"]),
+                        "segments": normalized_segments,
+                    }
+                return {"text": normalize_transcript_text(data["text"]), "segments": []}
 
             segments = data.get("segments")
             if isinstance(segments, list):
-                combined = " ".join(
-                    segment.get("text", "")
-                    for segment in segments
-                    if isinstance(segment, dict)
-                )
-                return normalize_transcript_text(combined)
+                normalized_segments = []
+                for segment in segments:
+                    if not isinstance(segment, dict):
+                        continue
+                    text = normalize_transcript_text(segment.get("text", ""))
+                    if not text:
+                        continue
+                    normalized_segments.append(
+                        {
+                            "start": float(segment["start"]) if "start" in segment else None,
+                            "end": float(segment["end"]) if "end" in segment else None,
+                            "text": text,
+                        }
+                    )
+                combined = " ".join(segment["text"] for segment in normalized_segments)
+                return {"text": normalize_transcript_text(combined), "segments": normalized_segments}
 
         if isinstance(data, list):
-            combined = " ".join(
-                item.get("text", "")
-                for item in data
-                if isinstance(item, dict)
-            )
+            normalized_segments = []
+            for item in data:
+                if not isinstance(item, dict):
+                    continue
+                text = normalize_transcript_text(item.get("text", ""))
+                if not text:
+                    continue
+                normalized_segments.append(
+                    {
+                        "start": float(item["start"]) if "start" in item else None,
+                        "end": float(item["end"]) if "end" in item else None,
+                        "text": text,
+                    }
+                )
+            combined = " ".join(segment["text"] for segment in normalized_segments)
             if combined.strip():
-                return normalize_transcript_text(combined)
+                return {"text": normalize_transcript_text(combined), "segments": normalized_segments}
 
         raise ValueError(f"Unsupported transcript JSON shape: {transcript_path}")
 
-    return normalize_transcript_text(raw_text)
+    return {"text": normalize_transcript_text(raw_text), "segments": []}
+
+
+def read_transcript_text(transcript_path: Path) -> str:
+    """Read transcript text from txt, markdown, subtitle, or JSON files."""
+    return build_transcript_payload(transcript_path)["text"]
 
 
 def detect_transcript_language(text: str) -> str:
@@ -318,6 +421,52 @@ def split_transcript_sentences(text: str) -> List[str]:
     return sentences
 
 
+def build_source_outline_from_segments(segments: List[dict], language: str) -> List[dict]:
+    """Group timed transcript segments into a compact source outline."""
+    if not segments:
+        return []
+
+    outline = []
+    bucket: List[dict] = []
+    target_words = 14 if language == "en" else 22
+
+    for segment in segments:
+        bucket.append(segment)
+        joined_text = normalize_transcript_text(" ".join(item["text"] for item in bucket))
+        enough_words = len(joined_text.split()) >= target_words if language == "en" else len(joined_text) >= target_words
+        if enough_words:
+            outline.append(
+                {
+                    "summary": shorten_phrase(joined_text, language, max_words=16, max_chars=48),
+                    "source_start": bucket[0].get("start"),
+                    "source_end": bucket[-1].get("end"),
+                    "source_anchor": (
+                        f"{format_seconds_label(bucket[0].get('start'))} - {format_seconds_label(bucket[-1].get('end'))}"
+                        if bucket[0].get("start") is not None and bucket[-1].get("end") is not None
+                        else None
+                    ),
+                }
+            )
+            bucket = []
+
+    if bucket:
+        joined_text = normalize_transcript_text(" ".join(item["text"] for item in bucket))
+        outline.append(
+            {
+                "summary": shorten_phrase(joined_text, language, max_words=16, max_chars=48),
+                "source_start": bucket[0].get("start"),
+                "source_end": bucket[-1].get("end"),
+                "source_anchor": (
+                    f"{format_seconds_label(bucket[0].get('start'))} - {format_seconds_label(bucket[-1].get('end'))}"
+                    if bucket[0].get("start") is not None and bucket[-1].get("end") is not None
+                    else None
+                ),
+            }
+        )
+
+    return outline[:4]
+
+
 def shorten_phrase(text: str, language: str, *, max_words: int = 12, max_chars: int = 42) -> str:
     """Trim a sentence into a concise phrase for script and on-screen text."""
     compact = normalize_transcript_text(text).strip(" .,!?:;，。！？；：")
@@ -330,7 +479,7 @@ def shorten_phrase(text: str, language: str, *, max_words: int = 12, max_chars: 
     return " ".join(words[:max_words]) + "..."
 
 
-def build_level2_script_sections(points: List[str], language: str, duration: int) -> List[dict]:
+def build_level2_script_sections(points: List[dict], language: str, duration: int) -> List[dict]:
     """Convert extracted transcript points into a deterministic script draft."""
     hook_duration = max(6, int(duration * 0.2))
     closing_duration = max(6, int(duration * 0.18))
@@ -342,9 +491,10 @@ def build_level2_script_sections(points: List[str], language: str, duration: int
             {
                 "section": "开场",
                 "duration": hook_duration,
-                "narration": f"这条短视频不用原句复述，先用新的讲法讲清核心点：{points[0]}。",
-                "on_screen_text": shorten_phrase(points[0], language, max_chars=18),
+                "narration": f"这条短视频不用原句复述，先用新的讲法讲清核心点：{points[0]['summary']}。",
+                "on_screen_text": shorten_phrase(points[0]["summary"], language, max_chars=18),
                 "visual_direction": "用标题卡点明主题，再切到新的讲述视角。",
+                "source_anchor": points[0].get("source_anchor"),
             }
         ]
         for index, point in enumerate(points, start=1):
@@ -352,9 +502,10 @@ def build_level2_script_sections(points: List[str], language: str, duration: int
                 {
                     "section": f"重点 {index}",
                     "duration": body_duration,
-                    "narration": f"第{index}点，{point}。把这个点拆开讲，避免沿用原视频节奏。",
-                    "on_screen_text": shorten_phrase(point, language, max_chars=18),
+                    "narration": f"第{index}点，{point['summary']}。把这个点拆开讲，避免沿用原视频节奏。",
+                    "on_screen_text": shorten_phrase(point["summary"], language, max_chars=18),
                     "visual_direction": "用新的 B-roll、图示或屏幕录制支撑这一段。",
+                    "source_anchor": point.get("source_anchor"),
                 }
             )
         sections.append(
@@ -364,6 +515,7 @@ def build_level2_script_sections(points: List[str], language: str, duration: int
                 "narration": f"总结一下，把上面几个重点收束成一句自己的结论，再给出下一步动作。",
                 "on_screen_text": "总结与行动",
                 "visual_direction": "回到主持人口播或总结卡片，不复用原片尾结构。",
+                "source_anchor": None,
             }
         )
         return sections
@@ -372,9 +524,10 @@ def build_level2_script_sections(points: List[str], language: str, duration: int
         {
             "section": "Hook",
             "duration": hook_duration,
-            "narration": f"Retell the core idea from a fresh angle: {points[0]}.",
-            "on_screen_text": shorten_phrase(points[0], language),
+            "narration": f"Retell the core idea from a fresh angle: {points[0]['summary']}.",
+            "on_screen_text": shorten_phrase(points[0]["summary"], language),
             "visual_direction": "Open with a fresh title card and new framing, not the original pacing.",
+            "source_anchor": points[0].get("source_anchor"),
         }
     ]
     for index, point in enumerate(points, start=1):
@@ -382,9 +535,10 @@ def build_level2_script_sections(points: List[str], language: str, duration: int
             {
                 "section": f"Beat {index}",
                 "duration": body_duration,
-                "narration": f"Point {index}: {point}. Expand it in your own voice instead of mirroring the source wording.",
-                "on_screen_text": shorten_phrase(point, language),
+                "narration": f"Point {index}: {point['summary']}. Expand it in your own voice instead of mirroring the source wording.",
+                "on_screen_text": shorten_phrase(point["summary"], language),
                 "visual_direction": "Use new B-roll, diagrams, or screen capture to support this point.",
+                "source_anchor": point.get("source_anchor"),
             }
         )
     sections.append(
@@ -394,21 +548,98 @@ def build_level2_script_sections(points: List[str], language: str, duration: int
             "narration": "Close with your own takeaway and a next action instead of reusing the source ending.",
             "on_screen_text": "Fresh takeaway",
             "visual_direction": "End on a summary card or direct-to-camera close.",
+            "source_anchor": None,
         }
     )
     return sections
 
 
-def build_level2_script_package(video_info: dict, transcript_text: str, transcript_path: Path, config: dict) -> dict:
+def build_level2_shot_plan(script_sections: List[dict], language: str) -> List[dict]:
+    """Generate a lightweight production handoff for each rewritten section."""
+    shot_plan = []
+    for index, section in enumerate(script_sections, start=1):
+        if index == 1:
+            asset_type = "title_card_then_new_talking_head"
+            goal_en = "State the new angle quickly and clearly."
+            goal_zh = "先立新视角，再切到新的讲述主体。"
+        elif index == len(script_sections):
+            asset_type = "summary_card_or_direct_close"
+            goal_en = "Land the takeaway without echoing the original ending."
+            goal_zh = "收束观点，不复用原片尾节奏。"
+        else:
+            asset_type = "fresh_broll_diagram_or_screen_capture"
+            goal_en = "Support one rewritten beat with new visuals."
+            goal_zh = "用新的视觉素材支撑这一段改写内容。"
+
+        shot_plan.append(
+            {
+                "shot": index,
+                "section": section["section"],
+                "duration": section["duration"],
+                "asset_type": asset_type,
+                "goal": goal_zh if language == "zh" else goal_en,
+                "source_anchor": section.get("source_anchor"),
+                "overlay_text": section["on_screen_text"],
+            }
+        )
+
+    return shot_plan
+
+
+def build_level2_review_rubric(language: str) -> List[str]:
+    """Create a concise operator rubric for approving the package."""
+    if language == "zh":
+        return [
+            "逐段检查 narration，去掉任何接近原句复述的表达",
+            "确认每段都有新的视觉方案，不依赖原视频镜头",
+            "检查 on-screen text 是否足够短，适合竖屏节奏",
+            "确认收尾是新的总结和动作，不复用原片尾结构",
+        ]
+
+    return [
+        "Check each narration beat for wording that still feels too close to the source",
+        "Confirm every section has a fresh visual plan instead of reused source shots",
+        "Keep on-screen text short enough for vertical viewing",
+        "Make sure the close lands as a new takeaway, not the source ending rewritten lightly",
+    ]
+
+
+def build_level2_blueprint(package: dict) -> dict:
+    """Build a reduced production blueprint artifact from the script package."""
+    return {
+        "milestone": package["milestone"],
+        "source_title": package["source"]["title"],
+        "language": package["language"],
+        "script_sections": package["script_sections"],
+        "shot_plan": package["shot_plan"],
+        "review_rubric": package["review_rubric"],
+    }
+
+
+def build_level2_script_package(video_info: dict, transcript_payload: dict, transcript_path: Path, config: dict) -> dict:
     """Build a transcript-to-script package for the first Level 2 milestone."""
+    transcript_text = transcript_payload["text"]
     sentences = split_transcript_sentences(transcript_text)
     if not sentences:
         raise ValueError("Transcript did not contain enough readable sentences to build a script package")
 
     language = detect_transcript_language(transcript_text)
-    selected_points = [shorten_phrase(sentence, language, max_words=16, max_chars=48) for sentence in sentences[:4]]
+    source_outline = build_source_outline_from_segments(transcript_payload.get("segments", []), language)
+    if not source_outline:
+        source_outline = [
+            {
+                "summary": shorten_phrase(sentence, language, max_words=16, max_chars=48),
+                "source_start": None,
+                "source_end": None,
+                "source_anchor": None,
+            }
+            for sentence in sentences[:4]
+        ]
+
     target_duration = config.get("default_duration", 60)
-    script_sections = build_level2_script_sections(selected_points, language, target_duration)
+    script_sections = build_level2_script_sections(source_outline, language, target_duration)
+    shot_plan = build_level2_shot_plan(script_sections, language)
+    review_rubric = build_level2_review_rubric(language)
 
     return {
         "milestone": "level2_transcript_to_script_package",
@@ -418,12 +649,15 @@ def build_level2_script_package(video_info: dict, transcript_text: str, transcri
             "video_path": video_info.get("path"),
             "transcript_path": str(transcript_path),
             "sentence_count": len(sentences),
+            "segment_count": len(transcript_payload.get("segments", [])),
         },
         "source_outline": [
-            {"index": index, "summary": point}
-            for index, point in enumerate(selected_points, start=1)
+            {"index": index, **point}
+            for index, point in enumerate(source_outline, start=1)
         ],
         "script_sections": script_sections,
+        "shot_plan": shot_plan,
+        "review_rubric": review_rubric,
         "production_checklist": [
             "Review the narration and remove any wording that still feels too close to the source",
             "Record a new voiceover or TTS track from the rewritten script",
@@ -446,13 +680,15 @@ def render_level2_script_markdown(package: dict) -> str:
         f"- Transcript: {package['source']['transcript_path']}",
         f"- Language: {package['language']}",
         f"- Milestone: {package['milestone']}",
+        f"- Timed segments: {package['source']['segment_count']}",
         "",
         "## Source Outline",
         "",
     ]
 
     for point in package["source_outline"]:
-        lines.append(f"{point['index']}. {point['summary']}")
+        anchor_suffix = f" ({point['source_anchor']})" if point.get("source_anchor") else ""
+        lines.append(f"{point['index']}. {point['summary']}{anchor_suffix}")
 
     lines.extend(["", "## Script Draft", ""])
     for section in package["script_sections"]:
@@ -462,9 +698,26 @@ def render_level2_script_markdown(package: dict) -> str:
                 f"- Narration: {section['narration']}",
                 f"- On-screen text: {section['on_screen_text']}",
                 f"- Visual direction: {section['visual_direction']}",
+                f"- Source anchor: {section['source_anchor'] or 'none'}",
                 "",
             ]
         )
+
+    lines.extend(["## Shot Plan", ""])
+    for shot in package["shot_plan"]:
+        lines.extend(
+            [
+                f"- Shot {shot['shot']}: {shot['section']} ({shot['duration']}s)",
+                f"  Asset: {shot['asset_type']}",
+                f"  Goal: {shot['goal']}",
+                f"  Overlay: {shot['overlay_text']}",
+                f"  Source anchor: {shot['source_anchor'] or 'none'}",
+            ]
+        )
+
+    lines.extend(["", "## Review Rubric", ""])
+    for item in package["review_rubric"]:
+        lines.append(f"- {item}")
 
     lines.extend(["## Production Checklist", ""])
     for item in package["production_checklist"]:
@@ -493,7 +746,11 @@ def save_level2_script_package(video_info: dict, package: dict) -> Tuple[Path, L
     with open(draft_path, "w", encoding="utf-8") as handle:
         handle.write(render_level2_script_markdown(package))
 
-    return package_dir, [package_json_path, draft_path]
+    blueprint_path = package_dir / "production_blueprint.json"
+    with open(blueprint_path, "w", encoding="utf-8") as handle:
+        json.dump(build_level2_blueprint(package), handle, ensure_ascii=False, indent=2)
+
+    return package_dir, [package_json_path, draft_path, blueprint_path]
 
 
 def download_video(url: str, output_dir: Path) -> dict:
@@ -762,7 +1019,8 @@ class CopyrightTransformer:
                 "message": "Level 2 currently requires a transcript file. Use --transcript PATH or place a sidecar transcript next to the source video.",
             }
 
-        transcript_text = read_transcript_text(transcript_file)
+        transcript_payload = build_transcript_payload(transcript_file)
+        transcript_text = transcript_payload["text"]
         if not transcript_text:
             return {
                 "status": "error",
@@ -771,7 +1029,7 @@ class CopyrightTransformer:
 
         package = build_level2_script_package(
             video_info or {"path": video_path, "title": Path(video_path).stem},
-            transcript_text,
+            transcript_payload,
             transcript_file,
             self.config,
         )

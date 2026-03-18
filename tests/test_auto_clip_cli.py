@@ -102,6 +102,22 @@ class AutoClipCliTests(unittest.TestCase):
         self.assertIn("This is the first point.", transcript_text)
         self.assertNotIn("-->", transcript_text)
 
+    def test_build_transcript_payload_keeps_timed_segments(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            transcript_path = Path(tmp_dir) / "sample.srt"
+            transcript_path.write_text(
+                "1\n00:00:00,000 --> 00:00:02,000\nFresh angle first.\n\n"
+                "2\n00:00:02,000 --> 00:00:05,000\nThen support it with new visuals.\n",
+                encoding="utf-8",
+            )
+
+            payload = auto_clip.build_transcript_payload(transcript_path)
+
+        self.assertEqual(len(payload["segments"]), 2)
+        self.assertEqual(payload["segments"][0]["start"], 0.0)
+        self.assertEqual(payload["segments"][1]["end"], 5.0)
+        self.assertIn("new visuals", payload["text"])
+
     def test_transform_script_generates_level2_package(self):
         config = {"default_duration": 36}
 
@@ -133,6 +149,12 @@ class AutoClipCliTests(unittest.TestCase):
             package_dir = Path(result["package_dir"])
             self.assertTrue((package_dir / "script_package.json").exists())
             self.assertTrue((package_dir / "script_draft.md").exists())
+            self.assertTrue((package_dir / "production_blueprint.json").exists())
+
+            package = auto_clip.json.loads((package_dir / "script_package.json").read_text(encoding="utf-8"))
+            self.assertTrue(package["shot_plan"])
+            self.assertTrue(package["review_rubric"])
+            self.assertIn("source_anchor", package["script_sections"][0])
 
 
 if __name__ == "__main__":

@@ -28,7 +28,7 @@ English | [简体中文](README.md)
 
 - downloads a source video with `yt-dlp`
 - applies a working local Level 1 FFmpeg remix path
-- builds a Level 2 transcript-to-script package when a transcript is provided
+- builds a Level 2 transcript-to-script package with timed source anchors, shot plan, and review rubric when a transcript is provided
 - slices output into 9:16 clips with a simple local strategy
 - provides `--doctor` and `--dry-run` commands for safer evaluation
 - includes a local web manager for task launching and inspection
@@ -43,7 +43,7 @@ English | [简体中文](README.md)
 | Web manager | Working | Local-only operator console |
 | Synthetic benchmark | Working | No external media required |
 | Social preview + release assets | Working | Helper scripts are in-repo |
-| Level 2 script regeneration | Partial | Transcript-to-script package works; rebuilt video remains manual |
+| Level 2 script regeneration | Partial | Transcript-to-script package, shot plan, and blueprint work; rebuilt video remains manual |
 | Level 3 complete recreation | Scaffolded | Not production-ready |
 | Hosted SaaS / public API | Not offered | This repo is local-first |
 

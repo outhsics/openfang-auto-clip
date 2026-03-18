@@ -48,7 +48,8 @@ Level 2 现在已经有了第一阶段的可运行里程碑。
 1. 读取 transcript 或字幕文件
 2. 提取源内容的关键段落
 3. 生成一份新的讲述结构草稿
-4. 输出 JSON + Markdown 脚本包供人工审阅
+4. 附带时间锚点、shot plan 和 review rubric
+5. 输出 JSON + Markdown 交接产物供人工审阅
 
 示例命令：
 
@@ -59,7 +60,7 @@ Level 2 现在已经有了第一阶段的可运行里程碑。
 当前状态：
 
 - CLI 现在可以生成 transcript-to-script 脚本包
-- 脚本包包含 source outline、narration draft 和 production checklist
+- 脚本包包含带时间锚点的 source outline、narration draft、shot plan、review rubric 和 production checklist
 - 新配音、重建视觉素材和最终成片仍然需要后续人工或其他工具完成
 
 ## Level 3
