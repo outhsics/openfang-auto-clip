@@ -19,6 +19,7 @@
 - 先看项目状态快照：[PROJECT_STATUS.md](PROJECT_STATUS.md)
 - 先跑不依赖外部素材的 benchmark：[examples/benchmark/README_ZH.md](examples/benchmark/README_ZH.md)
 - 先看完整评估路径索引：[examples/evaluation/README_ZH.md](examples/evaluation/README_ZH.md)
+- 直接看已提交的本地评估快照：[examples/evaluation/sample_local_evaluation_report.md](examples/evaluation/sample_local_evaluation_report.md)
 - 看一次真实输出结构示例：[examples/demo/README_ZH.md](examples/demo/README_ZH.md)
 - 直接看已提交的 Level 2 样例产物：[examples/demo/level2_samples/README_ZH.md](examples/demo/level2_samples/README_ZH.md)
 - 看可复用的 launch / demo 场景：[examples/showcases/README_ZH.md](examples/showcases/README_ZH.md)

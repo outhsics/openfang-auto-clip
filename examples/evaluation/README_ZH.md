@@ -17,6 +17,7 @@
 3. 直接在 GitHub 查看已提交的 Level 2 样例产物：
 
    - [../demo/level2_samples/README_ZH.md](../demo/level2_samples/README_ZH.md)
+   - [sample_local_evaluation_report.md](sample_local_evaluation_report.md)
 
 4. 如果想看最新生成结果，再本地运行双语 Level 2 suite：
 
@@ -40,6 +41,7 @@
 - 最安全的第一次本地试用：`run_local_evaluation.py`
 - 最适合直接在 GitHub 浏览的 Level 2 证据：已提交的 `level2_samples/`
 - 最适合看最新 Level 2 结果：`run_level2_demo_suite.py`
+- 最适合直接在 GitHub 浏览的整条评估快照：`sample_local_evaluation_report.md`
 
 ## 说明
 

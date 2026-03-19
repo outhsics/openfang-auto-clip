@@ -6,7 +6,7 @@
 - Clip count / Clip 数量: 3
 - Total clip size / Clip 总大小: 0.736 MB
 - Average clip size / 平均 Clip 大小: 0.245 MB
-- Total runtime / 总耗时: 9.774s
+- Total runtime / 总耗时: 10.13s
 
 ## Artifacts / 产物
 

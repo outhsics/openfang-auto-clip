@@ -3,13 +3,13 @@
     "duration_seconds": 18,
     "segment_duration": 6,
     "transform_level": 1,
-    "created_at": "2026-03-19T14:21:06"
+    "created_at": "2026-03-19T14:37:10"
   },
   "timings": {
-    "synthetic_source_generation_seconds": 0.976,
-    "transformation_seconds": 6.973,
-    "clip_creation_seconds": 1.825,
-    "total_seconds": 9.774
+    "synthetic_source_generation_seconds": 1.019,
+    "transformation_seconds": 7.238,
+    "clip_creation_seconds": 1.873,
+    "total_seconds": 10.13
   },
   "artifacts": {
     "source_path": "tmp/demo-benchmark/synthetic_source.mp4",

@@ -17,6 +17,7 @@ This page is the fastest way to understand how to evaluate `openfang-auto-clip` 
 3. Inspect the committed Level 2 sample artifacts directly on GitHub:
 
    - [../demo/level2_samples/README.md](../demo/level2_samples/README.md)
+   - [sample_local_evaluation_report.md](sample_local_evaluation_report.md)
 
 4. Run the live bilingual Level 2 suite locally if you want fresh outputs:
 
@@ -40,6 +41,7 @@ This page is the fastest way to understand how to evaluate `openfang-auto-clip` 
 - safest first local trial: `run_local_evaluation.py`
 - best GitHub-inspectable Level 2 proof: committed `level2_samples/`
 - best fresh Level 2 validation: `run_level2_demo_suite.py`
+- best GitHub-inspectable full evaluation snapshot: `sample_local_evaluation_report.md`
 
 ## Notes
 

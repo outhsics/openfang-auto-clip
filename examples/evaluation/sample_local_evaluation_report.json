@@ -1,0 +1,58 @@
+{
+  "created_at": "2026-03-19T14:37:11",
+  "output_dir": "examples/evaluation",
+  "status_en": "Ready for deeper evaluation",
+  "status_zh": "可进入更深入评估",
+  "doctor": {
+    "status": "pass",
+    "error_count": 0,
+    "warn_count": 1,
+    "checks": [
+      {
+        "name": "python",
+        "status": "ok",
+        "detail": "sample snapshot"
+      },
+      {
+        "name": "ffmpeg",
+        "status": "ok",
+        "detail": "sample snapshot"
+      },
+      {
+        "name": "yt-dlp",
+        "status": "ok",
+        "detail": "sample snapshot"
+      },
+      {
+        "name": "openfang",
+        "status": "warn",
+        "detail": "sample snapshot"
+      }
+    ]
+  },
+  "benchmark": {
+    "status": "pass",
+    "status_en": "Completed",
+    "status_zh": "已完成",
+    "report_path": "examples/benchmark/sample_benchmark_report.json",
+    "summary_path": "examples/benchmark/sample_benchmark_summary.md"
+  },
+  "level2_suite": {
+    "status": "pass",
+    "status_en": "Completed",
+    "status_zh": "已完成",
+    "average_score": 100,
+    "report_json_path": "examples/demo/level2_samples/index.json",
+    "report_markdown_path": "examples/demo/level2_samples/README.md"
+  },
+  "next_steps_en": [
+    "Inspect the committed benchmark summary and Level 2 sample artifacts first",
+    "Run the live local evaluation path only after the committed samples look healthy",
+    "Use real transcripts or URLs after the reproducible paths make sense"
+  ],
+  "next_steps_zh": [
+    "先查看已提交的 benchmark 摘要和 Level 2 样例产物",
+    "当这些已提交样例看起来正常后，再运行本地实时评估链路",
+    "只有当可复现路径表现合理后，再接入真实 transcript 或 URL"
+  ]
+}

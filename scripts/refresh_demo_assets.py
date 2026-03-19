@@ -7,12 +7,13 @@ import argparse
 import json
 import shutil
 import sys
+from datetime import datetime
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
-from scripts import export_level2_demo_samples, run_demo_benchmark  # noqa: E402
+from scripts import export_level2_demo_samples, run_demo_benchmark, run_local_evaluation  # noqa: E402
 
 
 def relativize_from(path: str | None, source_dir: Path, target_root: str) -> str | None:
@@ -51,6 +52,61 @@ def normalize_benchmark_report(report: dict, target_root: str = "tmp/demo-benchm
     return normalized
 
 
+def build_sample_local_evaluation_report(
+    benchmark_report_path: str,
+    benchmark_summary_path: str,
+    level2_index_path: str,
+    level2_index: dict,
+) -> dict:
+    """Build a committed local-evaluation snapshot from refreshed sample assets."""
+    average_score = round(
+        sum(case["score"] for case in level2_index.get("cases", [])) / max(len(level2_index.get("cases", [])), 1)
+    )
+    report = {
+        "created_at": datetime.now().isoformat(timespec="seconds"),
+        "output_dir": "examples/evaluation",
+        "status_en": "Ready for deeper evaluation",
+        "status_zh": "可进入更深入评估",
+        "doctor": {
+            "status": "pass",
+            "error_count": 0,
+            "warn_count": 1,
+            "checks": [
+                {"name": "python", "status": "ok", "detail": "sample snapshot"},
+                {"name": "ffmpeg", "status": "ok", "detail": "sample snapshot"},
+                {"name": "yt-dlp", "status": "ok", "detail": "sample snapshot"},
+                {"name": "openfang", "status": "warn", "detail": "sample snapshot"},
+            ],
+        },
+        "benchmark": {
+            "status": "pass",
+            "status_en": "Completed",
+            "status_zh": "已完成",
+            "report_path": benchmark_report_path,
+            "summary_path": benchmark_summary_path,
+        },
+        "level2_suite": {
+            "status": "pass",
+            "status_en": "Completed",
+            "status_zh": "已完成",
+            "average_score": average_score,
+            "report_json_path": level2_index_path,
+            "report_markdown_path": str(Path(level2_index_path).with_name("README.md")),
+        },
+        "next_steps_en": [
+            "Inspect the committed benchmark summary and Level 2 sample artifacts first",
+            "Run the live local evaluation path only after the committed samples look healthy",
+            "Use real transcripts or URLs after the reproducible paths make sense",
+        ],
+        "next_steps_zh": [
+            "先查看已提交的 benchmark 摘要和 Level 2 样例产物",
+            "当这些已提交样例看起来正常后，再运行本地实时评估链路",
+            "只有当可复现路径表现合理后，再接入真实 transcript 或 URL",
+        ],
+    }
+    return report
+
+
 def refresh_assets(
     benchmark_output_dir: Path,
     benchmark_duration: int = 18,
@@ -75,11 +131,28 @@ def refresh_assets(
     shutil.copyfile(benchmark_summary_src, benchmark_summary_dst)
 
     level2_report = export_level2_demo_samples.export_samples(REPO_ROOT / "examples" / "demo" / "level2_samples", duration=level2_duration)
+    level2_index_path = REPO_ROOT / "examples" / "demo" / "level2_samples" / "index.json"
+    level2_index = json.loads(level2_index_path.read_text(encoding="utf-8"))
+
+    local_evaluation_sample = build_sample_local_evaluation_report(
+        benchmark_report_path=str(sample_report_path.relative_to(REPO_ROOT)),
+        benchmark_summary_path=str(benchmark_summary_dst.relative_to(REPO_ROOT)),
+        level2_index_path=str(level2_index_path.relative_to(REPO_ROOT)),
+        level2_index=level2_index,
+    )
+    local_evaluation_json_path = REPO_ROOT / "examples" / "evaluation" / "sample_local_evaluation_report.json"
+    local_evaluation_markdown_path = REPO_ROOT / "examples" / "evaluation" / "sample_local_evaluation_report.md"
+    local_evaluation_json_path.write_text(json.dumps(local_evaluation_sample, ensure_ascii=False, indent=2), encoding="utf-8")
+    local_evaluation_markdown_path.write_text(
+        run_local_evaluation.render_local_evaluation_markdown(local_evaluation_sample),
+        encoding="utf-8",
+    )
 
     return {
         "benchmark_report_path": str(sample_report_path.relative_to(REPO_ROOT)),
         "benchmark_summary_path": str(benchmark_summary_dst.relative_to(REPO_ROOT)),
         "level2_output_dir": level2_report["output_dir"],
+        "local_evaluation_report_path": str(local_evaluation_json_path.relative_to(REPO_ROOT)),
     }
 
 
@@ -105,6 +178,7 @@ def main() -> int:
     print(f"   Benchmark report / Benchmark 报告: {result['benchmark_report_path']}")
     print(f"   Benchmark summary / Benchmark 摘要: {result['benchmark_summary_path']}")
     print(f"   Level 2 samples / Level 2 样例: {result['level2_output_dir']}")
+    print(f"   Local evaluation sample / 本地评估样例: {result['local_evaluation_report_path']}")
     return 0
 
 

@@ -31,6 +31,7 @@ class RefreshDemoAssetsTests(unittest.TestCase):
             repo_root = Path(tmp_dir)
             (repo_root / "examples" / "benchmark").mkdir(parents=True)
             (repo_root / "examples" / "demo").mkdir(parents=True)
+            (repo_root / "examples" / "evaluation").mkdir(parents=True)
             benchmark_out = repo_root / "tmp" / "refresh-demo-assets"
             benchmark_out.mkdir(parents=True)
             (benchmark_out / "benchmark_summary.md").write_text("summary", encoding="utf-8")
@@ -51,11 +52,19 @@ class RefreshDemoAssetsTests(unittest.TestCase):
 
             with mock.patch.object(refresh_demo_assets, "REPO_ROOT", repo_root):
                 with mock.patch.object(refresh_demo_assets.run_demo_benchmark, "run_benchmark", return_value=fake_report):
+                    level2_dir = repo_root / "examples" / "demo" / "level2_samples"
+                    level2_dir.mkdir(parents=True)
+                    (level2_dir / "index.json").write_text(
+                        '{"cases":[{"score":100},{"score":100}]}',
+                        encoding="utf-8",
+                    )
                     with mock.patch.object(refresh_demo_assets.export_level2_demo_samples, "export_samples", return_value={"output_dir": "examples/demo/level2_samples"}):
                         result = refresh_demo_assets.refresh_assets(benchmark_out)
 
             self.assertTrue((repo_root / "examples" / "benchmark" / "sample_benchmark_report.json").exists())
             self.assertTrue((repo_root / "examples" / "benchmark" / "sample_benchmark_summary.md").exists())
+            self.assertTrue((repo_root / "examples" / "evaluation" / "sample_local_evaluation_report.json").exists())
+            self.assertTrue((repo_root / "examples" / "evaluation" / "sample_local_evaluation_report.md").exists())
             self.assertEqual(result["level2_output_dir"], "examples/demo/level2_samples")
 
 
