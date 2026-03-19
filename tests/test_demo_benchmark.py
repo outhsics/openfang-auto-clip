@@ -54,6 +54,7 @@ class DemoBenchmarkTests(unittest.TestCase):
 
             self.assertEqual(report["artifacts"]["clip_count"], 1)
             self.assertTrue((output_dir / "benchmark_report.json").exists())
+            self.assertTrue((output_dir / "benchmark_summary.md").exists())
             self.assertTrue(report["artifacts"]["storyboard_path"])
 
     def test_extract_clip_previews_returns_generated_images(self):
@@ -71,6 +72,28 @@ class DemoBenchmarkTests(unittest.TestCase):
 
             self.assertEqual(len(previews), 2)
             self.assertTrue(all(path.exists() for path in previews))
+
+    def test_render_benchmark_summary_markdown_is_bilingual(self):
+        report = {
+            "benchmark": {"duration_seconds": 18, "segment_duration": 6, "transform_level": 1},
+            "timings": {"total_seconds": 9.8},
+            "artifacts": {
+                "report_path": "tmp/demo-benchmark/benchmark_report.json",
+                "summary_markdown_path": "tmp/demo-benchmark/benchmark_summary.md",
+                "preview_path": "tmp/demo-benchmark/preview.png",
+                "storyboard_path": "tmp/demo-benchmark/storyboard.png",
+                "clips_dir": "tmp/demo-benchmark/clips",
+            },
+            "summary": {
+                "clip_count": 3,
+                "total_clip_size_mb": 0.9,
+                "average_clip_size_mb": 0.3,
+            },
+        }
+
+        markdown = run_demo_benchmark.render_benchmark_summary_markdown(report)
+        self.assertIn("Benchmark Summary / Benchmark 摘要", markdown)
+        self.assertIn("Clip count / Clip 数量", markdown)
 
 
 if __name__ == "__main__":

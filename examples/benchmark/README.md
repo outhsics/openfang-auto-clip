@@ -7,7 +7,7 @@ This benchmark uses synthetic media, so anyone can reproduce the pipeline withou
 - generates a short synthetic source video with `ffmpeg`
 - optionally applies Level 1 transformation
 - cuts the result into vertical clips
-- writes a benchmark report, preview frame, and storyboard image
+- writes a benchmark report, bilingual benchmark summary, preview frame, and storyboard image
 
 ## Run it
 
@@ -20,6 +20,7 @@ python3 scripts/run_demo_benchmark.py
 ```text
 tmp/demo-benchmark/
 ├── benchmark_report.json
+├── benchmark_summary.md
 ├── preview.png
 ├── storyboard.png
 ├── synthetic_source.mp4
@@ -34,6 +35,7 @@ tmp/demo-benchmark/
 See [`sample_benchmark_report.json`](sample_benchmark_report.json).
 
 The committed sample is illustrative. Running the script locally will generate a fresh report with your machine's timings.
+The generated `benchmark_summary.md` is the fastest bilingual artifact to read or share.
 
 ## Why the storyboard matters
 

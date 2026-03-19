@@ -17,7 +17,7 @@
 - `--doctor` environment check
 - `--dry-run` processing plan output
 - local web manager for task launching and inspection
-- synthetic benchmark that generates report and storyboard artifacts without copyrighted media
+- synthetic benchmark that generates report, bilingual summary, and storyboard artifacts without copyrighted media
 - release-prep flow that now bundles release notes, benchmark proof, launch copy, and social-preview assets
 
 ## What Is Still Scaffolded
@@ -49,6 +49,7 @@
 - `2026-03-19`: added bilingual review reports and a `--review-package` CLI path for Level 2 operator validation
 - `2026-03-19`: added a reproducible bilingual Level 2 demo suite with English and Chinese transcript fixtures
 - `2026-03-19`: added a one-command local evaluation script that runs doctor, benchmark, and the Level 2 suite together
+- `2026-03-19`: added a bilingual benchmark summary artifact to make Level 1 output easier to inspect and share
 
 ## Next Recommended Actions
 

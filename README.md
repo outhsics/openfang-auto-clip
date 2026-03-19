@@ -37,6 +37,7 @@
 - 提供 `--doctor` 和 `--dry-run` 方便先验环境与流程
 - 提供本地 Web 管理界面做任务启动和查看
 - 提供 synthetic benchmark、release 素材和 social preview 生成脚本
+- synthetic benchmark 会额外输出双语 `benchmark_summary.md`
 
 ## Reality Check / 现状说明
 

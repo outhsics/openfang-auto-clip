@@ -142,6 +142,53 @@ def create_storyboard(preview_paths: list[Path], output_path: Path) -> None:
         raise RuntimeError(f"failed to create storyboard: {result.stderr[:300]}")
 
 
+def build_benchmark_summary(report: dict) -> dict:
+    """Build human-readable summary metrics from the benchmark report."""
+    clips = report.get("clips", [])
+    clip_sizes = [clip.get("size_mb", 0.0) for clip in clips]
+    return {
+        "clip_count": len(clips),
+        "total_clip_size_mb": round(sum(clip_sizes), 3),
+        "average_clip_size_mb": round(sum(clip_sizes) / len(clip_sizes), 3) if clip_sizes else 0.0,
+        "has_storyboard": bool(report["artifacts"].get("storyboard_path")),
+        "has_preview": bool(report["artifacts"].get("preview_path")),
+    }
+
+
+def render_benchmark_summary_markdown(report: dict) -> str:
+    """Render a bilingual markdown summary for the benchmark run."""
+    summary = report["summary"]
+    benchmark = report["benchmark"]
+    timings = report["timings"]
+    artifacts = report["artifacts"]
+    lines = [
+        "# Benchmark Summary / Benchmark 摘要",
+        "",
+        f"- Duration / 时长: {benchmark['duration_seconds']}s",
+        f"- Segment duration / 分段时长: {benchmark['segment_duration']}s",
+        f"- Transform level / 转换等级: {benchmark['transform_level']}",
+        f"- Clip count / Clip 数量: {summary['clip_count']}",
+        f"- Total clip size / Clip 总大小: {summary['total_clip_size_mb']} MB",
+        f"- Average clip size / 平均 Clip 大小: {summary['average_clip_size_mb']} MB",
+        f"- Total runtime / 总耗时: {timings['total_seconds']}s",
+        "",
+        "## Artifacts / 产物",
+        "",
+        f"- Report / 报告: {artifacts['report_path']}",
+        f"- Summary / 摘要: {artifacts['summary_markdown_path']}",
+        f"- Preview / 预览图: {artifacts['preview_path'] or 'none'}",
+        f"- Storyboard / 分镜图: {artifacts['storyboard_path'] or 'none'}",
+        f"- Clips dir / Clips 目录: {artifacts['clips_dir']}",
+        "",
+        "## Notes / 说明",
+        "",
+        "- This benchmark uses synthetic media, so it is safe to reproduce publicly. / 这个 benchmark 使用合成媒体，适合公开复现。",
+        "- Use the storyboard and summary when sharing the repo or filing issues. / 对外展示仓库或提 issue 时，优先附上 storyboard 和摘要。",
+        "",
+    ]
+    return "\n".join(lines)
+
+
 def run_benchmark(
     output_dir: Path,
     duration: int,
@@ -215,9 +262,15 @@ def run_benchmark(
         "transform_result": transform_summary,
         "clips": created_clips,
     }
+    report["summary"] = build_benchmark_summary(report)
 
     report_path = benchmark_dir / "benchmark_report.json"
+    report["artifacts"]["report_path"] = str(report_path)
     report_path.write_text(json.dumps(report, indent=2))
+
+    summary_markdown_path = benchmark_dir / "benchmark_summary.md"
+    report["artifacts"]["summary_markdown_path"] = str(summary_markdown_path)
+    summary_markdown_path.write_text(render_benchmark_summary_markdown(report), encoding="utf-8")
     return report
 
 
@@ -241,6 +294,7 @@ def main() -> int:
     print("✅ Demo benchmark complete")
     print(f"   Clips: {report['artifacts']['clip_count']}")
     print(f"   Report: {Path(report['artifacts']['clips_dir']).parent / 'benchmark_report.json'}")
+    print(f"   Summary: {report['artifacts']['summary_markdown_path']}")
     if report["artifacts"]["storyboard_path"]:
         print(f"   Storyboard: {report['artifacts']['storyboard_path']}")
     return 0

@@ -7,7 +7,7 @@
 - 用 `ffmpeg` 生成一段合成测试视频
 - 可选地应用 `Level 1` 转换
 - 将结果切成竖屏 clip
-- 输出 benchmark 报告、预览图和 storyboard
+- 输出 benchmark 报告、双语 benchmark 摘要、预览图和 storyboard
 
 ## 运行方式
 
@@ -20,6 +20,7 @@ python3 scripts/run_demo_benchmark.py
 ```text
 tmp/demo-benchmark/
 ├── benchmark_report.json
+├── benchmark_summary.md
 ├── preview.png
 ├── storyboard.png
 ├── synthetic_source.mp4
@@ -34,6 +35,7 @@ tmp/demo-benchmark/
 参见 [`sample_benchmark_report.json`](sample_benchmark_report.json)。
 
 仓库里提交的是示例文件，实际在本地运行脚本后会生成带有你机器耗时数据的新报告。
+其中 `benchmark_summary.md` 是最适合快速阅读和传播的双语摘要产物。
 
 ## 为什么 storyboard 很重要
 

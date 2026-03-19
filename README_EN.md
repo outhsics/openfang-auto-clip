@@ -37,6 +37,7 @@ English | [简体中文](README.md)
 - provides `--doctor` and `--dry-run` commands for safer evaluation
 - includes a local web manager for task launching and inspection
 - ships a synthetic benchmark plus release collateral generators
+- the synthetic benchmark also writes a bilingual `benchmark_summary.md`
 
 ## Reality Check
 
