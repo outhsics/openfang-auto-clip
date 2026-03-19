@@ -13,3 +13,4 @@ These demos are designed for launch posts, repo walkthroughs, and future AI hand
 - Use the benchmark showcase when introducing the repo publicly
 - Use the dry-run showcase when talking about operator safety and evaluation flow
 - Use the web manager showcase when you need a UI-driven demo
+- Use [../evaluation/README.md](../evaluation/README.md) when you want the full current evaluation map

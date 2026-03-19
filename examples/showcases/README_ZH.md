@@ -13,3 +13,4 @@
 - 对外介绍仓库时优先用 benchmark showcase
 - 讲 operator safety 或评估流程时用 dry-run showcase
 - 需要可视化演示时用 web manager showcase
+- 如果你想看当前完整评估入口，直接看 [../evaluation/README_ZH.md](../evaluation/README_ZH.md)

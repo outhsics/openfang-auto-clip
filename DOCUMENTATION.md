@@ -44,6 +44,7 @@ This repository now keeps English and Chinese documentation in paired files wher
 ## examples/ guides
 
 - [examples/benchmark/README.md](examples/benchmark/README.md) / [examples/benchmark/README_ZH.md](examples/benchmark/README_ZH.md)
+- [examples/evaluation/README.md](examples/evaluation/README.md) / [examples/evaluation/README_ZH.md](examples/evaluation/README_ZH.md)
 - [examples/demo/README.md](examples/demo/README.md) / [examples/demo/README_ZH.md](examples/demo/README_ZH.md)
 - [examples/demo/level2_samples/README.md](examples/demo/level2_samples/README.md) / [examples/demo/level2_samples/README_ZH.md](examples/demo/level2_samples/README_ZH.md)
 - [examples/showcases/README.md](examples/showcases/README.md) / [examples/showcases/README_ZH.md](examples/showcases/README_ZH.md)

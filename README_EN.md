@@ -18,6 +18,7 @@ English | [简体中文](README.md)
 
 - Read the status snapshot in [PROJECT_STATUS.md](PROJECT_STATUS.md)
 - Run the synthetic benchmark from [examples/benchmark/README.md](examples/benchmark/README.md)
+- Review the full evaluation index in [examples/evaluation/README.md](examples/evaluation/README.md)
 - Inspect the sample operator output in [examples/demo/README.md](examples/demo/README.md)
 - Inspect committed Level 2 sample artifacts in [examples/demo/level2_samples/README.md](examples/demo/level2_samples/README.md)
 - Browse reusable launch demos in [examples/showcases/README.md](examples/showcases/README.md)
