@@ -16,6 +16,7 @@ class Level2SampleExportTests(unittest.TestCase):
             self.assertTrue((output_dir / "README.md").exists())
             self.assertTrue((output_dir / "README_ZH.md").exists())
             self.assertTrue((output_dir / "en" / "script_package.json").exists())
+            self.assertTrue((output_dir / "en" / "operator_handoff.json").exists())
             self.assertTrue((output_dir / "zh" / "review_report.md").exists())
             self.assertTrue((output_dir / "en_json" / "script_package.json").exists())
             self.assertTrue((output_dir / "zh_vtt" / "review_report.md").exists())

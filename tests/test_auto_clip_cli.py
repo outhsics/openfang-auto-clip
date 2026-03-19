@@ -188,11 +188,14 @@ class AutoClipCliTests(unittest.TestCase):
             self.assertTrue((package_dir / "script_package.json").exists())
             self.assertTrue((package_dir / "script_draft.md").exists())
             self.assertTrue((package_dir / "production_blueprint.json").exists())
+            self.assertTrue((package_dir / "operator_handoff.json").exists())
             self.assertTrue((package_dir / "review_report.json").exists())
             self.assertTrue((package_dir / "review_report.md").exists())
 
             package = auto_clip.json.loads((package_dir / "script_package.json").read_text(encoding="utf-8"))
             self.assertTrue(package["shot_plan"])
+            self.assertTrue(package["asset_requests"])
+            self.assertTrue(package["voiceover_notes"])
             self.assertTrue(package["review_rubric"])
             self.assertIn("source_anchor", package["script_sections"][0])
 
@@ -216,6 +219,7 @@ class AutoClipCliTests(unittest.TestCase):
             self.assertTrue((package_dir / "script_package.json").exists())
             self.assertTrue((package_dir / "script_draft.md").exists())
             self.assertTrue((package_dir / "production_blueprint.json").exists())
+            self.assertTrue((package_dir / "operator_handoff.json").exists())
             self.assertTrue((package_dir / "report.json").exists())
             self.assertTrue((package_dir / "review_report.json").exists())
             self.assertTrue((package_dir / "review_report.md").exists())
@@ -242,6 +246,12 @@ class AutoClipCliTests(unittest.TestCase):
                 {"shot": 2, "section": "Point 1", "duration": 10},
                 {"shot": 3, "section": "Close", "duration": 10},
             ],
+            "asset_requests": [
+                {"shot": 1},
+                {"shot": 2},
+                {"shot": 3},
+            ],
+            "voiceover_notes": ["One", "Two", "Three", "Four"],
             "review_rubric": ["One", "Two", "Three", "Four"],
             "production_checklist": ["One", "Two", "Three", "Four"],
         }

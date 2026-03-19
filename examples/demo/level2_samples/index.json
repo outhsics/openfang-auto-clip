@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-03-19T13:03:48",
+  "generated_at": "2026-03-19T13:53:48",
   "output_dir": "examples/demo/level2_samples",
   "cases": [
     {
@@ -17,6 +17,7 @@
         "examples/demo/level2_samples/en/script_package.json",
         "examples/demo/level2_samples/en/script_draft.md",
         "examples/demo/level2_samples/en/production_blueprint.json",
+        "examples/demo/level2_samples/en/operator_handoff.json",
         "examples/demo/level2_samples/en/review_report.json",
         "examples/demo/level2_samples/en/review_report.md"
       ]
@@ -36,6 +37,7 @@
         "examples/demo/level2_samples/zh/script_package.json",
         "examples/demo/level2_samples/zh/script_draft.md",
         "examples/demo/level2_samples/zh/production_blueprint.json",
+        "examples/demo/level2_samples/zh/operator_handoff.json",
         "examples/demo/level2_samples/zh/review_report.json",
         "examples/demo/level2_samples/zh/review_report.md"
       ]
@@ -55,6 +57,7 @@
         "examples/demo/level2_samples/en_json/script_package.json",
         "examples/demo/level2_samples/en_json/script_draft.md",
         "examples/demo/level2_samples/en_json/production_blueprint.json",
+        "examples/demo/level2_samples/en_json/operator_handoff.json",
         "examples/demo/level2_samples/en_json/review_report.json",
         "examples/demo/level2_samples/en_json/review_report.md"
       ]
@@ -74,6 +77,7 @@
         "examples/demo/level2_samples/zh_vtt/script_package.json",
         "examples/demo/level2_samples/zh_vtt/script_draft.md",
         "examples/demo/level2_samples/zh_vtt/production_blueprint.json",
+        "examples/demo/level2_samples/zh_vtt/operator_handoff.json",
         "examples/demo/level2_samples/zh_vtt/review_report.json",
         "examples/demo/level2_samples/zh_vtt/review_report.md"
       ]

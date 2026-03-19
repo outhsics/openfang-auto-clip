@@ -21,6 +21,7 @@ Level 2 demo 命令会直接使用仓库内置的 `sample_level2_transcript.srt`
 review 命令会刷新 `review_report.json` 和 `review_report.md`，输出面向人工验收的双语检查结果。
 suite 命令会同时跑仓库内置的中英 transcript fixture，并覆盖 SRT、JSON、VTT 等格式，输出 `level2_demo_suite_report.json` 和 `level2_demo_suite_report.md`。
 已经提交到仓库的样例产物放在 [`level2_samples/README_ZH.md`](level2_samples/README_ZH.md)，方便直接在 GitHub 浏览。
+生成出的脚本包现在还会附带 `operator_handoff.json`，方便交给剪辑或运营继续执行。
 
 ## 期望输出结构
 

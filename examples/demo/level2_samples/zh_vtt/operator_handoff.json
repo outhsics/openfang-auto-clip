@@ -1,0 +1,112 @@
+{
+  "milestone": "level2_transcript_to_script_package",
+  "source_title": "Level 2 Sample ZH VTT",
+  "language": "zh",
+  "asset_requests": [
+    {
+      "shot": 1,
+      "section": "开场",
+      "asset_type": "title_card_then_new_talking_head",
+      "must_have": "围绕“先抛出最能抓住注意力的结论，不要把…”准备一份全新视觉素材，不复用原镜头。",
+      "delivery_note": "优先竖屏安全区域，给字幕和标题留出空间。",
+      "purpose": "先立新视角，再切到新的讲述主体。"
+    },
+    {
+      "shot": 2,
+      "section": "重点 1",
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "must_have": "围绕“先抛出最能抓住注意力的结论，不要把…”准备一份全新视觉素材，不复用原镜头。",
+      "delivery_note": "优先竖屏安全区域，给字幕和标题留出空间。",
+      "purpose": "用新的视觉素材支撑这一段改写内容。"
+    },
+    {
+      "shot": 3,
+      "section": "重点 2",
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "must_have": "围绕“接着用新的论据和新的画面去支撑，让…”准备一份全新视觉素材，不复用原镜头。",
+      "delivery_note": "优先竖屏安全区域，给字幕和标题留出空间。",
+      "purpose": "用新的视觉素材支撑这一段改写内容。"
+    },
+    {
+      "shot": 4,
+      "section": "重点 3",
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "must_have": "围绕“最后给出新的行动建议，而不是轻度改…”准备一份全新视觉素材，不复用原镜头。",
+      "delivery_note": "优先竖屏安全区域，给字幕和标题留出空间。",
+      "purpose": "用新的视觉素材支撑这一段改写内容。"
+    },
+    {
+      "shot": 5,
+      "section": "收尾",
+      "asset_type": "summary_card_or_direct_close",
+      "must_have": "围绕“总结与行动”准备一份全新视觉素材，不复用原镜头。",
+      "delivery_note": "优先竖屏安全区域，给字幕和标题留出空间。",
+      "purpose": "收束观点，不复用原片尾节奏。"
+    }
+  ],
+  "voiceover_notes": [
+    "语气用新的讲述视角，不要模仿原作者的句式和节奏。",
+    "每一段开头先讲结论，再补充支撑信息。",
+    "句子尽量短，方便后续对齐竖屏字幕和节奏。",
+    "结尾要给出新的行动建议，而不是轻度改写原片尾。"
+  ],
+  "shot_plan": [
+    {
+      "shot": 1,
+      "section": "开场",
+      "duration": 9,
+      "asset_type": "title_card_then_new_talking_head",
+      "goal": "先立新视角，再切到新的讲述主体。",
+      "source_anchor": "00:00:00.000 - 00:00:04.000",
+      "overlay_text": "先抛出最能抓住注意力的结论，不要把…"
+    },
+    {
+      "shot": 2,
+      "section": "重点 1",
+      "duration": 9,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "用新的视觉素材支撑这一段改写内容。",
+      "source_anchor": "00:00:00.000 - 00:00:04.000",
+      "overlay_text": "先抛出最能抓住注意力的结论，不要把…"
+    },
+    {
+      "shot": 3,
+      "section": "重点 2",
+      "duration": 9,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "用新的视觉素材支撑这一段改写内容。",
+      "source_anchor": "00:00:04.000 - 00:00:08.000",
+      "overlay_text": "接着用新的论据和新的画面去支撑，让…"
+    },
+    {
+      "shot": 4,
+      "section": "重点 3",
+      "duration": 9,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "用新的视觉素材支撑这一段改写内容。",
+      "source_anchor": "00:00:08.000 - 00:00:12.000",
+      "overlay_text": "最后给出新的行动建议，而不是轻度改…"
+    },
+    {
+      "shot": 5,
+      "section": "收尾",
+      "duration": 9,
+      "asset_type": "summary_card_or_direct_close",
+      "goal": "收束观点，不复用原片尾节奏。",
+      "source_anchor": null,
+      "overlay_text": "总结与行动"
+    }
+  ],
+  "review_rubric": [
+    "逐段检查 narration，去掉任何接近原句复述的表达",
+    "确认每段都有新的视觉方案，不依赖原视频镜头",
+    "检查 on-screen text 是否足够短，适合竖屏节奏",
+    "确认收尾是新的总结和动作，不复用原片尾结构"
+  ],
+  "production_checklist": [
+    "Review the narration and remove any wording that still feels too close to the source",
+    "Record a new voiceover or TTS track from the rewritten script",
+    "Replace visuals with new footage, diagrams, captures, or generated assets",
+    "Re-time captions and pacing after the new voiceover is approved"
+  ]
+}

@@ -29,7 +29,7 @@ English | [简体中文](README.md)
 
 - downloads a source video with `yt-dlp`
 - applies a working local Level 1 FFmpeg remix path
-- builds a Level 2 transcript-to-script package with timed source anchors, shot plan, and review rubric when a transcript is provided
+- builds a Level 2 transcript-to-script package with timed source anchors, shot plan, asset requests, voiceover notes, and review rubric when a transcript is provided
 - generates a self-contained Level 2 demo package from a bundled transcript for quick evaluation
 - reviews an existing Level 2 package and writes bilingual review artifacts for operator approval
 - runs a reproducible bilingual Level 2 demo suite so visitors can compare package quality quickly across multiple transcript formats

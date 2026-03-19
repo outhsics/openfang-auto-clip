@@ -20,6 +20,8 @@
 - Total duration / 总时长: 45s
 - Review rubric items / Review rubric 条数: 4
 - Checklist steps / Checklist 步数: 4
+- Asset requests / Asset request 条数: 6
+- Voiceover notes / Voiceover note 条数: 4
 
 ## Checks / 检查项
 
@@ -35,8 +37,8 @@
 
 ### Operator handoff assets are present / 运营交接信息已具备
 - Status / 状态: pass
-- EN: Review rubric has 4 items and checklist has 4 steps.
-- 中文: review rubric 有 4 条，production checklist 有 4 步。
+- EN: Review rubric has 4 items, checklist has 4 steps, and handoff assets cover 6 shots.
+- 中文: review rubric 有 4 条，production checklist 有 4 步，并覆盖了 6 个 asset request。
 
 ### Section timing is internally consistent / 段落时长内部一致
 - Status / 状态: pass

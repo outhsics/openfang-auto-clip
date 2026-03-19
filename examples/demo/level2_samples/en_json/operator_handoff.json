@@ -1,0 +1,95 @@
+{
+  "milestone": "level2_transcript_to_script_package",
+  "source_title": "Level 2 Sample EN JSON",
+  "language": "en",
+  "asset_requests": [
+    {
+      "shot": 1,
+      "section": "Hook",
+      "asset_type": "title_card_then_new_talking_head",
+      "must_have": "Prepare a fresh visual asset that supports 'Lead with the most surprising claim. Follow with evidence that changes the...' without reusing source shots.",
+      "delivery_note": "Frame for vertical safe areas and leave room for captions or title overlays.",
+      "purpose": "State the new angle quickly and clearly."
+    },
+    {
+      "shot": 2,
+      "section": "Beat 1",
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "must_have": "Prepare a fresh visual asset that supports 'Lead with the most surprising claim. Follow with evidence that changes the...' without reusing source shots.",
+      "delivery_note": "Frame for vertical safe areas and leave room for captions or title overlays.",
+      "purpose": "Support one rewritten beat with new visuals."
+    },
+    {
+      "shot": 3,
+      "section": "Beat 2",
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "must_have": "Prepare a fresh visual asset that supports 'Finish with a fresh takeaway and a clear next step' without reusing source shots.",
+      "delivery_note": "Frame for vertical safe areas and leave room for captions or title overlays.",
+      "purpose": "Support one rewritten beat with new visuals."
+    },
+    {
+      "shot": 4,
+      "section": "Close",
+      "asset_type": "summary_card_or_direct_close",
+      "must_have": "Prepare a fresh visual asset that supports 'Fresh takeaway' without reusing source shots.",
+      "delivery_note": "Frame for vertical safe areas and leave room for captions or title overlays.",
+      "purpose": "Land the takeaway without echoing the original ending."
+    }
+  ],
+  "voiceover_notes": [
+    "Use a fresh speaking angle instead of imitating the source voice or cadence.",
+    "Lead each section with the takeaway, then add supporting detail.",
+    "Keep sentences short enough to time cleanly with vertical captions.",
+    "Close with a new action or takeaway instead of lightly rewriting the original ending."
+  ],
+  "shot_plan": [
+    {
+      "shot": 1,
+      "section": "Hook",
+      "duration": 9,
+      "asset_type": "title_card_then_new_talking_head",
+      "goal": "State the new angle quickly and clearly.",
+      "source_anchor": "00:00:00.000 - 00:00:08.000",
+      "overlay_text": "Lead with the most surprising claim. Follow with evidence that changes the..."
+    },
+    {
+      "shot": 2,
+      "section": "Beat 1",
+      "duration": 14,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "Support one rewritten beat with new visuals.",
+      "source_anchor": "00:00:00.000 - 00:00:08.000",
+      "overlay_text": "Lead with the most surprising claim. Follow with evidence that changes the..."
+    },
+    {
+      "shot": 3,
+      "section": "Beat 2",
+      "duration": 14,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "Support one rewritten beat with new visuals.",
+      "source_anchor": "00:00:08.000 - 00:00:12.000",
+      "overlay_text": "Finish with a fresh takeaway and a clear next step"
+    },
+    {
+      "shot": 4,
+      "section": "Close",
+      "duration": 8,
+      "asset_type": "summary_card_or_direct_close",
+      "goal": "Land the takeaway without echoing the original ending.",
+      "source_anchor": null,
+      "overlay_text": "Fresh takeaway"
+    }
+  ],
+  "review_rubric": [
+    "Check each narration beat for wording that still feels too close to the source",
+    "Confirm every section has a fresh visual plan instead of reused source shots",
+    "Keep on-screen text short enough for vertical viewing",
+    "Make sure the close lands as a new takeaway, not the source ending rewritten lightly"
+  ],
+  "production_checklist": [
+    "Review the narration and remove any wording that still feels too close to the source",
+    "Record a new voiceover or TTS track from the rewritten script",
+    "Replace visuals with new footage, diagrams, captures, or generated assets",
+    "Re-time captions and pacing after the new voiceover is approved"
+  ]
+}

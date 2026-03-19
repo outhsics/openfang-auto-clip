@@ -606,6 +606,50 @@ def build_level2_review_rubric(language: str) -> List[str]:
     ]
 
 
+def build_level2_asset_requests(script_sections: List[dict], shot_plan: List[dict], language: str) -> List[dict]:
+    """Create asset requests an operator can hand off to editing or design."""
+    requests = []
+    for section, shot in zip(script_sections, shot_plan):
+        if language == "zh":
+            request = {
+                "shot": shot["shot"],
+                "section": section["section"],
+                "asset_type": shot["asset_type"],
+                "must_have": f"围绕“{section['on_screen_text']}”准备一份全新视觉素材，不复用原镜头。",
+                "delivery_note": "优先竖屏安全区域，给字幕和标题留出空间。",
+                "purpose": shot["goal"],
+            }
+        else:
+            request = {
+                "shot": shot["shot"],
+                "section": section["section"],
+                "asset_type": shot["asset_type"],
+                "must_have": f"Prepare a fresh visual asset that supports '{section['on_screen_text']}' without reusing source shots.",
+                "delivery_note": "Frame for vertical safe areas and leave room for captions or title overlays.",
+                "purpose": shot["goal"],
+            }
+        requests.append(request)
+    return requests
+
+
+def build_level2_voiceover_notes(language: str) -> List[str]:
+    """Create concise voiceover guidance for the rewritten script."""
+    if language == "zh":
+        return [
+            "语气用新的讲述视角，不要模仿原作者的句式和节奏。",
+            "每一段开头先讲结论，再补充支撑信息。",
+            "句子尽量短，方便后续对齐竖屏字幕和节奏。",
+            "结尾要给出新的行动建议，而不是轻度改写原片尾。",
+        ]
+
+    return [
+        "Use a fresh speaking angle instead of imitating the source voice or cadence.",
+        "Lead each section with the takeaway, then add supporting detail.",
+        "Keep sentences short enough to time cleanly with vertical captions.",
+        "Close with a new action or takeaway instead of lightly rewriting the original ending.",
+    ]
+
+
 def build_level2_blueprint(package: dict) -> dict:
     """Build a reduced production blueprint artifact from the script package."""
     return {
@@ -614,7 +658,23 @@ def build_level2_blueprint(package: dict) -> dict:
         "language": package["language"],
         "script_sections": package["script_sections"],
         "shot_plan": package["shot_plan"],
+        "asset_requests": package["asset_requests"],
+        "voiceover_notes": package["voiceover_notes"],
         "review_rubric": package["review_rubric"],
+    }
+
+
+def build_level2_operator_handoff(package: dict) -> dict:
+    """Build a tighter handoff artifact for operators and editors."""
+    return {
+        "milestone": package["milestone"],
+        "source_title": package["source"]["title"],
+        "language": package["language"],
+        "asset_requests": package["asset_requests"],
+        "voiceover_notes": package["voiceover_notes"],
+        "shot_plan": package["shot_plan"],
+        "review_rubric": package["review_rubric"],
+        "production_checklist": package["production_checklist"],
     }
 
 
@@ -622,6 +682,8 @@ def build_level2_package_review(package: dict) -> dict:
     """Build a bilingual structural review for a Level 2 script package."""
     script_sections = package.get("script_sections", [])
     shot_plan = package.get("shot_plan", [])
+    asset_requests = package.get("asset_requests", [])
+    voiceover_notes = package.get("voiceover_notes", [])
     source_outline = package.get("source_outline", [])
     review_rubric = package.get("review_rubric", [])
     production_checklist = package.get("production_checklist", [])
@@ -688,7 +750,12 @@ def build_level2_package_review(package: dict) -> dict:
         }
     )
 
-    handoff_ok = len(review_rubric) >= 4 and len(production_checklist) >= 4
+    handoff_ok = (
+        len(review_rubric) >= 4
+        and len(production_checklist) >= 4
+        and len(asset_requests) == len(shot_plan)
+        and len(voiceover_notes) >= 4
+    )
     checks.append(
         {
             "id": "operator_handoff",
@@ -696,14 +763,14 @@ def build_level2_package_review(package: dict) -> dict:
             "label_en": "Operator handoff assets are present",
             "label_zh": "运营交接信息已具备",
             "detail_en": (
-                f"Review rubric has {len(review_rubric)} items and checklist has {len(production_checklist)} steps."
+                f"Review rubric has {len(review_rubric)} items, checklist has {len(production_checklist)} steps, and handoff assets cover {len(asset_requests)} shots."
                 if handoff_ok
-                else f"Review rubric/checklist is thin: {len(review_rubric)} rubric items, {len(production_checklist)} checklist steps."
+                else f"Handoff is thin: {len(review_rubric)} rubric items, {len(production_checklist)} checklist steps, {len(asset_requests)} asset requests, {len(voiceover_notes)} voiceover notes."
             ),
             "detail_zh": (
-                f"review rubric 有 {len(review_rubric)} 条，production checklist 有 {len(production_checklist)} 步。"
+                f"review rubric 有 {len(review_rubric)} 条，production checklist 有 {len(production_checklist)} 步，并覆盖了 {len(asset_requests)} 个 asset request。"
                 if handoff_ok
-                else f"review rubric / checklist 还不够厚：rubric {len(review_rubric)} 条，checklist {len(production_checklist)} 步。"
+                else f"交接信息还不够厚：rubric {len(review_rubric)} 条，checklist {len(production_checklist)} 步，asset request {len(asset_requests)} 条，voiceover note {len(voiceover_notes)} 条。"
             ),
             "weight": 20,
         }
@@ -776,6 +843,8 @@ def build_level2_package_review(package: dict) -> dict:
             "duration_total_seconds": duration_total,
             "review_rubric_count": len(review_rubric),
             "production_checklist_count": len(production_checklist),
+            "asset_request_count": len(asset_requests),
+            "voiceover_note_count": len(voiceover_notes),
         },
         "checks": checks,
         "next_steps_en": [
@@ -820,6 +889,8 @@ def render_level2_review_markdown(review: dict) -> str:
         ("Total duration", "总时长", f"{metrics['duration_total_seconds']}s"),
         ("Review rubric items", "Review rubric 条数", metrics["review_rubric_count"]),
         ("Checklist steps", "Checklist 步数", metrics["production_checklist_count"]),
+        ("Asset requests", "Asset request 条数", metrics["asset_request_count"]),
+        ("Voiceover notes", "Voiceover note 条数", metrics["voiceover_note_count"]),
     ]
     for label_en, label_zh, value in metric_rows:
         lines.append(f"- {label_en} / {label_zh}: {value}")
@@ -879,6 +950,8 @@ def build_level2_script_package(video_info: dict, transcript_payload: dict, tran
     target_duration = config.get("default_duration", 60)
     script_sections = build_level2_script_sections(source_outline, language, target_duration)
     shot_plan = build_level2_shot_plan(script_sections, language)
+    asset_requests = build_level2_asset_requests(script_sections, shot_plan, language)
+    voiceover_notes = build_level2_voiceover_notes(language)
     review_rubric = build_level2_review_rubric(language)
 
     return {
@@ -897,6 +970,8 @@ def build_level2_script_package(video_info: dict, transcript_payload: dict, tran
         ],
         "script_sections": script_sections,
         "shot_plan": shot_plan,
+        "asset_requests": asset_requests,
+        "voiceover_notes": voiceover_notes,
         "review_rubric": review_rubric,
         "production_checklist": [
             "Review the narration and remove any wording that still feels too close to the source",
@@ -955,6 +1030,21 @@ def render_level2_script_markdown(package: dict) -> str:
             ]
         )
 
+    lines.extend(["", "## Asset Requests", ""])
+    for item in package["asset_requests"]:
+        lines.extend(
+            [
+                f"- Shot {item['shot']}: {item['section']} [{item['asset_type']}]",
+                f"  Must have: {item['must_have']}",
+                f"  Delivery note: {item['delivery_note']}",
+                f"  Purpose: {item['purpose']}",
+            ]
+        )
+
+    lines.extend(["", "## Voiceover Notes", ""])
+    for item in package["voiceover_notes"]:
+        lines.append(f"- {item}")
+
     lines.extend(["", "## Review Rubric", ""])
     for item in package["review_rubric"]:
         lines.append(f"- {item}")
@@ -990,9 +1080,13 @@ def save_level2_script_package(video_info: dict, package: dict) -> Tuple[Path, L
     with open(blueprint_path, "w", encoding="utf-8") as handle:
         json.dump(build_level2_blueprint(package), handle, ensure_ascii=False, indent=2)
 
+    handoff_path = package_dir / "operator_handoff.json"
+    with open(handoff_path, "w", encoding="utf-8") as handle:
+        json.dump(build_level2_operator_handoff(package), handle, ensure_ascii=False, indent=2)
+
     review_paths = save_level2_package_review(package_dir, build_level2_package_review(package))
 
-    return package_dir, [package_json_path, draft_path, blueprint_path, *review_paths]
+    return package_dir, [package_json_path, draft_path, blueprint_path, handoff_path, *review_paths]
 
 
 def resolve_level2_package_path(package_path: str) -> Path:

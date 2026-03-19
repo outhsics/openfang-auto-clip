@@ -3,7 +3,7 @@
 这些已提交到仓库的产物由内置 transcript fixture 生成。
 它们让访客不用先跑 CLI，也能直接查看真实的 Level 2 输出结果。
 
-- 生成时间：2026-03-19T13:03:48
+- 生成时间：2026-03-19T13:53:48
 
 ## 样例列表
 
@@ -16,6 +16,7 @@
 - 脚本包：`examples/demo/level2_samples/en/script_package.json`
 - 脚本草稿：`examples/demo/level2_samples/en/script_draft.md`
 - Blueprint：`examples/demo/level2_samples/en/production_blueprint.json`
+- 交接 JSON：`examples/demo/level2_samples/en/operator_handoff.json`
 - 评审 JSON：`examples/demo/level2_samples/en/review_report.json`
 - 评审 Markdown：`examples/demo/level2_samples/en/review_report.md`
 
@@ -28,6 +29,7 @@
 - 脚本包：`examples/demo/level2_samples/zh/script_package.json`
 - 脚本草稿：`examples/demo/level2_samples/zh/script_draft.md`
 - Blueprint：`examples/demo/level2_samples/zh/production_blueprint.json`
+- 交接 JSON：`examples/demo/level2_samples/zh/operator_handoff.json`
 - 评审 JSON：`examples/demo/level2_samples/zh/review_report.json`
 - 评审 Markdown：`examples/demo/level2_samples/zh/review_report.md`
 
@@ -40,6 +42,7 @@
 - 脚本包：`examples/demo/level2_samples/en_json/script_package.json`
 - 脚本草稿：`examples/demo/level2_samples/en_json/script_draft.md`
 - Blueprint：`examples/demo/level2_samples/en_json/production_blueprint.json`
+- 交接 JSON：`examples/demo/level2_samples/en_json/operator_handoff.json`
 - 评审 JSON：`examples/demo/level2_samples/en_json/review_report.json`
 - 评审 Markdown：`examples/demo/level2_samples/en_json/review_report.md`
 
@@ -52,6 +55,7 @@
 - 脚本包：`examples/demo/level2_samples/zh_vtt/script_package.json`
 - 脚本草稿：`examples/demo/level2_samples/zh_vtt/script_draft.md`
 - Blueprint：`examples/demo/level2_samples/zh_vtt/production_blueprint.json`
+- 交接 JSON：`examples/demo/level2_samples/zh_vtt/operator_handoff.json`
 - 评审 JSON：`examples/demo/level2_samples/zh_vtt/review_report.json`
 - 评审 Markdown：`examples/demo/level2_samples/zh_vtt/review_report.md`
 

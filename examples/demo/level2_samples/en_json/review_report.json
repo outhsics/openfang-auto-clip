@@ -17,7 +17,9 @@
     "section_anchor_count": 3,
     "duration_total_seconds": 45,
     "review_rubric_count": 4,
-    "production_checklist_count": 4
+    "production_checklist_count": 4,
+    "asset_request_count": 4,
+    "voiceover_note_count": 4
   },
   "checks": [
     {
@@ -43,8 +45,8 @@
       "status": "pass",
       "label_en": "Operator handoff assets are present",
       "label_zh": "运营交接信息已具备",
-      "detail_en": "Review rubric has 4 items and checklist has 4 steps.",
-      "detail_zh": "review rubric 有 4 条，production checklist 有 4 步。",
+      "detail_en": "Review rubric has 4 items, checklist has 4 steps, and handoff assets cover 4 shots.",
+      "detail_zh": "review rubric 有 4 条，production checklist 有 4 步，并覆盖了 4 个 asset request。",
       "weight": 20
     },
     {

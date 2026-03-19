@@ -9,7 +9,7 @@
 ## What Ships Today
 
 - local CLI for downloading a video, applying Level 1 remix, and generating vertical clips
-- local Level 2 transcript-to-script package generation with timed source anchors and shot plan when a transcript is available
+- local Level 2 transcript-to-script package generation with timed source anchors, shot plan, asset requests, and voiceover notes when a transcript is available
 - self-contained Level 2 demo package generation from a bundled transcript for first-run evaluation
 - bilingual Level 2 package review reports for operator validation
 - reproducible bilingual Level 2 demo suite for evaluating package quality across English and Chinese transcripts plus multiple transcript formats
@@ -50,6 +50,7 @@
 - `2026-03-19`: added bilingual review reports and a `--review-package` CLI path for Level 2 operator validation
 - `2026-03-19`: added a reproducible bilingual Level 2 demo suite with English and Chinese transcript fixtures
 - `2026-03-19`: expanded the Level 2 demo suite to cover SRT, JSON, and VTT transcript inputs
+- `2026-03-19`: added richer Level 2 operator handoff artifacts including asset requests, voiceover notes, and `operator_handoff.json`
 - `2026-03-19`: added a one-command local evaluation script that runs doctor, benchmark, and the Level 2 suite together
 - `2026-03-19`: added a bilingual benchmark summary artifact to make Level 1 output easier to inspect and share
 - `2026-03-19`: exported committed bilingual Level 2 sample artifacts for direct repository browsing

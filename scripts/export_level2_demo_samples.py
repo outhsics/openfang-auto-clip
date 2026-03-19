@@ -84,12 +84,14 @@ def export_case(case: dict, output_dir: Path, duration: int) -> dict:
     package_json_path = output_dir / "script_package.json"
     draft_path = output_dir / "script_draft.md"
     blueprint_path = output_dir / "production_blueprint.json"
+    handoff_path = output_dir / "operator_handoff.json"
     review_json_path = output_dir / "review_report.json"
     review_markdown_path = output_dir / "review_report.md"
 
     write_json(package_json_path, package)
     draft_path.write_text(auto_clip.render_level2_script_markdown(package), encoding="utf-8")
     write_json(blueprint_path, auto_clip.build_level2_blueprint(package))
+    write_json(handoff_path, auto_clip.build_level2_operator_handoff(package))
     write_json(review_json_path, review)
     review_markdown_path.write_text(auto_clip.render_level2_review_markdown(review), encoding="utf-8")
 
@@ -108,6 +110,7 @@ def export_case(case: dict, output_dir: Path, duration: int) -> dict:
             display_path(package_json_path),
             display_path(draft_path),
             display_path(blueprint_path),
+            display_path(handoff_path),
             display_path(review_json_path),
             display_path(review_markdown_path),
         ],
@@ -140,8 +143,9 @@ def render_index_markdown(report: dict) -> str:
                 f"- Script package: `{case['files'][0]}`",
                 f"- Script draft: `{case['files'][1]}`",
                 f"- Blueprint: `{case['files'][2]}`",
-                f"- Review JSON: `{case['files'][3]}`",
-                f"- Review Markdown: `{case['files'][4]}`",
+                f"- Operator handoff: `{case['files'][3]}`",
+                f"- Review JSON: `{case['files'][4]}`",
+                f"- Review Markdown: `{case['files'][5]}`",
                 "",
             ]
         )
@@ -184,8 +188,9 @@ def render_index_markdown_zh(report: dict) -> str:
                 f"- 脚本包：`{case['files'][0]}`",
                 f"- 脚本草稿：`{case['files'][1]}`",
                 f"- Blueprint：`{case['files'][2]}`",
-                f"- 评审 JSON：`{case['files'][3]}`",
-                f"- 评审 Markdown：`{case['files'][4]}`",
+                f"- 交接 JSON：`{case['files'][3]}`",
+                f"- 评审 JSON：`{case['files'][4]}`",
+                f"- 评审 Markdown：`{case['files'][5]}`",
                 "",
             ]
         )

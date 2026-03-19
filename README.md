@@ -29,7 +29,7 @@
 
 - 用 `yt-dlp` 下载源视频
 - 跑一个可用的本地 Level 1 FFmpeg 视觉混音路径
-- 在提供 transcript 的前提下生成一个带时间锚点、shot plan 和 review rubric 的 Level 2 脚本再生包
+- 在提供 transcript 的前提下生成一个带时间锚点、shot plan、asset request、voiceover note 和 review rubric 的 Level 2 脚本再生包
 - 用仓库自带 transcript 直接生成一个自包含的 Level 2 demo 包，方便首次评估
 - 对已有 Level 2 脚本包生成双语 review report，方便人工验收
 - 运行一个可复现的中英双语 Level 2 demo suite，比较脚本包结构质量并验证多种 transcript 格式

@@ -84,6 +84,40 @@
   Overlay: Fresh takeaway
   Source anchor: none
 
+## Asset Requests
+
+- Shot 1: Hook [title_card_then_new_talking_head]
+  Must have: Prepare a fresh visual asset that supports 'Most short-form clips lose attention because they start with setup instead of...' without reusing source shots.
+  Delivery note: Frame for vertical safe areas and leave room for captions or title overlays.
+  Purpose: State the new angle quickly and clearly.
+- Shot 2: Beat 1 [fresh_broll_diagram_or_screen_capture]
+  Must have: Prepare a fresh visual asset that supports 'Most short-form clips lose attention because they start with setup instead of...' without reusing source shots.
+  Delivery note: Frame for vertical safe areas and leave room for captions or title overlays.
+  Purpose: Support one rewritten beat with new visuals.
+- Shot 3: Beat 2 [fresh_broll_diagram_or_screen_capture]
+  Must have: Prepare a fresh visual asset that supports 'The fix is to lead with the strongest claim, then prove it...' without reusing source shots.
+  Delivery note: Frame for vertical safe areas and leave room for captions or title overlays.
+  Purpose: Support one rewritten beat with new visuals.
+- Shot 4: Beat 3 [fresh_broll_diagram_or_screen_capture]
+  Must have: Prepare a fresh visual asset that supports 'Every beat should ask for a different visual, so the edit feels...' without reusing source shots.
+  Delivery note: Frame for vertical safe areas and leave room for captions or title overlays.
+  Purpose: Support one rewritten beat with new visuals.
+- Shot 5: Beat 4 [fresh_broll_diagram_or_screen_capture]
+  Must have: Prepare a fresh visual asset that supports 'End by naming the practical takeaway, because the audience remembers structure more...' without reusing source shots.
+  Delivery note: Frame for vertical safe areas and leave room for captions or title overlays.
+  Purpose: Support one rewritten beat with new visuals.
+- Shot 6: Close [summary_card_or_direct_close]
+  Must have: Prepare a fresh visual asset that supports 'Fresh takeaway' without reusing source shots.
+  Delivery note: Frame for vertical safe areas and leave room for captions or title overlays.
+  Purpose: Land the takeaway without echoing the original ending.
+
+## Voiceover Notes
+
+- Use a fresh speaking angle instead of imitating the source voice or cadence.
+- Lead each section with the takeaway, then add supporting detail.
+- Keep sentences short enough to time cleanly with vertical captions.
+- Close with a new action or takeaway instead of lightly rewriting the original ending.
+
 ## Review Rubric
 
 - Check each narration beat for wording that still feels too close to the source

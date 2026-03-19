@@ -84,6 +84,40 @@
   Overlay: 总结与行动
   Source anchor: none
 
+## Asset Requests
+
+- Shot 1: 开场 [title_card_then_new_talking_head]
+  Must have: 围绕“很多短视频一开始先铺垫背景，结果观…”准备一份全新视觉素材，不复用原镜头。
+  Delivery note: 优先竖屏安全区域，给字幕和标题留出空间。
+  Purpose: 先立新视角，再切到新的讲述主体。
+- Shot 2: 重点 1 [fresh_broll_diagram_or_screen_capture]
+  Must have: 围绕“很多短视频一开始先铺垫背景，结果观…”准备一份全新视觉素材，不复用原镜头。
+  Delivery note: 优先竖屏安全区域，给字幕和标题留出空间。
+  Purpose: 用新的视觉素材支撑这一段改写内容。
+- Shot 3: 重点 2 [fresh_broll_diagram_or_screen_capture]
+  Must have: 围绕“更稳的做法是先抛出最强结论，再用两…”准备一份全新视觉素材，不复用原镜头。
+  Delivery note: 优先竖屏安全区域，给字幕和标题留出空间。
+  Purpose: 用新的视觉素材支撑这一段改写内容。
+- Shot 4: 重点 3 [fresh_broll_diagram_or_screen_capture]
+  Must have: 围绕“每个论点都应该配一套新的画面思路，…”准备一份全新视觉素材，不复用原镜头。
+  Delivery note: 优先竖屏安全区域，给字幕和标题留出空间。
+  Purpose: 用新的视觉素材支撑这一段改写内容。
+- Shot 5: 重点 4 [fresh_broll_diagram_or_screen_capture]
+  Must have: 围绕“结尾要明确给出新的行动建议，这样观…”准备一份全新视觉素材，不复用原镜头。
+  Delivery note: 优先竖屏安全区域，给字幕和标题留出空间。
+  Purpose: 用新的视觉素材支撑这一段改写内容。
+- Shot 6: 收尾 [summary_card_or_direct_close]
+  Must have: 围绕“总结与行动”准备一份全新视觉素材，不复用原镜头。
+  Delivery note: 优先竖屏安全区域，给字幕和标题留出空间。
+  Purpose: 收束观点，不复用原片尾节奏。
+
+## Voiceover Notes
+
+- 语气用新的讲述视角，不要模仿原作者的句式和节奏。
+- 每一段开头先讲结论，再补充支撑信息。
+- 句子尽量短，方便后续对齐竖屏字幕和节奏。
+- 结尾要给出新的行动建议，而不是轻度改写原片尾。
+
 ## Review Rubric
 
 - 逐段检查 narration，去掉任何接近原句复述的表达

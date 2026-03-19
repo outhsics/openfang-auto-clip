@@ -21,6 +21,7 @@ The Level 2 demo command uses the bundled `sample_level2_transcript.srt` fixture
 The review command refreshes `review_report.json` and `review_report.md` with bilingual operator-facing checks.
 The suite command runs bundled English and Chinese transcript fixtures across SRT, JSON, and VTT inputs, then writes `level2_demo_suite_report.json` and `level2_demo_suite_report.md`.
 Committed sample outputs live under [`level2_samples/README.md`](level2_samples/README.md) for direct GitHub inspection.
+The generated package now also includes `operator_handoff.json` for editors and operators.
 
 ## Expected output structure
 

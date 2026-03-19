@@ -3,7 +3,7 @@
 These committed artifacts are generated from the bundled transcript fixtures.
 They let visitors inspect real Level 2 outputs without running the CLI first.
 
-- Generated at: 2026-03-19T13:03:48
+- Generated at: 2026-03-19T13:53:48
 
 ## Samples
 
@@ -16,6 +16,7 @@ They let visitors inspect real Level 2 outputs without running the CLI first.
 - Script package: `examples/demo/level2_samples/en/script_package.json`
 - Script draft: `examples/demo/level2_samples/en/script_draft.md`
 - Blueprint: `examples/demo/level2_samples/en/production_blueprint.json`
+- Operator handoff: `examples/demo/level2_samples/en/operator_handoff.json`
 - Review JSON: `examples/demo/level2_samples/en/review_report.json`
 - Review Markdown: `examples/demo/level2_samples/en/review_report.md`
 
@@ -28,6 +29,7 @@ They let visitors inspect real Level 2 outputs without running the CLI first.
 - Script package: `examples/demo/level2_samples/zh/script_package.json`
 - Script draft: `examples/demo/level2_samples/zh/script_draft.md`
 - Blueprint: `examples/demo/level2_samples/zh/production_blueprint.json`
+- Operator handoff: `examples/demo/level2_samples/zh/operator_handoff.json`
 - Review JSON: `examples/demo/level2_samples/zh/review_report.json`
 - Review Markdown: `examples/demo/level2_samples/zh/review_report.md`
 
@@ -40,6 +42,7 @@ They let visitors inspect real Level 2 outputs without running the CLI first.
 - Script package: `examples/demo/level2_samples/en_json/script_package.json`
 - Script draft: `examples/demo/level2_samples/en_json/script_draft.md`
 - Blueprint: `examples/demo/level2_samples/en_json/production_blueprint.json`
+- Operator handoff: `examples/demo/level2_samples/en_json/operator_handoff.json`
 - Review JSON: `examples/demo/level2_samples/en_json/review_report.json`
 - Review Markdown: `examples/demo/level2_samples/en_json/review_report.md`
 
@@ -52,6 +55,7 @@ They let visitors inspect real Level 2 outputs without running the CLI first.
 - Script package: `examples/demo/level2_samples/zh_vtt/script_package.json`
 - Script draft: `examples/demo/level2_samples/zh_vtt/script_draft.md`
 - Blueprint: `examples/demo/level2_samples/zh_vtt/production_blueprint.json`
+- Operator handoff: `examples/demo/level2_samples/zh_vtt/operator_handoff.json`
 - Review JSON: `examples/demo/level2_samples/zh_vtt/review_report.json`
 - Review Markdown: `examples/demo/level2_samples/zh_vtt/review_report.md`
 
