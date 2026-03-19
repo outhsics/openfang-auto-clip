@@ -28,6 +28,12 @@ This page is the fastest way to understand how to evaluate `openfang-auto-clip` 
 
    - [../demo/README.md](../demo/README.md)
 
+6. Refresh the committed repo assets when you want GitHub-visible proof to stay current:
+
+   ```bash
+   python3 scripts/refresh_demo_assets.py
+   ```
+
 ## Which Path To Use
 
 - quickest repo proof: benchmark + benchmark summary

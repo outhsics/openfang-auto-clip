@@ -33,6 +33,7 @@ tmp/demo-benchmark/
 ## Sample benchmark report
 
 See [`sample_benchmark_report.json`](sample_benchmark_report.json).
+See [`sample_benchmark_summary.md`](sample_benchmark_summary.md) for the committed bilingual summary snapshot.
 
 The committed sample is illustrative. Running the script locally will generate a fresh report with your machine's timings.
 The generated `benchmark_summary.md` is the fastest bilingual artifact to read or share.

@@ -3,13 +3,13 @@
     "duration_seconds": 18,
     "segment_duration": 6,
     "transform_level": 1,
-    "created_at": "2026-03-08T21:10:00"
+    "created_at": "2026-03-19T14:21:06"
   },
   "timings": {
-    "synthetic_source_generation_seconds": 1.148,
-    "transformation_seconds": 2.406,
-    "clip_creation_seconds": 1.887,
-    "total_seconds": 5.441
+    "synthetic_source_generation_seconds": 0.976,
+    "transformation_seconds": 6.973,
+    "clip_creation_seconds": 1.825,
+    "total_seconds": 9.774
   },
   "artifacts": {
     "source_path": "tmp/demo-benchmark/synthetic_source.mp4",
@@ -17,13 +17,15 @@
     "clips_dir": "tmp/demo-benchmark/clips",
     "preview_path": "tmp/demo-benchmark/preview.png",
     "storyboard_path": "tmp/demo-benchmark/storyboard.png",
-    "clip_count": 3
+    "clip_count": 3,
+    "report_path": "tmp/demo-benchmark/benchmark_report.json",
+    "summary_markdown_path": "tmp/demo-benchmark/benchmark_summary.md"
   },
   "transform_result": {
     "status": "success",
     "output_path": "tmp/demo-benchmark/synthetic_source_transformed.mp4",
     "level": 1,
-    "file_size_mb": 2.9,
+    "file_size_mb": 1.3937816619873047,
     "transformations": [
       "horizontal_flip",
       "zoom_crop",
@@ -42,9 +44,34 @@
       "start": 0,
       "end": 6,
       "duration": 6,
-      "size_mb": 1.4,
+      "size_mb": 0.2734832763671875,
       "reason": "Benchmark clip 1",
       "score": 5
+    },
+    {
+      "path": "tmp/demo-benchmark/clips/clip_02_0006s-0012s.mp4",
+      "start": 6,
+      "end": 12,
+      "duration": 6,
+      "size_mb": 0.27811527252197266,
+      "reason": "Benchmark clip 2",
+      "score": 5
+    },
+    {
+      "path": "tmp/demo-benchmark/clips/clip_03_0012s-0018s.mp4",
+      "start": 12,
+      "end": 18,
+      "duration": 6,
+      "size_mb": 0.1845836639404297,
+      "reason": "Benchmark clip 3",
+      "score": 5
     }
-  ]
+  ],
+  "summary": {
+    "clip_count": 3,
+    "total_clip_size_mb": 0.736,
+    "average_clip_size_mb": 0.245,
+    "has_storyboard": true,
+    "has_preview": true
+  }
 }

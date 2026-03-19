@@ -28,6 +28,12 @@
 
    - [../demo/README_ZH.md](../demo/README_ZH.md)
 
+6. 如果你想刷新仓库里已提交的 demo 资产，让 GitHub 上的证据保持最新，可以运行：
+
+   ```bash
+   python3 scripts/refresh_demo_assets.py
+   ```
+
 ## 怎么选
 
 - 最快证明仓库真实可跑：benchmark + benchmark summary

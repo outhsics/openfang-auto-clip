@@ -16,6 +16,7 @@
 - one-command local evaluation flow that bundles doctor, benchmark, and Level 2 suite
 - committed bilingual Level 2 sample artifacts for direct GitHub inspection
 - bilingual evaluation index pages that map benchmark, local evaluation, Level 2 suite, and committed samples
+- one-command refresh flow for committed benchmark and Level 2 sample assets
 - `--doctor` environment check
 - `--dry-run` processing plan output
 - local web manager for task launching and inspection
@@ -53,6 +54,7 @@
 - `2026-03-19`: expanded the Level 2 demo suite to cover SRT, JSON, and VTT transcript inputs
 - `2026-03-19`: added richer Level 2 operator handoff artifacts including asset requests, voiceover notes, and `operator_handoff.json`
 - `2026-03-19`: added bilingual evaluation index pages to make current proof paths easier to navigate
+- `2026-03-19`: added a refresh script for committed benchmark and Level 2 sample assets
 - `2026-03-19`: added a one-command local evaluation script that runs doctor, benchmark, and the Level 2 suite together
 - `2026-03-19`: added a bilingual benchmark summary artifact to make Level 1 output easier to inspect and share
 - `2026-03-19`: exported committed bilingual Level 2 sample artifacts for direct repository browsing

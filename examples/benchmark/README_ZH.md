@@ -33,6 +33,7 @@ tmp/demo-benchmark/
 ## 示例报告
 
 参见 [`sample_benchmark_report.json`](sample_benchmark_report.json)。
+也可以直接看 [`sample_benchmark_summary.md`](sample_benchmark_summary.md) 这个已提交的双语摘要快照。
 
 仓库里提交的是示例文件，实际在本地运行脚本后会生成带有你机器耗时数据的新报告。
 其中 `benchmark_summary.md` 是最适合快速阅读和传播的双语摘要产物。

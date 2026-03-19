@@ -70,6 +70,7 @@ python3 auto_clip.py --demo-script-package
 python3 auto_clip.py --review-package ~/.openfang/clips/script_packages/TIMESTAMP_source
 python3 scripts/run_level2_demo_suite.py
 python3 scripts/run_local_evaluation.py
+python3 scripts/refresh_demo_assets.py
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --dry-run
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 1 --duration 45
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 2 --transcript path/to/source.srt
@@ -100,6 +101,9 @@ python3 scripts/run_level2_demo_suite.py
 
 # Run the complete local evaluation path
 python3 scripts/run_local_evaluation.py
+
+# Refresh committed demo and benchmark sample assets
+python3 scripts/refresh_demo_assets.py
 
 # Generate a Level 2 script package from a transcript
 ./auto_clip.sh "URL" --transform 2 --transcript path/to/source.srt

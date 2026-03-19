@@ -3,7 +3,7 @@
 These committed artifacts are generated from the bundled transcript fixtures.
 They let visitors inspect real Level 2 outputs without running the CLI first.
 
-- Generated at: 2026-03-19T13:53:48
+- Generated at: 2026-03-19T14:21:06
 
 ## Samples
 
