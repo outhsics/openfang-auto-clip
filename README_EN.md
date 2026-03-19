@@ -32,6 +32,7 @@ English | [简体中文](README.md)
 - generates a self-contained Level 2 demo package from a bundled transcript for quick evaluation
 - reviews an existing Level 2 package and writes bilingual review artifacts for operator approval
 - runs a reproducible bilingual Level 2 demo suite so visitors can compare package quality quickly
+- runs the full local evaluation path in one command: doctor, benchmark, and Level 2 suite
 - slices output into 9:16 clips with a simple local strategy
 - provides `--doctor` and `--dry-run` commands for safer evaluation
 - includes a local web manager for task launching and inspection
@@ -65,6 +66,7 @@ python3 scripts/run_demo_benchmark.py
 python3 auto_clip.py --demo-script-package
 python3 auto_clip.py --review-package ~/.openfang/clips/script_packages/TIMESTAMP_source
 python3 scripts/run_level2_demo_suite.py
+python3 scripts/run_local_evaluation.py
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --dry-run
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 1 --duration 45
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 2 --transcript path/to/source.srt
@@ -92,6 +94,9 @@ python3 auto_clip.py --review-package ~/.openfang/clips/script_packages/TIMESTAM
 
 # Run the bilingual Level 2 demo suite
 python3 scripts/run_level2_demo_suite.py
+
+# Run the complete local evaluation path
+python3 scripts/run_local_evaluation.py
 
 # Generate a Level 2 script package from a transcript
 ./auto_clip.sh "URL" --transform 2 --transcript path/to/source.srt

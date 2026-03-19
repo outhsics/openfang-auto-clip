@@ -13,6 +13,7 @@
 - self-contained Level 2 demo package generation from a bundled transcript for first-run evaluation
 - bilingual Level 2 package review reports for operator validation
 - reproducible bilingual Level 2 demo suite for evaluating package quality across English and Chinese transcripts
+- one-command local evaluation flow that bundles doctor, benchmark, and Level 2 suite
 - `--doctor` environment check
 - `--dry-run` processing plan output
 - local web manager for task launching and inspection
@@ -47,6 +48,7 @@
 - `2026-03-18`: added a zero-external-media Level 2 demo command for faster evaluation and onboarding
 - `2026-03-19`: added bilingual review reports and a `--review-package` CLI path for Level 2 operator validation
 - `2026-03-19`: added a reproducible bilingual Level 2 demo suite with English and Chinese transcript fixtures
+- `2026-03-19`: added a one-command local evaluation script that runs doctor, benchmark, and the Level 2 suite together
 
 ## Next Recommended Actions
 

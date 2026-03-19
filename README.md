@@ -32,6 +32,7 @@
 - 用仓库自带 transcript 直接生成一个自包含的 Level 2 demo 包，方便首次评估
 - 对已有 Level 2 脚本包生成双语 review report，方便人工验收
 - 运行一个可复现的中英双语 Level 2 demo suite，比较脚本包结构质量
+- 一条命令跑完本地评估链路：doctor、benchmark、Level 2 suite
 - 按简单本地策略切成 9:16 短视频片段
 - 提供 `--doctor` 和 `--dry-run` 方便先验环境与流程
 - 提供本地 Web 管理界面做任务启动和查看
@@ -65,6 +66,7 @@ python3 scripts/run_demo_benchmark.py
 python3 auto_clip.py --demo-script-package
 python3 auto_clip.py --review-package ~/.openfang/clips/script_packages/TIMESTAMP_source
 python3 scripts/run_level2_demo_suite.py
+python3 scripts/run_local_evaluation.py
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --dry-run
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 1 --duration 45
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 2 --transcript path/to/source.srt
@@ -92,6 +94,9 @@ python3 auto_clip.py --review-package ~/.openfang/clips/script_packages/TIMESTAM
 
 # 运行中英双语 Level 2 demo suite
 python3 scripts/run_level2_demo_suite.py
+
+# 一条命令跑完整个本地评估链路
+python3 scripts/run_local_evaluation.py
 
 # 基于 transcript 生成 Level 2 脚本包
 ./auto_clip.sh "URL" --transform 2 --transcript path/to/source.srt

@@ -47,6 +47,7 @@ sudo apt-get install -y ffmpeg
 
 ```bash
 ./auto_clip.sh --doctor
+python3 scripts/run_local_evaluation.py
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --dry-run
 ./auto_clip.sh --help
 python3 -m unittest discover -s tests
