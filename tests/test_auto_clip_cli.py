@@ -150,6 +150,8 @@ class AutoClipCliTests(unittest.TestCase):
             self.assertTrue((package_dir / "script_package.json").exists())
             self.assertTrue((package_dir / "script_draft.md").exists())
             self.assertTrue((package_dir / "production_blueprint.json").exists())
+            self.assertTrue((package_dir / "review_report.json").exists())
+            self.assertTrue((package_dir / "review_report.md").exists())
 
             package = auto_clip.json.loads((package_dir / "script_package.json").read_text(encoding="utf-8"))
             self.assertTrue(package["shot_plan"])
@@ -177,6 +179,45 @@ class AutoClipCliTests(unittest.TestCase):
             self.assertTrue((package_dir / "script_draft.md").exists())
             self.assertTrue((package_dir / "production_blueprint.json").exists())
             self.assertTrue((package_dir / "report.json").exists())
+            self.assertTrue((package_dir / "review_report.json").exists())
+            self.assertTrue((package_dir / "review_report.md").exists())
+
+    def test_run_level2_package_review_accepts_directory(self):
+        package = {
+            "language": "en",
+            "milestone": "level2_transcript_to_script_package",
+            "source": {
+                "title": "Demo Review",
+                "segment_count": 2,
+            },
+            "source_outline": [
+                {"index": 1, "summary": "Hook", "source_anchor": "00:00:00.000 - 00:00:03.000"},
+                {"index": 2, "summary": "Support", "source_anchor": "00:00:03.000 - 00:00:06.000"},
+            ],
+            "script_sections": [
+                {"section": "Hook", "duration": 10, "source_anchor": "00:00:00.000 - 00:00:03.000"},
+                {"section": "Point 1", "duration": 10, "source_anchor": "00:00:03.000 - 00:00:06.000"},
+                {"section": "Close", "duration": 10, "source_anchor": None},
+            ],
+            "shot_plan": [
+                {"shot": 1, "section": "Hook", "duration": 10},
+                {"shot": 2, "section": "Point 1", "duration": 10},
+                {"shot": 3, "section": "Close", "duration": 10},
+            ],
+            "review_rubric": ["One", "Two", "Three", "Four"],
+            "production_checklist": ["One", "Two", "Three", "Four"],
+        }
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            package_dir = Path(tmp_dir) / "package"
+            package_dir.mkdir()
+            (package_dir / "script_package.json").write_text(auto_clip.json.dumps(package), encoding="utf-8")
+
+            review = auto_clip.run_level2_package_review(str(package_dir))
+
+            self.assertEqual(review["status"], "ready_for_operator_review")
+            self.assertTrue((package_dir / "review_report.json").exists())
+            self.assertTrue((package_dir / "review_report.md").exists())
 
 
 if __name__ == "__main__":

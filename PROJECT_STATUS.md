@@ -11,6 +11,7 @@
 - local CLI for downloading a video, applying Level 1 remix, and generating vertical clips
 - local Level 2 transcript-to-script package generation with timed source anchors and shot plan when a transcript is available
 - self-contained Level 2 demo package generation from a bundled transcript for first-run evaluation
+- bilingual Level 2 package review reports for operator validation
 - `--doctor` environment check
 - `--dry-run` processing plan output
 - local web manager for task launching and inspection
@@ -43,6 +44,7 @@
 - `2026-03-17`: shipped the first Level 2 milestone by turning `--transform 2` into a transcript-to-script package flow with JSON and Markdown output
 - `2026-03-18`: tightened the Level 2 milestone with timed transcript anchors, production blueprint output, shot plan, and review rubric
 - `2026-03-18`: added a zero-external-media Level 2 demo command for faster evaluation and onboarding
+- `2026-03-19`: added bilingual review reports and a `--review-package` CLI path for Level 2 operator validation
 
 ## Next Recommended Actions
 

@@ -60,7 +60,7 @@ Example:
 Current status:
 
 - the CLI can generate a transcript-to-script package today
-- the package includes timed source outline, narration draft, shot plan, review rubric, and production checklist
+- the package includes timed source outline, narration draft, shot plan, review rubric, production checklist, and bilingual review reports
 - voiceover synthesis, rebuilt visuals, and final video assembly are still manual follow-up work
 
 ## Level 3

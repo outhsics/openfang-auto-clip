@@ -60,7 +60,7 @@ Level 2 现在已经有了第一阶段的可运行里程碑。
 当前状态：
 
 - CLI 现在可以生成 transcript-to-script 脚本包
-- 脚本包包含带时间锚点的 source outline、narration draft、shot plan、review rubric 和 production checklist
+- 脚本包包含带时间锚点的 source outline、narration draft、shot plan、review rubric、production checklist，以及双语 review report
 - 新配音、重建视觉素材和最终成片仍然需要后续人工或其他工具完成
 
 ## Level 3

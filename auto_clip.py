@@ -618,6 +618,244 @@ def build_level2_blueprint(package: dict) -> dict:
     }
 
 
+def build_level2_package_review(package: dict) -> dict:
+    """Build a bilingual structural review for a Level 2 script package."""
+    script_sections = package.get("script_sections", [])
+    shot_plan = package.get("shot_plan", [])
+    source_outline = package.get("source_outline", [])
+    review_rubric = package.get("review_rubric", [])
+    production_checklist = package.get("production_checklist", [])
+    source_info = package.get("source", {})
+
+    section_count = len(script_sections)
+    shot_plan_count = len(shot_plan)
+    outline_anchor_count = sum(1 for point in source_outline if point.get("source_anchor"))
+    section_anchor_count = sum(1 for section in script_sections if section.get("source_anchor"))
+    segment_count = int(source_info.get("segment_count", 0) or 0)
+    duration_total = sum(max(0, int(section.get("duration", 0) or 0)) for section in script_sections)
+    non_positive_durations = sum(1 for section in script_sections if int(section.get("duration", 0) or 0) <= 0)
+    expected_anchor_sections = max(1, min(max(section_count - 1, 1), max(len(source_outline), 1))) if segment_count else 0
+
+    checks = []
+
+    structure_ok = section_count >= 3 and shot_plan_count == section_count
+    checks.append(
+        {
+            "id": "structure_complete",
+            "status": "pass" if structure_ok else "fail",
+            "label_en": "Package structure is complete",
+            "label_zh": "脚本包结构完整",
+            "detail_en": (
+                f"{section_count} script sections and {shot_plan_count} shot-plan rows are aligned."
+                if structure_ok
+                else f"Expected matching script sections and shot-plan rows, got {section_count} vs {shot_plan_count}."
+            ),
+            "detail_zh": (
+                f"共 {section_count} 个脚本段落，shot plan 也有 {shot_plan_count} 行，结构对齐。"
+                if structure_ok
+                else f"脚本段落数与 shot plan 行数不一致：{section_count} vs {shot_plan_count}。"
+            ),
+            "weight": 30,
+        }
+    )
+
+    if segment_count == 0:
+        anchor_status = "warn"
+        anchor_detail_en = "Transcript has no timed segments, so anchor coverage cannot be verified yet."
+        anchor_detail_zh = "当前 transcript 没有时间段信息，暂时无法验证锚点覆盖率。"
+    else:
+        anchor_ok = outline_anchor_count >= 1 and section_anchor_count >= expected_anchor_sections
+        anchor_status = "pass" if anchor_ok else "warn"
+        anchor_detail_en = (
+            f"Timed transcript provides {outline_anchor_count} outline anchors and {section_anchor_count} section anchors."
+            if anchor_ok
+            else f"Timed transcript exists, but anchor coverage is thin: {outline_anchor_count} outline anchors, {section_anchor_count} section anchors."
+        )
+        anchor_detail_zh = (
+            f"带时间信息的 transcript 已提供 {outline_anchor_count} 个大纲锚点、{section_anchor_count} 个脚本段锚点。"
+            if anchor_ok
+            else f"已有带时间信息的 transcript，但锚点覆盖偏弱：大纲锚点 {outline_anchor_count} 个，脚本段锚点 {section_anchor_count} 个。"
+        )
+    checks.append(
+        {
+            "id": "anchor_coverage",
+            "status": anchor_status,
+            "label_en": "Timed anchor coverage is reviewable",
+            "label_zh": "时间锚点具备可审阅性",
+            "detail_en": anchor_detail_en,
+            "detail_zh": anchor_detail_zh,
+            "weight": 30,
+        }
+    )
+
+    handoff_ok = len(review_rubric) >= 4 and len(production_checklist) >= 4
+    checks.append(
+        {
+            "id": "operator_handoff",
+            "status": "pass" if handoff_ok else "warn",
+            "label_en": "Operator handoff assets are present",
+            "label_zh": "运营交接信息已具备",
+            "detail_en": (
+                f"Review rubric has {len(review_rubric)} items and checklist has {len(production_checklist)} steps."
+                if handoff_ok
+                else f"Review rubric/checklist is thin: {len(review_rubric)} rubric items, {len(production_checklist)} checklist steps."
+            ),
+            "detail_zh": (
+                f"review rubric 有 {len(review_rubric)} 条，production checklist 有 {len(production_checklist)} 步。"
+                if handoff_ok
+                else f"review rubric / checklist 还不够厚：rubric {len(review_rubric)} 条，checklist {len(production_checklist)} 步。"
+            ),
+            "weight": 20,
+        }
+    )
+
+    duration_ok = section_count > 0 and duration_total > 0 and non_positive_durations == 0
+    checks.append(
+        {
+            "id": "duration_shape",
+            "status": "pass" if duration_ok else "fail",
+            "label_en": "Section timing is internally consistent",
+            "label_zh": "段落时长内部一致",
+            "detail_en": (
+                f"Section durations add up to {duration_total}s with no non-positive segments."
+                if duration_ok
+                else f"Found {non_positive_durations} non-positive section durations across {section_count} sections."
+            ),
+            "detail_zh": (
+                f"所有段落时长合计 {duration_total} 秒，且没有非正数时长。"
+                if duration_ok
+                else f"在 {section_count} 个段落里发现 {non_positive_durations} 个非正数时长。"
+            ),
+            "weight": 20,
+        }
+    )
+
+    score = 0
+    for check in checks:
+        if check["status"] == "pass":
+            score += check["weight"]
+        elif check["status"] == "warn":
+            score += check["weight"] // 2
+
+    if score >= 85:
+        status = "ready_for_operator_review"
+        status_en = "Ready for operator review"
+        status_zh = "可进入人工审阅"
+        summary_en = "The package is structurally complete and usable for operator review."
+        summary_zh = "这个脚本包结构完整，已经可以进入人工审阅。"
+    elif score >= 60:
+        status = "needs_operator_tightening"
+        status_en = "Needs operator tightening"
+        status_zh = "需要进一步打磨"
+        summary_en = "The package is promising, but some review signals are still weak."
+        summary_zh = "这个脚本包已经有基础，但部分审阅信号还偏弱。"
+    else:
+        status = "not_ready_for_review"
+        status_en = "Not ready for review"
+        status_zh = "暂不适合进入审阅"
+        summary_en = "The package needs more structure before operator validation."
+        summary_zh = "这个脚本包还需要补齐结构，再进入人工验证。"
+
+    return {
+        "review_version": 1,
+        "package_language": package.get("language", "en"),
+        "source_title": source_info.get("title", "source"),
+        "status": status,
+        "status_label_en": status_en,
+        "status_label_zh": status_zh,
+        "score": score,
+        "summary_en": summary_en,
+        "summary_zh": summary_zh,
+        "metrics": {
+            "script_section_count": section_count,
+            "shot_plan_count": shot_plan_count,
+            "source_outline_count": len(source_outline),
+            "timed_segment_count": segment_count,
+            "outline_anchor_count": outline_anchor_count,
+            "section_anchor_count": section_anchor_count,
+            "duration_total_seconds": duration_total,
+            "review_rubric_count": len(review_rubric),
+            "production_checklist_count": len(production_checklist),
+        },
+        "checks": checks,
+        "next_steps_en": [
+            "Review any warning items before producing voiceover or visuals",
+            "Prefer timed transcripts so source anchors can be verified",
+            "Use the shot plan as the handoff spec for new visuals",
+        ],
+        "next_steps_zh": [
+            "在做配音和重建视觉前，先处理所有 warning 项",
+            "优先使用带时间信息的 transcript，方便核对锚点",
+            "把 shot plan 当作后续新视觉素材的交接规范",
+        ],
+    }
+
+
+def render_level2_review_markdown(review: dict) -> str:
+    """Render a bilingual review artifact for a Level 2 package."""
+    lines = [
+        "# Level 2 Package Review / Level 2 脚本包评审",
+        "",
+        f"- Source / 源标题: {review['source_title']}",
+        f"- Score / 得分: {review['score']}/100",
+        f"- Status / 状态: {review['status_label_en']} / {review['status_label_zh']}",
+        "",
+        "## Summary / 总结",
+        "",
+        f"- EN: {review['summary_en']}",
+        f"- 中文: {review['summary_zh']}",
+        "",
+        "## Metrics / 指标",
+        "",
+    ]
+
+    metrics = review["metrics"]
+    metric_rows = [
+        ("Script sections", "脚本段落数", metrics["script_section_count"]),
+        ("Shot-plan rows", "Shot plan 行数", metrics["shot_plan_count"]),
+        ("Source outline points", "Source outline 点数", metrics["source_outline_count"]),
+        ("Timed segments", "时间片段数", metrics["timed_segment_count"]),
+        ("Outline anchors", "大纲锚点数", metrics["outline_anchor_count"]),
+        ("Section anchors", "脚本段锚点数", metrics["section_anchor_count"]),
+        ("Total duration", "总时长", f"{metrics['duration_total_seconds']}s"),
+        ("Review rubric items", "Review rubric 条数", metrics["review_rubric_count"]),
+        ("Checklist steps", "Checklist 步数", metrics["production_checklist_count"]),
+    ]
+    for label_en, label_zh, value in metric_rows:
+        lines.append(f"- {label_en} / {label_zh}: {value}")
+
+    lines.extend(["", "## Checks / 检查项", ""])
+    for check in review["checks"]:
+        lines.extend(
+            [
+                f"### {check['label_en']} / {check['label_zh']}",
+                f"- Status / 状态: {check['status']}",
+                f"- EN: {check['detail_en']}",
+                f"- 中文: {check['detail_zh']}",
+                "",
+            ]
+        )
+
+    lines.extend(["## Next Steps / 下一步", ""])
+    for item_en, item_zh in zip(review["next_steps_en"], review["next_steps_zh"]):
+        lines.append(f"- {item_en} / {item_zh}")
+    lines.append("")
+    return "\n".join(lines)
+
+
+def save_level2_package_review(package_dir: Path, review: dict) -> List[Path]:
+    """Persist bilingual review artifacts next to the Level 2 package."""
+    review_json_path = package_dir / "review_report.json"
+    with open(review_json_path, "w", encoding="utf-8") as handle:
+        json.dump(review, handle, ensure_ascii=False, indent=2)
+
+    review_markdown_path = package_dir / "review_report.md"
+    with open(review_markdown_path, "w", encoding="utf-8") as handle:
+        handle.write(render_level2_review_markdown(review))
+
+    return [review_json_path, review_markdown_path]
+
+
 def build_level2_script_package(video_info: dict, transcript_payload: dict, transcript_path: Path, config: dict) -> dict:
     """Build a transcript-to-script package for the first Level 2 milestone."""
     transcript_text = transcript_payload["text"]
@@ -752,7 +990,51 @@ def save_level2_script_package(video_info: dict, package: dict) -> Tuple[Path, L
     with open(blueprint_path, "w", encoding="utf-8") as handle:
         json.dump(build_level2_blueprint(package), handle, ensure_ascii=False, indent=2)
 
-    return package_dir, [package_json_path, draft_path, blueprint_path]
+    review_paths = save_level2_package_review(package_dir, build_level2_package_review(package))
+
+    return package_dir, [package_json_path, draft_path, blueprint_path, *review_paths]
+
+
+def resolve_level2_package_path(package_path: str) -> Path:
+    """Resolve a Level 2 package directory or package JSON path."""
+    candidate = Path(package_path).expanduser()
+    if not candidate.is_absolute():
+        candidate = (Path.cwd() / candidate).resolve()
+    if candidate.is_dir():
+        candidate = candidate / "script_package.json"
+    if not candidate.exists():
+        raise FileNotFoundError(f"Level 2 package not found: {candidate}")
+    return candidate
+
+
+def run_level2_package_review(package_path: str) -> dict:
+    """Review an existing Level 2 script package and refresh review artifacts."""
+    package_file = resolve_level2_package_path(package_path)
+    package_dir = package_file.parent
+    package = json.loads(package_file.read_text(encoding="utf-8"))
+    review = build_level2_package_review(package)
+    saved_files = save_level2_package_review(package_dir, review)
+
+    print("=" * 70)
+    print("🧾 OpenFang Auto Clip - Level 2 Package Review")
+    print("🧾 OpenFang Auto Clip - Level 2 脚本包评审")
+    print("=" * 70)
+    print()
+    print(f"📁 Package / 包目录: {package_dir}")
+    print(f"📊 Score / 得分: {review['score']}/100")
+    print(f"✅ Status / 状态: {review['status_label_en']} / {review['status_label_zh']}")
+    print()
+    print(f"Summary / 总结: {review['summary_en']} / {review['summary_zh']}")
+    print("Artifacts / 产物:")
+    for saved_file in saved_files:
+        print(f"  • {saved_file.name}")
+    print()
+
+    return {
+        **review,
+        "package_dir": str(package_dir),
+        "saved_files": [str(saved_file) for saved_file in saved_files],
+    }
 
 
 def run_level2_script_demo(config: dict, transcript_path: Optional[str] = None) -> dict:
@@ -1425,6 +1707,9 @@ Examples:
   # Run a self-contained Level 2 demo package
   %(prog)s --demo-script-package
 
+  # Review an existing Level 2 package
+  %(prog)s --review-package ~/.openfang/clips/script_packages/TIMESTAMP_source
+
   # Complete recreation scaffold (Level 3)
   %(prog)s "URL" --transform 3
 
@@ -1455,6 +1740,8 @@ For more information, see README.md or docs/TRANSFORMATION.md
                        help='Check local environment readiness and exit')
     parser.add_argument('--demo-script-package', action='store_true',
                        help='Generate a self-contained Level 2 demo package from the bundled transcript')
+    parser.add_argument('--review-package',
+                       help='Review a generated Level 2 package directory or script_package.json and write bilingual review artifacts')
 
     args = parser.parse_args()
 
@@ -1476,8 +1763,13 @@ For more information, see README.md or docs/TRANSFORMATION.md
         print("\n🎉 Success!")
         sys.exit(0 if result else 1)
 
+    if args.review_package:
+        result = run_level2_package_review(args.review_package)
+        print("\n🎉 Success!")
+        sys.exit(0 if result else 1)
+
     if not args.url:
-        parser.error("url is required unless --doctor or --demo-script-package is used")
+        parser.error("url is required unless --doctor, --demo-script-package, or --review-package is used")
 
     if args.dry_run:
         plan = build_processing_plan(args.url, args.transform, config, transcript_path=args.transcript)
