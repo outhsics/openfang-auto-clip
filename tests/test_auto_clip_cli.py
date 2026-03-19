@@ -118,6 +118,44 @@ class AutoClipCliTests(unittest.TestCase):
         self.assertEqual(payload["segments"][1]["end"], 5.0)
         self.assertIn("new visuals", payload["text"])
 
+    def test_build_transcript_payload_parses_json_segments(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            transcript_path = Path(tmp_dir) / "sample.json"
+            transcript_path.write_text(
+                auto_clip.json.dumps(
+                    {
+                        "text": "Hook first. Then prove it.",
+                        "segments": [
+                            {"start": 0, "end": 2, "text": "Hook first."},
+                            {"start": 2, "end": 4, "text": "Then prove it."},
+                        ],
+                    }
+                ),
+                encoding="utf-8",
+            )
+
+            payload = auto_clip.build_transcript_payload(transcript_path)
+
+        self.assertEqual(len(payload["segments"]), 2)
+        self.assertEqual(payload["segments"][0]["start"], 0.0)
+        self.assertIn("Then prove it.", payload["text"])
+
+    def test_build_transcript_payload_parses_vtt_segments(self):
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            transcript_path = Path(tmp_dir) / "sample.vtt"
+            transcript_path.write_text(
+                "WEBVTT\n\n"
+                "00:00:00.000 --> 00:00:02.000\n先讲结论。\n\n"
+                "00:00:02.000 --> 00:00:04.000\n再补充新的论据。\n",
+                encoding="utf-8",
+            )
+
+            payload = auto_clip.build_transcript_payload(transcript_path)
+
+        self.assertEqual(len(payload["segments"]), 2)
+        self.assertEqual(payload["segments"][1]["end"], 4.0)
+        self.assertIn("新的论据", payload["text"])
+
     def test_transform_script_generates_level2_package(self):
         config = {"default_duration": 36}
 

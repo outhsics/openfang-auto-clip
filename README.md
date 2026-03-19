@@ -32,7 +32,7 @@
 - 在提供 transcript 的前提下生成一个带时间锚点、shot plan 和 review rubric 的 Level 2 脚本再生包
 - 用仓库自带 transcript 直接生成一个自包含的 Level 2 demo 包，方便首次评估
 - 对已有 Level 2 脚本包生成双语 review report，方便人工验收
-- 运行一个可复现的中英双语 Level 2 demo suite，比较脚本包结构质量
+- 运行一个可复现的中英双语 Level 2 demo suite，比较脚本包结构质量并验证多种 transcript 格式
 - 一条命令跑完本地评估链路：doctor、benchmark、Level 2 suite
 - 按简单本地策略切成 9:16 短视频片段
 - 提供 `--doctor` 和 `--dry-run` 方便先验环境与流程

@@ -1,0 +1,20 @@
+{
+  "text": "Lead with the most surprising claim. Follow with evidence that changes the viewer's mental model. Finish with a fresh takeaway and a clear next step.",
+  "segments": [
+    {
+      "start": 0.0,
+      "end": 4.0,
+      "text": "Lead with the most surprising claim."
+    },
+    {
+      "start": 4.0,
+      "end": 8.0,
+      "text": "Follow with evidence that changes the viewer's mental model."
+    },
+    {
+      "start": 8.0,
+      "end": 12.0,
+      "text": "Finish with a fresh takeaway and a clear next step."
+    }
+  ]
+}

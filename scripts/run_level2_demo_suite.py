@@ -17,18 +17,32 @@ import auto_clip  # noqa: E402
 
 CASES = [
     {
-        "id": "en",
-        "label_en": "English transcript",
-        "label_zh": "英文 transcript",
-        "title": "Level 2 Demo EN",
+        "id": "en_srt",
+        "label_en": "English SRT transcript",
+        "label_zh": "英文 SRT transcript",
+        "title": "Level 2 Demo EN SRT",
         "transcript": REPO_ROOT / "examples" / "demo" / "sample_level2_transcript.srt",
     },
     {
-        "id": "zh",
-        "label_en": "Chinese transcript",
-        "label_zh": "中文 transcript",
-        "title": "Level 2 Demo ZH",
+        "id": "zh_srt",
+        "label_en": "Chinese SRT transcript",
+        "label_zh": "中文 SRT transcript",
+        "title": "Level 2 Demo ZH SRT",
         "transcript": REPO_ROOT / "examples" / "demo" / "sample_level2_transcript_zh.srt",
+    },
+    {
+        "id": "en_json",
+        "label_en": "English JSON transcript",
+        "label_zh": "英文 JSON transcript",
+        "title": "Level 2 Demo EN JSON",
+        "transcript": REPO_ROOT / "examples" / "demo" / "sample_level2_transcript.json",
+    },
+    {
+        "id": "zh_vtt",
+        "label_en": "Chinese VTT transcript",
+        "label_zh": "中文 VTT transcript",
+        "title": "Level 2 Demo ZH VTT",
+        "transcript": REPO_ROOT / "examples" / "demo" / "sample_level2_transcript_zh.vtt",
     },
 ]
 
@@ -53,6 +67,7 @@ def run_case(case: dict, config: dict) -> dict:
         "label_en": case["label_en"],
         "label_zh": case["label_zh"],
         "language": package["language"],
+        "transcript_format": transcript_path.suffix.lower().lstrip("."),
         "transcript_path": str(transcript_path),
         "package_dir": str(package_dir),
         "score": review["score"],
@@ -83,6 +98,7 @@ def render_suite_markdown(report: dict) -> str:
                 f"### {case['label_en']} / {case['label_zh']}",
                 f"- Status / 状态: {case['status_label_en']} / {case['status_label_zh']}",
                 f"- Score / 得分: {case['score']}/100",
+                f"- Format / 格式: {case['transcript_format']}",
                 f"- Package / 包目录: {case['package_dir']}",
                 f"- Transcript / Transcript 路径: {case['transcript_path']}",
                 f"- Script sections / 脚本段落数: {case['metrics']['script_section_count']}",
@@ -116,12 +132,12 @@ def run_suite(output_dir: Path, duration: int) -> dict:
         "average_score": average_score,
         "cases": cases,
         "notes_en": [
-            "This suite uses bundled bilingual transcripts and does not download source media.",
+            "This suite uses bundled bilingual transcript fixtures across multiple formats and does not download source media.",
             "Each case writes script package, blueprint, and bilingual review artifacts.",
             "Use these outputs to compare Level 2 structure before testing real operator transcripts.",
         ],
         "notes_zh": [
-            "这个套件使用仓库内置的中英 transcript，不会下载外部媒体素材。",
+            "这个套件使用仓库内置的中英 transcript fixture，并覆盖多种格式，不会下载外部媒体素材。",
             "每个用例都会生成脚本包、blueprint 和双语 review 产物。",
             "可以先用这些结果比较 Level 2 结构，再接入真实 transcript。",
         ],

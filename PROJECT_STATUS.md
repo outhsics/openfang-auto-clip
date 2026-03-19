@@ -12,7 +12,7 @@
 - local Level 2 transcript-to-script package generation with timed source anchors and shot plan when a transcript is available
 - self-contained Level 2 demo package generation from a bundled transcript for first-run evaluation
 - bilingual Level 2 package review reports for operator validation
-- reproducible bilingual Level 2 demo suite for evaluating package quality across English and Chinese transcripts
+- reproducible bilingual Level 2 demo suite for evaluating package quality across English and Chinese transcripts plus multiple transcript formats
 - one-command local evaluation flow that bundles doctor, benchmark, and Level 2 suite
 - committed bilingual Level 2 sample artifacts for direct GitHub inspection
 - `--doctor` environment check
@@ -49,6 +49,7 @@
 - `2026-03-18`: added a zero-external-media Level 2 demo command for faster evaluation and onboarding
 - `2026-03-19`: added bilingual review reports and a `--review-package` CLI path for Level 2 operator validation
 - `2026-03-19`: added a reproducible bilingual Level 2 demo suite with English and Chinese transcript fixtures
+- `2026-03-19`: expanded the Level 2 demo suite to cover SRT, JSON, and VTT transcript inputs
 - `2026-03-19`: added a one-command local evaluation script that runs doctor, benchmark, and the Level 2 suite together
 - `2026-03-19`: added a bilingual benchmark summary artifact to make Level 1 output easier to inspect and share
 - `2026-03-19`: exported committed bilingual Level 2 sample artifacts for direct repository browsing

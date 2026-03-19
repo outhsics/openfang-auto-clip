@@ -13,10 +13,11 @@ class Level2DemoSuiteTests(unittest.TestCase):
 
             cases = [
                 {
-                    "id": "en",
-                    "label_en": "English transcript",
-                    "label_zh": "英文 transcript",
+                    "id": "en_srt",
+                    "label_en": "English SRT transcript",
+                    "label_zh": "英文 SRT transcript",
                     "language": "en",
+                    "transcript_format": "srt",
                     "transcript_path": "en.srt",
                     "package_dir": str(output_dir / "pkg_en"),
                     "score": 90,
@@ -31,10 +32,11 @@ class Level2DemoSuiteTests(unittest.TestCase):
                     "saved_files": [],
                 },
                 {
-                    "id": "zh",
-                    "label_en": "Chinese transcript",
-                    "label_zh": "中文 transcript",
+                    "id": "zh_srt",
+                    "label_en": "Chinese SRT transcript",
+                    "label_zh": "中文 SRT transcript",
                     "language": "zh",
+                    "transcript_format": "srt",
                     "transcript_path": "zh.srt",
                     "package_dir": str(output_dir / "pkg_zh"),
                     "score": 100,
@@ -44,6 +46,44 @@ class Level2DemoSuiteTests(unittest.TestCase):
                     "metrics": {
                         "script_section_count": 3,
                         "timed_segment_count": 2,
+                        "section_anchor_count": 2,
+                    },
+                    "saved_files": [],
+                },
+                {
+                    "id": "en_json",
+                    "label_en": "English JSON transcript",
+                    "label_zh": "英文 JSON transcript",
+                    "language": "en",
+                    "transcript_format": "json",
+                    "transcript_path": "en.json",
+                    "package_dir": str(output_dir / "pkg_en_json"),
+                    "score": 92,
+                    "status": "ready_for_operator_review",
+                    "status_label_en": "Ready for operator review",
+                    "status_label_zh": "可进入人工审阅",
+                    "metrics": {
+                        "script_section_count": 3,
+                        "timed_segment_count": 3,
+                        "section_anchor_count": 2,
+                    },
+                    "saved_files": [],
+                },
+                {
+                    "id": "zh_vtt",
+                    "label_en": "Chinese VTT transcript",
+                    "label_zh": "中文 VTT transcript",
+                    "language": "zh",
+                    "transcript_format": "vtt",
+                    "transcript_path": "zh.vtt",
+                    "package_dir": str(output_dir / "pkg_zh_vtt"),
+                    "score": 98,
+                    "status": "ready_for_operator_review",
+                    "status_label_en": "Ready for operator review",
+                    "status_label_zh": "可进入人工审阅",
+                    "metrics": {
+                        "script_section_count": 3,
+                        "timed_segment_count": 3,
                         "section_anchor_count": 2,
                     },
                     "saved_files": [],
@@ -69,6 +109,7 @@ class Level2DemoSuiteTests(unittest.TestCase):
                     "status_label_en": "Ready for operator review",
                     "status_label_zh": "可进入人工审阅",
                     "score": 95,
+                    "transcript_format": "json",
                     "package_dir": "tmp/pkg",
                     "transcript_path": "examples/demo/sample_level2_transcript.srt",
                     "metrics": {
@@ -84,6 +125,7 @@ class Level2DemoSuiteTests(unittest.TestCase):
 
         markdown = run_level2_demo_suite.render_suite_markdown(report)
         self.assertIn("Level 2 Demo Suite / Level 2 演示套件", markdown)
+        self.assertIn("Format / 格式: json", markdown)
         self.assertIn("First note / 第一条说明", markdown)
 
 
