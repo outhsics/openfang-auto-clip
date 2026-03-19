@@ -156,6 +156,28 @@ class AutoClipCliTests(unittest.TestCase):
             self.assertTrue(package["review_rubric"])
             self.assertIn("source_anchor", package["script_sections"][0])
 
+    def test_run_level2_script_demo_creates_report_and_package(self):
+        config = {"default_duration": 30}
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            tmp_path = Path(tmp_dir)
+            transcript_path = tmp_path / "demo.srt"
+            transcript_path.write_text(
+                "1\n00:00:00,000 --> 00:00:03,000\nLead with the strongest claim.\n\n"
+                "2\n00:00:03,000 --> 00:00:06,000\nSupport it with a fresh visual beat.\n",
+                encoding="utf-8",
+            )
+
+            with mock.patch.object(auto_clip, "OUTPUT_DIR", tmp_path / "output"):
+                report = auto_clip.run_level2_script_demo(config, transcript_path=str(transcript_path))
+
+            package_dir = Path(report["output_dir"])
+            self.assertEqual(report["mode"], "script_package_demo")
+            self.assertTrue((package_dir / "script_package.json").exists())
+            self.assertTrue((package_dir / "script_draft.md").exists())
+            self.assertTrue((package_dir / "production_blueprint.json").exists())
+            self.assertTrue((package_dir / "report.json").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

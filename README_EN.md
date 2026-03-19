@@ -29,6 +29,7 @@ English | [简体中文](README.md)
 - downloads a source video with `yt-dlp`
 - applies a working local Level 1 FFmpeg remix path
 - builds a Level 2 transcript-to-script package with timed source anchors, shot plan, and review rubric when a transcript is provided
+- generates a self-contained Level 2 demo package from a bundled transcript for quick evaluation
 - slices output into 9:16 clips with a simple local strategy
 - provides `--doctor` and `--dry-run` commands for safer evaluation
 - includes a local web manager for task launching and inspection
@@ -59,6 +60,7 @@ pip install -e .
 
 ./auto_clip.sh --doctor
 python3 scripts/run_demo_benchmark.py
+python3 auto_clip.py --demo-script-package
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --dry-run
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 1 --duration 45
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 2 --transcript path/to/source.srt
@@ -77,6 +79,9 @@ If you prefer the bundled installer, see [docs/INSTALLATION.md](docs/INSTALLATIO
 
 # Run the synthetic benchmark
 python3 scripts/run_demo_benchmark.py
+
+# Run the zero-external-media Level 2 demo
+python3 auto_clip.py --demo-script-package
 
 # Generate a Level 2 script package from a transcript
 ./auto_clip.sh "URL" --transform 2 --transcript path/to/source.srt

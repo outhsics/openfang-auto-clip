@@ -24,6 +24,8 @@ from enum import Enum
 OUTPUT_DIR = Path.home() / ".openfang" / "clips"
 CONFIG_FILE = Path.home() / ".openfang" / "auto_clip_config.json"
 TRANSCRIPT_EXTENSIONS = (".txt", ".md", ".srt", ".vtt", ".json")
+REPO_ROOT = Path(__file__).resolve().parent
+DEFAULT_LEVEL2_DEMO_TRANSCRIPT = REPO_ROOT / "examples" / "demo" / "sample_level2_transcript.srt"
 
 
 class TransformLevel(Enum):
@@ -753,6 +755,74 @@ def save_level2_script_package(video_info: dict, package: dict) -> Tuple[Path, L
     return package_dir, [package_json_path, draft_path, blueprint_path]
 
 
+def run_level2_script_demo(config: dict, transcript_path: Optional[str] = None) -> dict:
+    """Generate a self-contained Level 2 package without downloading media."""
+    transcript_file = resolve_explicit_transcript_path(transcript_path) if transcript_path else DEFAULT_LEVEL2_DEMO_TRANSCRIPT
+    if not transcript_file.exists():
+        raise FileNotFoundError(
+            f"Demo transcript not found: {transcript_file}. "
+            "Provide one with --transcript or restore the bundled sample."
+        )
+
+    transcript_payload = build_transcript_payload(transcript_file)
+    transcript_text = transcript_payload["text"]
+    if not transcript_text:
+        raise ValueError(f"Transcript file was empty after parsing: {transcript_file}")
+
+    video_info = {
+        "title": "Level 2 Demo Source",
+        "path": str(transcript_file),
+        "duration": config.get("default_duration", 60),
+        "id": "level2-demo",
+        "uploader": "OpenFang Auto Clip",
+    }
+    package = build_level2_script_package(video_info, transcript_payload, transcript_file, config)
+    package_dir, saved_files = save_level2_script_package(video_info, package)
+
+    report = {
+        "video": video_info,
+        "transformation": {
+            "level": TransformLevel.SCRIPT.value,
+            "result": {
+                "status": "success",
+                "level": TransformLevel.SCRIPT.value,
+                "milestone": package["milestone"],
+                "package_dir": str(package_dir),
+                "saved_files": [str(saved_file) for saved_file in saved_files],
+                "transcript_path": str(transcript_file),
+                "message": "Transcript-to-script demo package generated successfully",
+            },
+        },
+        "clips": [],
+        "created_at": datetime.now().isoformat(),
+        "mode": "script_package_demo",
+        "output_dir": str(package_dir),
+    }
+
+    report_path = package_dir / "report.json"
+    with open(report_path, "w", encoding="utf-8") as handle:
+        json.dump(report, handle, ensure_ascii=False, indent=2)
+
+    print("=" * 70)
+    print("🎬 OpenFang Auto Clip - Level 2 Demo Package")
+    print("=" * 70)
+    print()
+    print("🧪 Running a self-contained Level 2 evaluation flow")
+    print(f"📝 Transcript source: {transcript_file}")
+    print(f"📁 Package directory: {package_dir}")
+    print("Artifacts:")
+    for saved_file in [*saved_files, report_path]:
+        print(f"  • {saved_file.name}")
+    print()
+    print("💡 Next steps:")
+    print("  1. Review script_draft.md")
+    print("  2. Inspect source anchors and shot plan")
+    print("  3. Swap in a real transcript with --transcript")
+    print()
+
+    return report
+
+
 def download_video(url: str, output_dir: Path) -> dict:
     """
     Download video from YouTube or other supported sites
@@ -1352,6 +1422,9 @@ Examples:
   # Generate a Level 2 script package from a transcript
   %(prog)s "URL" --transform 2 --transcript path/to/source.srt
 
+  # Run a self-contained Level 2 demo package
+  %(prog)s --demo-script-package
+
   # Complete recreation scaffold (Level 3)
   %(prog)s "URL" --transform 3
 
@@ -1380,6 +1453,8 @@ For more information, see README.md or docs/TRANSFORMATION.md
                        help='Validate inputs and write a processing plan without downloading media')
     parser.add_argument('--doctor', action='store_true',
                        help='Check local environment readiness and exit')
+    parser.add_argument('--demo-script-package', action='store_true',
+                       help='Generate a self-contained Level 2 demo package from the bundled transcript')
 
     args = parser.parse_args()
 
@@ -1396,8 +1471,13 @@ For more information, see README.md or docs/TRANSFORMATION.md
         print_doctor_report(report)
         sys.exit(1 if any(check["status"] == "error" for check in report["checks"]) else 0)
 
+    if args.demo_script_package:
+        result = run_level2_script_demo(config, transcript_path=args.transcript)
+        print("\n🎉 Success!")
+        sys.exit(0 if result else 1)
+
     if not args.url:
-        parser.error("url is required unless --doctor is used")
+        parser.error("url is required unless --doctor or --demo-script-package is used")
 
     if args.dry_run:
         plan = build_processing_plan(args.url, args.transform, config, transcript_path=args.transcript)

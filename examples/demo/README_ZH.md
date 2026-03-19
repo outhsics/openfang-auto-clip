@@ -12,7 +12,10 @@
 
 ```bash
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 1 --duration 45
+python3 auto_clip.py --demo-script-package
 ```
+
+Level 2 demo 命令会直接使用仓库内置的 `sample_level2_transcript.srt`，无需下载媒体素材，也能产出可审阅的脚本包。
 
 ## 期望输出结构
 
