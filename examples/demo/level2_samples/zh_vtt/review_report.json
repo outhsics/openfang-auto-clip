@@ -1,7 +1,7 @@
 {
   "review_version": 1,
-  "package_language": "en",
-  "source_title": "Level 2 Sample EN SRT",
+  "package_language": "zh",
+  "source_title": "Level 2 Sample ZH VTT",
   "status": "ready_for_operator_review",
   "status_label_en": "Ready for operator review",
   "status_label_zh": "可进入人工审阅",
@@ -9,12 +9,12 @@
   "summary_en": "The package is structurally complete and usable for operator review.",
   "summary_zh": "这个脚本包结构完整，已经可以进入人工审阅。",
   "metrics": {
-    "script_section_count": 6,
-    "shot_plan_count": 6,
-    "source_outline_count": 4,
-    "timed_segment_count": 4,
-    "outline_anchor_count": 4,
-    "section_anchor_count": 5,
+    "script_section_count": 5,
+    "shot_plan_count": 5,
+    "source_outline_count": 3,
+    "timed_segment_count": 3,
+    "outline_anchor_count": 3,
+    "section_anchor_count": 4,
     "duration_total_seconds": 45,
     "review_rubric_count": 4,
     "production_checklist_count": 4
@@ -25,8 +25,8 @@
       "status": "pass",
       "label_en": "Package structure is complete",
       "label_zh": "脚本包结构完整",
-      "detail_en": "6 script sections and 6 shot-plan rows are aligned.",
-      "detail_zh": "共 6 个脚本段落，shot plan 也有 6 行，结构对齐。",
+      "detail_en": "5 script sections and 5 shot-plan rows are aligned.",
+      "detail_zh": "共 5 个脚本段落，shot plan 也有 5 行，结构对齐。",
       "weight": 30
     },
     {
@@ -34,8 +34,8 @@
       "status": "pass",
       "label_en": "Timed anchor coverage is reviewable",
       "label_zh": "时间锚点具备可审阅性",
-      "detail_en": "Timed transcript provides 4 outline anchors and 5 section anchors.",
-      "detail_zh": "带时间信息的 transcript 已提供 4 个大纲锚点、5 个脚本段锚点。",
+      "detail_en": "Timed transcript provides 3 outline anchors and 4 section anchors.",
+      "detail_zh": "带时间信息的 transcript 已提供 3 个大纲锚点、4 个脚本段锚点。",
       "weight": 30
     },
     {

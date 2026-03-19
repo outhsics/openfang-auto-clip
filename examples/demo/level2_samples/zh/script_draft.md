@@ -1,6 +1,6 @@
 # Level 2 Script Package
 
-- Source title: Level 2 Sample ZH
+- Source title: Level 2 Sample ZH SRT
 - Transcript: examples/demo/sample_level2_transcript_zh.srt
 - Language: zh
 - Milestone: level2_transcript_to_script_package

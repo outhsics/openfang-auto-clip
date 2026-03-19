@@ -1,12 +1,13 @@
 {
-  "generated_at": "2026-03-19T11:46:42",
+  "generated_at": "2026-03-19T13:03:48",
   "output_dir": "examples/demo/level2_samples",
   "cases": [
     {
       "id": "en",
-      "label_en": "English sample",
-      "label_zh": "英文样例",
+      "label_en": "English SRT sample",
+      "label_zh": "英文 SRT 样例",
       "language": "en",
+      "transcript_format": "srt",
       "score": 100,
       "status_en": "Ready for operator review",
       "status_zh": "可进入人工审阅",
@@ -22,9 +23,10 @@
     },
     {
       "id": "zh",
-      "label_en": "Chinese sample",
-      "label_zh": "中文样例",
+      "label_en": "Chinese SRT sample",
+      "label_zh": "中文 SRT 样例",
       "language": "zh",
+      "transcript_format": "srt",
       "score": 100,
       "status_en": "Ready for operator review",
       "status_zh": "可进入人工审阅",
@@ -36,6 +38,44 @@
         "examples/demo/level2_samples/zh/production_blueprint.json",
         "examples/demo/level2_samples/zh/review_report.json",
         "examples/demo/level2_samples/zh/review_report.md"
+      ]
+    },
+    {
+      "id": "en_json",
+      "label_en": "English JSON sample",
+      "label_zh": "英文 JSON 样例",
+      "language": "en",
+      "transcript_format": "json",
+      "score": 100,
+      "status_en": "Ready for operator review",
+      "status_zh": "可进入人工审阅",
+      "transcript_path": "examples/demo/sample_level2_transcript.json",
+      "output_dir": "examples/demo/level2_samples/en_json",
+      "files": [
+        "examples/demo/level2_samples/en_json/script_package.json",
+        "examples/demo/level2_samples/en_json/script_draft.md",
+        "examples/demo/level2_samples/en_json/production_blueprint.json",
+        "examples/demo/level2_samples/en_json/review_report.json",
+        "examples/demo/level2_samples/en_json/review_report.md"
+      ]
+    },
+    {
+      "id": "zh_vtt",
+      "label_en": "Chinese VTT sample",
+      "label_zh": "中文 VTT 样例",
+      "language": "zh",
+      "transcript_format": "vtt",
+      "score": 100,
+      "status_en": "Ready for operator review",
+      "status_zh": "可进入人工审阅",
+      "transcript_path": "examples/demo/sample_level2_transcript_zh.vtt",
+      "output_dir": "examples/demo/level2_samples/zh_vtt",
+      "files": [
+        "examples/demo/level2_samples/zh_vtt/script_package.json",
+        "examples/demo/level2_samples/zh_vtt/script_draft.md",
+        "examples/demo/level2_samples/zh_vtt/production_blueprint.json",
+        "examples/demo/level2_samples/zh_vtt/review_report.json",
+        "examples/demo/level2_samples/zh_vtt/review_report.md"
       ]
     }
   ]

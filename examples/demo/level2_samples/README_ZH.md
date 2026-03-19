@@ -3,12 +3,13 @@
 这些已提交到仓库的产物由内置 transcript fixture 生成。
 它们让访客不用先跑 CLI，也能直接查看真实的 Level 2 输出结果。
 
-- 生成时间：2026-03-19T11:46:42
+- 生成时间：2026-03-19T13:03:48
 
 ## 样例列表
 
-### 英文样例
+### 英文 SRT 样例
 - 语言：en
+- Transcript 格式：srt
 - 评审状态：可进入人工审阅
 - 评审得分：100/100
 - Transcript fixture：`examples/demo/sample_level2_transcript.srt`
@@ -18,8 +19,9 @@
 - 评审 JSON：`examples/demo/level2_samples/en/review_report.json`
 - 评审 Markdown：`examples/demo/level2_samples/en/review_report.md`
 
-### 中文样例
+### 中文 SRT 样例
 - 语言：zh
+- Transcript 格式：srt
 - 评审状态：可进入人工审阅
 - 评审得分：100/100
 - Transcript fixture：`examples/demo/sample_level2_transcript_zh.srt`
@@ -28,6 +30,30 @@
 - Blueprint：`examples/demo/level2_samples/zh/production_blueprint.json`
 - 评审 JSON：`examples/demo/level2_samples/zh/review_report.json`
 - 评审 Markdown：`examples/demo/level2_samples/zh/review_report.md`
+
+### 英文 JSON 样例
+- 语言：en
+- Transcript 格式：json
+- 评审状态：可进入人工审阅
+- 评审得分：100/100
+- Transcript fixture：`examples/demo/sample_level2_transcript.json`
+- 脚本包：`examples/demo/level2_samples/en_json/script_package.json`
+- 脚本草稿：`examples/demo/level2_samples/en_json/script_draft.md`
+- Blueprint：`examples/demo/level2_samples/en_json/production_blueprint.json`
+- 评审 JSON：`examples/demo/level2_samples/en_json/review_report.json`
+- 评审 Markdown：`examples/demo/level2_samples/en_json/review_report.md`
+
+### 中文 VTT 样例
+- 语言：zh
+- Transcript 格式：vtt
+- 评审状态：可进入人工审阅
+- 评审得分：100/100
+- Transcript fixture：`examples/demo/sample_level2_transcript_zh.vtt`
+- 脚本包：`examples/demo/level2_samples/zh_vtt/script_package.json`
+- 脚本草稿：`examples/demo/level2_samples/zh_vtt/script_draft.md`
+- Blueprint：`examples/demo/level2_samples/zh_vtt/production_blueprint.json`
+- 评审 JSON：`examples/demo/level2_samples/zh_vtt/review_report.json`
+- 评审 Markdown：`examples/demo/level2_samples/zh_vtt/review_report.md`
 
 ## 说明
 

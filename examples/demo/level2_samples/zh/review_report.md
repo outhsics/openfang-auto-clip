@@ -1,6 +1,6 @@
 # Level 2 Package Review / Level 2 脚本包评审
 
-- Source / 源标题: Level 2 Sample ZH
+- Source / 源标题: Level 2 Sample ZH SRT
 - Score / 得分: 100/100
 - Status / 状态: Ready for operator review / 可进入人工审阅
 

@@ -18,17 +18,31 @@ import auto_clip  # noqa: E402
 CASES = [
     {
         "id": "en",
-        "label_en": "English sample",
-        "label_zh": "英文样例",
-        "title": "Level 2 Sample EN",
+        "label_en": "English SRT sample",
+        "label_zh": "英文 SRT 样例",
+        "title": "Level 2 Sample EN SRT",
         "transcript_path": REPO_ROOT / "examples" / "demo" / "sample_level2_transcript.srt",
     },
     {
         "id": "zh",
-        "label_en": "Chinese sample",
-        "label_zh": "中文样例",
-        "title": "Level 2 Sample ZH",
+        "label_en": "Chinese SRT sample",
+        "label_zh": "中文 SRT 样例",
+        "title": "Level 2 Sample ZH SRT",
         "transcript_path": REPO_ROOT / "examples" / "demo" / "sample_level2_transcript_zh.srt",
+    },
+    {
+        "id": "en_json",
+        "label_en": "English JSON sample",
+        "label_zh": "英文 JSON 样例",
+        "title": "Level 2 Sample EN JSON",
+        "transcript_path": REPO_ROOT / "examples" / "demo" / "sample_level2_transcript.json",
+    },
+    {
+        "id": "zh_vtt",
+        "label_en": "Chinese VTT sample",
+        "label_zh": "中文 VTT 样例",
+        "title": "Level 2 Sample ZH VTT",
+        "transcript_path": REPO_ROOT / "examples" / "demo" / "sample_level2_transcript_zh.vtt",
     },
 ]
 
@@ -84,6 +98,7 @@ def export_case(case: dict, output_dir: Path, duration: int) -> dict:
         "label_en": case["label_en"],
         "label_zh": case["label_zh"],
         "language": package["language"],
+        "transcript_format": transcript_path.suffix.lower().lstrip("."),
         "score": review["score"],
         "status_en": review["status_label_en"],
         "status_zh": review["status_label_zh"],
@@ -118,6 +133,7 @@ def render_index_markdown(report: dict) -> str:
             [
                 f"### {case['label_en']}",
                 f"- Language: {case['language']}",
+                f"- Transcript format: {case['transcript_format']}",
                 f"- Review status: {case['status_en']}",
                 f"- Review score: {case['score']}/100",
                 f"- Transcript fixture: `{case['transcript_path']}`",
@@ -161,6 +177,7 @@ def render_index_markdown_zh(report: dict) -> str:
             [
                 f"### {case['label_zh']}",
                 f"- 语言：{case['language']}",
+                f"- Transcript 格式：{case['transcript_format']}",
                 f"- 评审状态：{case['status_zh']}",
                 f"- 评审得分：{case['score']}/100",
                 f"- Transcript fixture：`{case['transcript_path']}`",

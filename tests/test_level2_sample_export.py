@@ -11,12 +11,14 @@ class Level2SampleExportTests(unittest.TestCase):
             output_dir = Path(tmp_dir) / "level2_samples"
             report = export_level2_demo_samples.export_samples(output_dir, duration=45)
 
-            self.assertEqual(len(report["cases"]), 2)
+            self.assertEqual(len(report["cases"]), 4)
             self.assertTrue((output_dir / "index.json").exists())
             self.assertTrue((output_dir / "README.md").exists())
             self.assertTrue((output_dir / "README_ZH.md").exists())
             self.assertTrue((output_dir / "en" / "script_package.json").exists())
             self.assertTrue((output_dir / "zh" / "review_report.md").exists())
+            self.assertTrue((output_dir / "en_json" / "script_package.json").exists())
+            self.assertTrue((output_dir / "zh_vtt" / "review_report.md").exists())
 
 
 if __name__ == "__main__":

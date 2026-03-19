@@ -1,0 +1,83 @@
+{
+  "milestone": "level2_transcript_to_script_package",
+  "source_title": "Level 2 Sample EN JSON",
+  "language": "en",
+  "script_sections": [
+    {
+      "section": "Hook",
+      "duration": 9,
+      "narration": "Retell the core idea from a fresh angle: Lead with the most surprising claim. Follow with evidence that changes the viewer's mental model.",
+      "on_screen_text": "Lead with the most surprising claim. Follow with evidence that changes the...",
+      "visual_direction": "Open with a fresh title card and new framing, not the original pacing.",
+      "source_anchor": "00:00:00.000 - 00:00:08.000"
+    },
+    {
+      "section": "Beat 1",
+      "duration": 14,
+      "narration": "Point 1: Lead with the most surprising claim. Follow with evidence that changes the viewer's mental model. Expand it in your own voice instead of mirroring the source wording.",
+      "on_screen_text": "Lead with the most surprising claim. Follow with evidence that changes the...",
+      "visual_direction": "Use new B-roll, diagrams, or screen capture to support this point.",
+      "source_anchor": "00:00:00.000 - 00:00:08.000"
+    },
+    {
+      "section": "Beat 2",
+      "duration": 14,
+      "narration": "Point 2: Finish with a fresh takeaway and a clear next step. Expand it in your own voice instead of mirroring the source wording.",
+      "on_screen_text": "Finish with a fresh takeaway and a clear next step",
+      "visual_direction": "Use new B-roll, diagrams, or screen capture to support this point.",
+      "source_anchor": "00:00:08.000 - 00:00:12.000"
+    },
+    {
+      "section": "Close",
+      "duration": 8,
+      "narration": "Close with your own takeaway and a next action instead of reusing the source ending.",
+      "on_screen_text": "Fresh takeaway",
+      "visual_direction": "End on a summary card or direct-to-camera close.",
+      "source_anchor": null
+    }
+  ],
+  "shot_plan": [
+    {
+      "shot": 1,
+      "section": "Hook",
+      "duration": 9,
+      "asset_type": "title_card_then_new_talking_head",
+      "goal": "State the new angle quickly and clearly.",
+      "source_anchor": "00:00:00.000 - 00:00:08.000",
+      "overlay_text": "Lead with the most surprising claim. Follow with evidence that changes the..."
+    },
+    {
+      "shot": 2,
+      "section": "Beat 1",
+      "duration": 14,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "Support one rewritten beat with new visuals.",
+      "source_anchor": "00:00:00.000 - 00:00:08.000",
+      "overlay_text": "Lead with the most surprising claim. Follow with evidence that changes the..."
+    },
+    {
+      "shot": 3,
+      "section": "Beat 2",
+      "duration": 14,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "Support one rewritten beat with new visuals.",
+      "source_anchor": "00:00:08.000 - 00:00:12.000",
+      "overlay_text": "Finish with a fresh takeaway and a clear next step"
+    },
+    {
+      "shot": 4,
+      "section": "Close",
+      "duration": 8,
+      "asset_type": "summary_card_or_direct_close",
+      "goal": "Land the takeaway without echoing the original ending.",
+      "source_anchor": null,
+      "overlay_text": "Fresh takeaway"
+    }
+  ],
+  "review_rubric": [
+    "Check each narration beat for wording that still feels too close to the source",
+    "Confirm every section has a fresh visual plan instead of reused source shots",
+    "Keep on-screen text short enough for vertical viewing",
+    "Make sure the close lands as a new takeaway, not the source ending rewritten lightly"
+  ]
+}

@@ -2,7 +2,7 @@
   "milestone": "level2_transcript_to_script_package",
   "language": "zh",
   "source": {
-    "title": "Level 2 Sample ZH",
+    "title": "Level 2 Sample ZH SRT",
     "video_path": "examples/demo/sample_level2_transcript_zh.srt",
     "transcript_path": "examples/demo/sample_level2_transcript_zh.srt",
     "sentence_count": 4,

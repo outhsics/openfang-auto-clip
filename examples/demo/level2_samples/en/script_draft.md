@@ -1,6 +1,6 @@
 # Level 2 Script Package
 
-- Source title: Level 2 Sample EN
+- Source title: Level 2 Sample EN SRT
 - Transcript: examples/demo/sample_level2_transcript.srt
 - Language: en
 - Milestone: level2_transcript_to_script_package

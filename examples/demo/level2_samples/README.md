@@ -3,12 +3,13 @@
 These committed artifacts are generated from the bundled transcript fixtures.
 They let visitors inspect real Level 2 outputs without running the CLI first.
 
-- Generated at: 2026-03-19T11:46:42
+- Generated at: 2026-03-19T13:03:48
 
 ## Samples
 
-### English sample
+### English SRT sample
 - Language: en
+- Transcript format: srt
 - Review status: Ready for operator review
 - Review score: 100/100
 - Transcript fixture: `examples/demo/sample_level2_transcript.srt`
@@ -18,8 +19,9 @@ They let visitors inspect real Level 2 outputs without running the CLI first.
 - Review JSON: `examples/demo/level2_samples/en/review_report.json`
 - Review Markdown: `examples/demo/level2_samples/en/review_report.md`
 
-### Chinese sample
+### Chinese SRT sample
 - Language: zh
+- Transcript format: srt
 - Review status: Ready for operator review
 - Review score: 100/100
 - Transcript fixture: `examples/demo/sample_level2_transcript_zh.srt`
@@ -28,6 +30,30 @@ They let visitors inspect real Level 2 outputs without running the CLI first.
 - Blueprint: `examples/demo/level2_samples/zh/production_blueprint.json`
 - Review JSON: `examples/demo/level2_samples/zh/review_report.json`
 - Review Markdown: `examples/demo/level2_samples/zh/review_report.md`
+
+### English JSON sample
+- Language: en
+- Transcript format: json
+- Review status: Ready for operator review
+- Review score: 100/100
+- Transcript fixture: `examples/demo/sample_level2_transcript.json`
+- Script package: `examples/demo/level2_samples/en_json/script_package.json`
+- Script draft: `examples/demo/level2_samples/en_json/script_draft.md`
+- Blueprint: `examples/demo/level2_samples/en_json/production_blueprint.json`
+- Review JSON: `examples/demo/level2_samples/en_json/review_report.json`
+- Review Markdown: `examples/demo/level2_samples/en_json/review_report.md`
+
+### Chinese VTT sample
+- Language: zh
+- Transcript format: vtt
+- Review status: Ready for operator review
+- Review score: 100/100
+- Transcript fixture: `examples/demo/sample_level2_transcript_zh.vtt`
+- Script package: `examples/demo/level2_samples/zh_vtt/script_package.json`
+- Script draft: `examples/demo/level2_samples/zh_vtt/script_draft.md`
+- Blueprint: `examples/demo/level2_samples/zh_vtt/production_blueprint.json`
+- Review JSON: `examples/demo/level2_samples/zh_vtt/review_report.json`
+- Review Markdown: `examples/demo/level2_samples/zh_vtt/review_report.md`
 
 ## Notes
 

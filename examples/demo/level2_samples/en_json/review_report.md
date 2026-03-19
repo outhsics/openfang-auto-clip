@@ -1,6 +1,6 @@
 # Level 2 Package Review / Level 2 脚本包评审
 
-- Source / 源标题: Level 2 Sample EN SRT
+- Source / 源标题: Level 2 Sample EN JSON
 - Score / 得分: 100/100
 - Status / 状态: Ready for operator review / 可进入人工审阅
 
@@ -11,12 +11,12 @@
 
 ## Metrics / 指标
 
-- Script sections / 脚本段落数: 6
-- Shot-plan rows / Shot plan 行数: 6
-- Source outline points / Source outline 点数: 4
-- Timed segments / 时间片段数: 4
-- Outline anchors / 大纲锚点数: 4
-- Section anchors / 脚本段锚点数: 5
+- Script sections / 脚本段落数: 4
+- Shot-plan rows / Shot plan 行数: 4
+- Source outline points / Source outline 点数: 2
+- Timed segments / 时间片段数: 3
+- Outline anchors / 大纲锚点数: 2
+- Section anchors / 脚本段锚点数: 3
 - Total duration / 总时长: 45s
 - Review rubric items / Review rubric 条数: 4
 - Checklist steps / Checklist 步数: 4
@@ -25,13 +25,13 @@
 
 ### Package structure is complete / 脚本包结构完整
 - Status / 状态: pass
-- EN: 6 script sections and 6 shot-plan rows are aligned.
-- 中文: 共 6 个脚本段落，shot plan 也有 6 行，结构对齐。
+- EN: 4 script sections and 4 shot-plan rows are aligned.
+- 中文: 共 4 个脚本段落，shot plan 也有 4 行，结构对齐。
 
 ### Timed anchor coverage is reviewable / 时间锚点具备可审阅性
 - Status / 状态: pass
-- EN: Timed transcript provides 4 outline anchors and 5 section anchors.
-- 中文: 带时间信息的 transcript 已提供 4 个大纲锚点、5 个脚本段锚点。
+- EN: Timed transcript provides 2 outline anchors and 3 section anchors.
+- 中文: 带时间信息的 transcript 已提供 2 个大纲锚点、3 个脚本段锚点。
 
 ### Operator handoff assets are present / 运营交接信息已具备
 - Status / 状态: pass

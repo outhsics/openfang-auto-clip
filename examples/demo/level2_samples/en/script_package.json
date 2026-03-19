@@ -2,7 +2,7 @@
   "milestone": "level2_transcript_to_script_package",
   "language": "en",
   "source": {
-    "title": "Level 2 Sample EN",
+    "title": "Level 2 Sample EN SRT",
     "video_path": "examples/demo/sample_level2_transcript.srt",
     "transcript_path": "examples/demo/sample_level2_transcript.srt",
     "sentence_count": 4,

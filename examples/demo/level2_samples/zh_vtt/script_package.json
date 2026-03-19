@@ -1,0 +1,139 @@
+{
+  "milestone": "level2_transcript_to_script_package",
+  "language": "zh",
+  "source": {
+    "title": "Level 2 Sample ZH VTT",
+    "video_path": "examples/demo/sample_level2_transcript_zh.vtt",
+    "transcript_path": "examples/demo/sample_level2_transcript_zh.vtt",
+    "sentence_count": 3,
+    "segment_count": 3
+  },
+  "source_outline": [
+    {
+      "index": 1,
+      "summary": "先抛出最能抓住注意力的结论，不要把重点藏在后面",
+      "source_start": 0.0,
+      "source_end": 4.0,
+      "source_anchor": "00:00:00.000 - 00:00:04.000"
+    },
+    {
+      "index": 2,
+      "summary": "接着用新的论据和新的画面去支撑，让观众感觉你是在重新组织内容",
+      "source_start": 4.0,
+      "source_end": 8.0,
+      "source_anchor": "00:00:04.000 - 00:00:08.000"
+    },
+    {
+      "index": 3,
+      "summary": "最后给出新的行动建议，而不是轻度改写原片尾",
+      "source_start": 8.0,
+      "source_end": 12.0,
+      "source_anchor": "00:00:08.000 - 00:00:12.000"
+    }
+  ],
+  "script_sections": [
+    {
+      "section": "开场",
+      "duration": 9,
+      "narration": "这条短视频不用原句复述，先用新的讲法讲清核心点：先抛出最能抓住注意力的结论，不要把重点藏在后面。",
+      "on_screen_text": "先抛出最能抓住注意力的结论，不要把…",
+      "visual_direction": "用标题卡点明主题，再切到新的讲述视角。",
+      "source_anchor": "00:00:00.000 - 00:00:04.000"
+    },
+    {
+      "section": "重点 1",
+      "duration": 9,
+      "narration": "第1点，先抛出最能抓住注意力的结论，不要把重点藏在后面。把这个点拆开讲，避免沿用原视频节奏。",
+      "on_screen_text": "先抛出最能抓住注意力的结论，不要把…",
+      "visual_direction": "用新的 B-roll、图示或屏幕录制支撑这一段。",
+      "source_anchor": "00:00:00.000 - 00:00:04.000"
+    },
+    {
+      "section": "重点 2",
+      "duration": 9,
+      "narration": "第2点，接着用新的论据和新的画面去支撑，让观众感觉你是在重新组织内容。把这个点拆开讲，避免沿用原视频节奏。",
+      "on_screen_text": "接着用新的论据和新的画面去支撑，让…",
+      "visual_direction": "用新的 B-roll、图示或屏幕录制支撑这一段。",
+      "source_anchor": "00:00:04.000 - 00:00:08.000"
+    },
+    {
+      "section": "重点 3",
+      "duration": 9,
+      "narration": "第3点，最后给出新的行动建议，而不是轻度改写原片尾。把这个点拆开讲，避免沿用原视频节奏。",
+      "on_screen_text": "最后给出新的行动建议，而不是轻度改…",
+      "visual_direction": "用新的 B-roll、图示或屏幕录制支撑这一段。",
+      "source_anchor": "00:00:08.000 - 00:00:12.000"
+    },
+    {
+      "section": "收尾",
+      "duration": 9,
+      "narration": "总结一下，把上面几个重点收束成一句自己的结论，再给出下一步动作。",
+      "on_screen_text": "总结与行动",
+      "visual_direction": "回到主持人口播或总结卡片，不复用原片尾结构。",
+      "source_anchor": null
+    }
+  ],
+  "shot_plan": [
+    {
+      "shot": 1,
+      "section": "开场",
+      "duration": 9,
+      "asset_type": "title_card_then_new_talking_head",
+      "goal": "先立新视角，再切到新的讲述主体。",
+      "source_anchor": "00:00:00.000 - 00:00:04.000",
+      "overlay_text": "先抛出最能抓住注意力的结论，不要把…"
+    },
+    {
+      "shot": 2,
+      "section": "重点 1",
+      "duration": 9,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "用新的视觉素材支撑这一段改写内容。",
+      "source_anchor": "00:00:00.000 - 00:00:04.000",
+      "overlay_text": "先抛出最能抓住注意力的结论，不要把…"
+    },
+    {
+      "shot": 3,
+      "section": "重点 2",
+      "duration": 9,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "用新的视觉素材支撑这一段改写内容。",
+      "source_anchor": "00:00:04.000 - 00:00:08.000",
+      "overlay_text": "接着用新的论据和新的画面去支撑，让…"
+    },
+    {
+      "shot": 4,
+      "section": "重点 3",
+      "duration": 9,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "用新的视觉素材支撑这一段改写内容。",
+      "source_anchor": "00:00:08.000 - 00:00:12.000",
+      "overlay_text": "最后给出新的行动建议，而不是轻度改…"
+    },
+    {
+      "shot": 5,
+      "section": "收尾",
+      "duration": 9,
+      "asset_type": "summary_card_or_direct_close",
+      "goal": "收束观点，不复用原片尾节奏。",
+      "source_anchor": null,
+      "overlay_text": "总结与行动"
+    }
+  ],
+  "review_rubric": [
+    "逐段检查 narration，去掉任何接近原句复述的表达",
+    "确认每段都有新的视觉方案，不依赖原视频镜头",
+    "检查 on-screen text 是否足够短，适合竖屏节奏",
+    "确认收尾是新的总结和动作，不复用原片尾结构"
+  ],
+  "production_checklist": [
+    "Review the narration and remove any wording that still feels too close to the source",
+    "Record a new voiceover or TTS track from the rewritten script",
+    "Replace visuals with new footage, diagrams, captures, or generated assets",
+    "Re-time captions and pacing after the new voiceover is approved"
+  ],
+  "limitations": [
+    "This milestone generates a script package, not a fully rebuilt output video",
+    "Voiceover, new visuals, and final edit still need operator review and assembly"
+  ]
+}
