@@ -14,10 +14,12 @@ This folder is a lightweight evaluation guide for first-time visitors.
 ./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 1 --duration 45
 python3 auto_clip.py --demo-script-package
 python3 auto_clip.py --review-package ~/.openfang/clips/script_packages/TIMESTAMP_source
+python3 scripts/run_level2_demo_suite.py
 ```
 
 The Level 2 demo command uses the bundled `sample_level2_transcript.srt` fixture and writes a reviewable script package without downloading media.
 The review command refreshes `review_report.json` and `review_report.md` with bilingual operator-facing checks.
+The suite command runs both bundled English and Chinese transcripts, then writes `level2_demo_suite_report.json` and `level2_demo_suite_report.md`.
 
 ## Expected output structure
 

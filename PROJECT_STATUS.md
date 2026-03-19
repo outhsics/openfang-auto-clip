@@ -12,6 +12,7 @@
 - local Level 2 transcript-to-script package generation with timed source anchors and shot plan when a transcript is available
 - self-contained Level 2 demo package generation from a bundled transcript for first-run evaluation
 - bilingual Level 2 package review reports for operator validation
+- reproducible bilingual Level 2 demo suite for evaluating package quality across English and Chinese transcripts
 - `--doctor` environment check
 - `--dry-run` processing plan output
 - local web manager for task launching and inspection
@@ -45,6 +46,7 @@
 - `2026-03-18`: tightened the Level 2 milestone with timed transcript anchors, production blueprint output, shot plan, and review rubric
 - `2026-03-18`: added a zero-external-media Level 2 demo command for faster evaluation and onboarding
 - `2026-03-19`: added bilingual review reports and a `--review-package` CLI path for Level 2 operator validation
+- `2026-03-19`: added a reproducible bilingual Level 2 demo suite with English and Chinese transcript fixtures
 
 ## Next Recommended Actions
 

@@ -61,6 +61,7 @@ Level 2 现在已经有了第一阶段的可运行里程碑。
 
 - CLI 现在可以生成 transcript-to-script 脚本包
 - 脚本包包含带时间锚点的 source outline、narration draft、shot plan、review rubric、production checklist，以及双语 review report
+- 仓库还附带一个可复现的中英双语 Level 2 demo suite，方便快速评估
 - 新配音、重建视觉素材和最终成片仍然需要后续人工或其他工具完成
 
 ## Level 3
