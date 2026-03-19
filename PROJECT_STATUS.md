@@ -14,6 +14,7 @@
 - bilingual Level 2 package review reports for operator validation
 - reproducible bilingual Level 2 demo suite for evaluating package quality across English and Chinese transcripts
 - one-command local evaluation flow that bundles doctor, benchmark, and Level 2 suite
+- committed bilingual Level 2 sample artifacts for direct GitHub inspection
 - `--doctor` environment check
 - `--dry-run` processing plan output
 - local web manager for task launching and inspection
@@ -50,6 +51,7 @@
 - `2026-03-19`: added a reproducible bilingual Level 2 demo suite with English and Chinese transcript fixtures
 - `2026-03-19`: added a one-command local evaluation script that runs doctor, benchmark, and the Level 2 suite together
 - `2026-03-19`: added a bilingual benchmark summary artifact to make Level 1 output easier to inspect and share
+- `2026-03-19`: exported committed bilingual Level 2 sample artifacts for direct repository browsing
 
 ## Next Recommended Actions
 

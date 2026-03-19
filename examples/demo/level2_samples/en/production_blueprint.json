@@ -1,0 +1,117 @@
+{
+  "milestone": "level2_transcript_to_script_package",
+  "source_title": "Level 2 Sample EN",
+  "language": "en",
+  "script_sections": [
+    {
+      "section": "Hook",
+      "duration": 9,
+      "narration": "Retell the core idea from a fresh angle: Most short-form clips lose attention because they start with setup instead of a sharp payoff.",
+      "on_screen_text": "Most short-form clips lose attention because they start with setup instead of...",
+      "visual_direction": "Open with a fresh title card and new framing, not the original pacing.",
+      "source_anchor": "00:00:00.000 - 00:00:04.500"
+    },
+    {
+      "section": "Beat 1",
+      "duration": 7,
+      "narration": "Point 1: Most short-form clips lose attention because they start with setup instead of a sharp payoff. Expand it in your own voice instead of mirroring the source wording.",
+      "on_screen_text": "Most short-form clips lose attention because they start with setup instead of...",
+      "visual_direction": "Use new B-roll, diagrams, or screen capture to support this point.",
+      "source_anchor": "00:00:00.000 - 00:00:04.500"
+    },
+    {
+      "section": "Beat 2",
+      "duration": 7,
+      "narration": "Point 2: The fix is to lead with the strongest claim, then prove it with two clean supporting.... Expand it in your own voice instead of mirroring the source wording.",
+      "on_screen_text": "The fix is to lead with the strongest claim, then prove it...",
+      "visual_direction": "Use new B-roll, diagrams, or screen capture to support this point.",
+      "source_anchor": "00:00:04.500 - 00:00:09.000"
+    },
+    {
+      "section": "Beat 3",
+      "duration": 7,
+      "narration": "Point 3: Every beat should ask for a different visual, so the edit feels rebuilt instead of merely.... Expand it in your own voice instead of mirroring the source wording.",
+      "on_screen_text": "Every beat should ask for a different visual, so the edit feels...",
+      "visual_direction": "Use new B-roll, diagrams, or screen capture to support this point.",
+      "source_anchor": "00:00:09.000 - 00:00:13.500"
+    },
+    {
+      "section": "Beat 4",
+      "duration": 7,
+      "narration": "Point 4: End by naming the practical takeaway, because the audience remembers structure more than slogans. Expand it in your own voice instead of mirroring the source wording.",
+      "on_screen_text": "End by naming the practical takeaway, because the audience remembers structure more...",
+      "visual_direction": "Use new B-roll, diagrams, or screen capture to support this point.",
+      "source_anchor": "00:00:13.500 - 00:00:18.000"
+    },
+    {
+      "section": "Close",
+      "duration": 8,
+      "narration": "Close with your own takeaway and a next action instead of reusing the source ending.",
+      "on_screen_text": "Fresh takeaway",
+      "visual_direction": "End on a summary card or direct-to-camera close.",
+      "source_anchor": null
+    }
+  ],
+  "shot_plan": [
+    {
+      "shot": 1,
+      "section": "Hook",
+      "duration": 9,
+      "asset_type": "title_card_then_new_talking_head",
+      "goal": "State the new angle quickly and clearly.",
+      "source_anchor": "00:00:00.000 - 00:00:04.500",
+      "overlay_text": "Most short-form clips lose attention because they start with setup instead of..."
+    },
+    {
+      "shot": 2,
+      "section": "Beat 1",
+      "duration": 7,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "Support one rewritten beat with new visuals.",
+      "source_anchor": "00:00:00.000 - 00:00:04.500",
+      "overlay_text": "Most short-form clips lose attention because they start with setup instead of..."
+    },
+    {
+      "shot": 3,
+      "section": "Beat 2",
+      "duration": 7,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "Support one rewritten beat with new visuals.",
+      "source_anchor": "00:00:04.500 - 00:00:09.000",
+      "overlay_text": "The fix is to lead with the strongest claim, then prove it..."
+    },
+    {
+      "shot": 4,
+      "section": "Beat 3",
+      "duration": 7,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "Support one rewritten beat with new visuals.",
+      "source_anchor": "00:00:09.000 - 00:00:13.500",
+      "overlay_text": "Every beat should ask for a different visual, so the edit feels..."
+    },
+    {
+      "shot": 5,
+      "section": "Beat 4",
+      "duration": 7,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "Support one rewritten beat with new visuals.",
+      "source_anchor": "00:00:13.500 - 00:00:18.000",
+      "overlay_text": "End by naming the practical takeaway, because the audience remembers structure more..."
+    },
+    {
+      "shot": 6,
+      "section": "Close",
+      "duration": 8,
+      "asset_type": "summary_card_or_direct_close",
+      "goal": "Land the takeaway without echoing the original ending.",
+      "source_anchor": null,
+      "overlay_text": "Fresh takeaway"
+    }
+  ],
+  "review_rubric": [
+    "Check each narration beat for wording that still feels too close to the source",
+    "Confirm every section has a fresh visual plan instead of reused source shots",
+    "Keep on-screen text short enough for vertical viewing",
+    "Make sure the close lands as a new takeaway, not the source ending rewritten lightly"
+  ]
+}

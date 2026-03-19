@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-03-19T11:46:42",
+  "output_dir": "examples/demo/level2_samples",
+  "cases": [
+    {
+      "id": "en",
+      "label_en": "English sample",
+      "label_zh": "英文样例",
+      "language": "en",
+      "score": 100,
+      "status_en": "Ready for operator review",
+      "status_zh": "可进入人工审阅",
+      "transcript_path": "examples/demo/sample_level2_transcript.srt",
+      "output_dir": "examples/demo/level2_samples/en",
+      "files": [
+        "examples/demo/level2_samples/en/script_package.json",
+        "examples/demo/level2_samples/en/script_draft.md",
+        "examples/demo/level2_samples/en/production_blueprint.json",
+        "examples/demo/level2_samples/en/review_report.json",
+        "examples/demo/level2_samples/en/review_report.md"
+      ]
+    },
+    {
+      "id": "zh",
+      "label_en": "Chinese sample",
+      "label_zh": "中文样例",
+      "language": "zh",
+      "score": 100,
+      "status_en": "Ready for operator review",
+      "status_zh": "可进入人工审阅",
+      "transcript_path": "examples/demo/sample_level2_transcript_zh.srt",
+      "output_dir": "examples/demo/level2_samples/zh",
+      "files": [
+        "examples/demo/level2_samples/zh/script_package.json",
+        "examples/demo/level2_samples/zh/script_draft.md",
+        "examples/demo/level2_samples/zh/production_blueprint.json",
+        "examples/demo/level2_samples/zh/review_report.json",
+        "examples/demo/level2_samples/zh/review_report.md"
+      ]
+    }
+  ]
+}

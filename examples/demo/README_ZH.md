@@ -20,6 +20,7 @@ python3 scripts/run_level2_demo_suite.py
 Level 2 demo 命令会直接使用仓库内置的 `sample_level2_transcript.srt`，无需下载媒体素材，也能产出可审阅的脚本包。
 review 命令会刷新 `review_report.json` 和 `review_report.md`，输出面向人工验收的双语检查结果。
 suite 命令会同时跑仓库内置的中英 transcript，并输出 `level2_demo_suite_report.json` 和 `level2_demo_suite_report.md`。
+已经提交到仓库的样例产物放在 [`level2_samples/README_ZH.md`](level2_samples/README_ZH.md)，方便直接在 GitHub 浏览。
 
 ## 期望输出结构
 

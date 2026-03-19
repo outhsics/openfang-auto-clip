@@ -1,0 +1,163 @@
+{
+  "milestone": "level2_transcript_to_script_package",
+  "language": "zh",
+  "source": {
+    "title": "Level 2 Sample ZH",
+    "video_path": "examples/demo/sample_level2_transcript_zh.srt",
+    "transcript_path": "examples/demo/sample_level2_transcript_zh.srt",
+    "sentence_count": 4,
+    "segment_count": 4
+  },
+  "source_outline": [
+    {
+      "index": 1,
+      "summary": "很多短视频一开始先铺垫背景，结果观众在真正重点出现前就已经划走了",
+      "source_start": 0.0,
+      "source_end": 4.5,
+      "source_anchor": "00:00:00.000 - 00:00:04.500"
+    },
+    {
+      "index": 2,
+      "summary": "更稳的做法是先抛出最强结论，再用两到三个清晰论点去支撑它",
+      "source_start": 4.5,
+      "source_end": 9.0,
+      "source_anchor": "00:00:04.500 - 00:00:09.000"
+    },
+    {
+      "index": 3,
+      "summary": "每个论点都应该配一套新的画面思路，让成片看起来像重建而不是简单裁剪",
+      "source_start": 9.0,
+      "source_end": 13.5,
+      "source_anchor": "00:00:09.000 - 00:00:13.500"
+    },
+    {
+      "index": 4,
+      "summary": "结尾要明确给出新的行动建议，这样观众记住的是结构和价值，不只是口号",
+      "source_start": 13.5,
+      "source_end": 18.0,
+      "source_anchor": "00:00:13.500 - 00:00:18.000"
+    }
+  ],
+  "script_sections": [
+    {
+      "section": "开场",
+      "duration": 9,
+      "narration": "这条短视频不用原句复述，先用新的讲法讲清核心点：很多短视频一开始先铺垫背景，结果观众在真正重点出现前就已经划走了。",
+      "on_screen_text": "很多短视频一开始先铺垫背景，结果观…",
+      "visual_direction": "用标题卡点明主题，再切到新的讲述视角。",
+      "source_anchor": "00:00:00.000 - 00:00:04.500"
+    },
+    {
+      "section": "重点 1",
+      "duration": 7,
+      "narration": "第1点，很多短视频一开始先铺垫背景，结果观众在真正重点出现前就已经划走了。把这个点拆开讲，避免沿用原视频节奏。",
+      "on_screen_text": "很多短视频一开始先铺垫背景，结果观…",
+      "visual_direction": "用新的 B-roll、图示或屏幕录制支撑这一段。",
+      "source_anchor": "00:00:00.000 - 00:00:04.500"
+    },
+    {
+      "section": "重点 2",
+      "duration": 7,
+      "narration": "第2点，更稳的做法是先抛出最强结论，再用两到三个清晰论点去支撑它。把这个点拆开讲，避免沿用原视频节奏。",
+      "on_screen_text": "更稳的做法是先抛出最强结论，再用两…",
+      "visual_direction": "用新的 B-roll、图示或屏幕录制支撑这一段。",
+      "source_anchor": "00:00:04.500 - 00:00:09.000"
+    },
+    {
+      "section": "重点 3",
+      "duration": 7,
+      "narration": "第3点，每个论点都应该配一套新的画面思路，让成片看起来像重建而不是简单裁剪。把这个点拆开讲，避免沿用原视频节奏。",
+      "on_screen_text": "每个论点都应该配一套新的画面思路，…",
+      "visual_direction": "用新的 B-roll、图示或屏幕录制支撑这一段。",
+      "source_anchor": "00:00:09.000 - 00:00:13.500"
+    },
+    {
+      "section": "重点 4",
+      "duration": 7,
+      "narration": "第4点，结尾要明确给出新的行动建议，这样观众记住的是结构和价值，不只是口号。把这个点拆开讲，避免沿用原视频节奏。",
+      "on_screen_text": "结尾要明确给出新的行动建议，这样观…",
+      "visual_direction": "用新的 B-roll、图示或屏幕录制支撑这一段。",
+      "source_anchor": "00:00:13.500 - 00:00:18.000"
+    },
+    {
+      "section": "收尾",
+      "duration": 8,
+      "narration": "总结一下，把上面几个重点收束成一句自己的结论，再给出下一步动作。",
+      "on_screen_text": "总结与行动",
+      "visual_direction": "回到主持人口播或总结卡片，不复用原片尾结构。",
+      "source_anchor": null
+    }
+  ],
+  "shot_plan": [
+    {
+      "shot": 1,
+      "section": "开场",
+      "duration": 9,
+      "asset_type": "title_card_then_new_talking_head",
+      "goal": "先立新视角，再切到新的讲述主体。",
+      "source_anchor": "00:00:00.000 - 00:00:04.500",
+      "overlay_text": "很多短视频一开始先铺垫背景，结果观…"
+    },
+    {
+      "shot": 2,
+      "section": "重点 1",
+      "duration": 7,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "用新的视觉素材支撑这一段改写内容。",
+      "source_anchor": "00:00:00.000 - 00:00:04.500",
+      "overlay_text": "很多短视频一开始先铺垫背景，结果观…"
+    },
+    {
+      "shot": 3,
+      "section": "重点 2",
+      "duration": 7,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "用新的视觉素材支撑这一段改写内容。",
+      "source_anchor": "00:00:04.500 - 00:00:09.000",
+      "overlay_text": "更稳的做法是先抛出最强结论，再用两…"
+    },
+    {
+      "shot": 4,
+      "section": "重点 3",
+      "duration": 7,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "用新的视觉素材支撑这一段改写内容。",
+      "source_anchor": "00:00:09.000 - 00:00:13.500",
+      "overlay_text": "每个论点都应该配一套新的画面思路，…"
+    },
+    {
+      "shot": 5,
+      "section": "重点 4",
+      "duration": 7,
+      "asset_type": "fresh_broll_diagram_or_screen_capture",
+      "goal": "用新的视觉素材支撑这一段改写内容。",
+      "source_anchor": "00:00:13.500 - 00:00:18.000",
+      "overlay_text": "结尾要明确给出新的行动建议，这样观…"
+    },
+    {
+      "shot": 6,
+      "section": "收尾",
+      "duration": 8,
+      "asset_type": "summary_card_or_direct_close",
+      "goal": "收束观点，不复用原片尾节奏。",
+      "source_anchor": null,
+      "overlay_text": "总结与行动"
+    }
+  ],
+  "review_rubric": [
+    "逐段检查 narration，去掉任何接近原句复述的表达",
+    "确认每段都有新的视觉方案，不依赖原视频镜头",
+    "检查 on-screen text 是否足够短，适合竖屏节奏",
+    "确认收尾是新的总结和动作，不复用原片尾结构"
+  ],
+  "production_checklist": [
+    "Review the narration and remove any wording that still feels too close to the source",
+    "Record a new voiceover or TTS track from the rewritten script",
+    "Replace visuals with new footage, diagrams, captures, or generated assets",
+    "Re-time captions and pacing after the new voiceover is approved"
+  ],
+  "limitations": [
+    "This milestone generates a script package, not a fully rebuilt output video",
+    "Voiceover, new visuals, and final edit still need operator review and assembly"
+  ]
+}

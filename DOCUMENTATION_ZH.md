@@ -45,6 +45,7 @@
 
 - [examples/benchmark/README.md](examples/benchmark/README.md) / [examples/benchmark/README_ZH.md](examples/benchmark/README_ZH.md)
 - [examples/demo/README.md](examples/demo/README.md) / [examples/demo/README_ZH.md](examples/demo/README_ZH.md)
+- [examples/demo/level2_samples/README.md](examples/demo/level2_samples/README.md) / [examples/demo/level2_samples/README_ZH.md](examples/demo/level2_samples/README_ZH.md)
 - [examples/showcases/README.md](examples/showcases/README.md) / [examples/showcases/README_ZH.md](examples/showcases/README_ZH.md)
 
 ## 维护说明

@@ -1,0 +1,70 @@
+{
+  "review_version": 1,
+  "package_language": "en",
+  "source_title": "Level 2 Sample EN",
+  "status": "ready_for_operator_review",
+  "status_label_en": "Ready for operator review",
+  "status_label_zh": "可进入人工审阅",
+  "score": 100,
+  "summary_en": "The package is structurally complete and usable for operator review.",
+  "summary_zh": "这个脚本包结构完整，已经可以进入人工审阅。",
+  "metrics": {
+    "script_section_count": 6,
+    "shot_plan_count": 6,
+    "source_outline_count": 4,
+    "timed_segment_count": 4,
+    "outline_anchor_count": 4,
+    "section_anchor_count": 5,
+    "duration_total_seconds": 45,
+    "review_rubric_count": 4,
+    "production_checklist_count": 4
+  },
+  "checks": [
+    {
+      "id": "structure_complete",
+      "status": "pass",
+      "label_en": "Package structure is complete",
+      "label_zh": "脚本包结构完整",
+      "detail_en": "6 script sections and 6 shot-plan rows are aligned.",
+      "detail_zh": "共 6 个脚本段落，shot plan 也有 6 行，结构对齐。",
+      "weight": 30
+    },
+    {
+      "id": "anchor_coverage",
+      "status": "pass",
+      "label_en": "Timed anchor coverage is reviewable",
+      "label_zh": "时间锚点具备可审阅性",
+      "detail_en": "Timed transcript provides 4 outline anchors and 5 section anchors.",
+      "detail_zh": "带时间信息的 transcript 已提供 4 个大纲锚点、5 个脚本段锚点。",
+      "weight": 30
+    },
+    {
+      "id": "operator_handoff",
+      "status": "pass",
+      "label_en": "Operator handoff assets are present",
+      "label_zh": "运营交接信息已具备",
+      "detail_en": "Review rubric has 4 items and checklist has 4 steps.",
+      "detail_zh": "review rubric 有 4 条，production checklist 有 4 步。",
+      "weight": 20
+    },
+    {
+      "id": "duration_shape",
+      "status": "pass",
+      "label_en": "Section timing is internally consistent",
+      "label_zh": "段落时长内部一致",
+      "detail_en": "Section durations add up to 45s with no non-positive segments.",
+      "detail_zh": "所有段落时长合计 45 秒，且没有非正数时长。",
+      "weight": 20
+    }
+  ],
+  "next_steps_en": [
+    "Review any warning items before producing voiceover or visuals",
+    "Prefer timed transcripts so source anchors can be verified",
+    "Use the shot plan as the handoff spec for new visuals"
+  ],
+  "next_steps_zh": [
+    "在做配音和重建视觉前，先处理所有 warning 项",
+    "优先使用带时间信息的 transcript，方便核对锚点",
+    "把 shot plan 当作后续新视觉素材的交接规范"
+  ]
+}
