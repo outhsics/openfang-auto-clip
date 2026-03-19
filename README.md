@@ -144,7 +144,7 @@ python3 -m unittest discover -s tests
 ## 支持与社区
 
 - Bug： [GitHub Issues](https://github.com/outhsics/openfang-auto-clip/issues)
-- 使用问题：看 [SUPPORT.md](SUPPORT.md)
+- 使用问题：看 [SUPPORT_ZH.md](SUPPORT_ZH.md)
 - 安全问题：看 [SECURITY.md](SECURITY.md)
 - 贡献方式：看 [CONTRIBUTING.md](CONTRIBUTING.md)
 

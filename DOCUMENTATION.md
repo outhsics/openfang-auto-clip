@@ -22,7 +22,7 @@ This repository now keeps English and Chinese documentation in paired files wher
 - [PUBLISH_GUIDE.md](PUBLISH_GUIDE.md) / [PUBLISH_GUIDE_ZH.md](PUBLISH_GUIDE_ZH.md)
 - [ROADMAP_v0.3.0.md](ROADMAP_v0.3.0.md) / [ROADMAP_v0.3.0_ZH.md](ROADMAP_v0.3.0_ZH.md)
 - [SECURITY.md](SECURITY.md)
-- [SUPPORT.md](SUPPORT.md)
+- [SUPPORT.md](SUPPORT.md) / [SUPPORT_ZH.md](SUPPORT_ZH.md)
 - [AI_CONTEXT.md](AI_CONTEXT.md)
 
 ## Chinese-first guides with English counterparts
