@@ -1,8 +1,6 @@
-# OpenFang Auto Clip
+# 🎬 OpenFang Auto Clip
 
-<div align="center">
-
-**本地优先的视频再利用流水线，强调可复现 benchmark、可信文档和可传播发布资产**
+**The Fully Customizable, Local-First Video Automation Pipeline**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
@@ -10,9 +8,60 @@
 
 [English](README_EN.md) | 简体中文
 
-</div>
+---
 
-![OpenFang Auto Clip overview](docs/assets/readme-hero.svg)
+## ⚡ 30-Second Quick Start
+
+```bash
+# Clone & install (one command)
+git clone https://github.com/outhsics/openfang-auto-clip.git && \
+cd openfang-auto-clip && pip install -e .
+
+# Run quick demo - see results in 5 seconds (no video download needed!)
+python3 auto_clip.py --quick-demo
+
+# Process your first video
+./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 1
+```
+
+**Output:** `~/.openfang/clips/clips/TIMESTAMP/`
+
+---
+
+## 🎯 Why OpenFang?
+
+### The Problem with SaaS Video Tools
+
+| Challenge | SaaS Tools | OpenFang Auto Clip |
+|-----------|-----------|-------------------|
+| **Privacy** | ❌ Upload your content to cloud | ✅ Everything stays on your machine |
+| **Cost** | 💰 $20-100/month + API fees | ✅ 100% free, MIT licensed |
+| **Customization** | ❌ Limited to their features | ✅ Full Python + FFmpeg control |
+| **API Limits** | 💸 Pay per use | ✅ No API costs for most features |
+| **Data Ownership** | ⚠️ Locked into their platform | ✅ Your data, your workflow |
+| **Offline** | ❌ Requires internet | ✅ Works completely offline |
+
+### What Makes Us Different
+
+**🔧 Fully Customizable**
+- Unlike black-box SaaS tools, you have complete control
+- Extend with custom FFmpeg filters
+- Integrate any Python library
+- Modify the pipeline to fit your needs
+
+**🏠 Local-First Architecture**
+- Your videos never leave your machine
+- No API keys required for most features
+- Works offline after initial setup
+- Complete privacy and data ownership
+
+**📊 Production-Ready Features**
+- Reproducible benchmark system
+- Bilingual documentation (EN/ZH)
+- Synthetic demos (no external media needed)
+- Enterprise-ready CLI and Web UI
+
+---
 
 ## 60 秒判断值不值得看
 
@@ -65,16 +114,17 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .
 
+# Quick demo (5 seconds, no download needed!)
+python3 auto_clip.py --quick-demo
+
+# Check environment
 ./auto_clip.sh --doctor
+
+# Run benchmark
 python3 scripts/run_demo_benchmark.py
-python3 auto_clip.py --demo-script-package
-python3 auto_clip.py --review-package ~/.openfang/clips/script_packages/TIMESTAMP_source
-python3 scripts/run_level2_demo_suite.py
-python3 scripts/run_local_evaluation.py
-python3 scripts/refresh_demo_assets.py
-./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --dry-run
-./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 1 --duration 45
-./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 2 --transcript path/to/source.srt
+
+# Process your first video
+./auto_clip.sh "https://www.youtube.com/watch?v=VIDEO_ID" --transform 1
 ```
 
 如果你想用仓库自带安装脚本，见 [docs/INSTALLATION_ZH.md](docs/INSTALLATION_ZH.md)。

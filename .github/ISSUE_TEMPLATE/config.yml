@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions / 问题
+    url: https://github.com/outhsics/openfang-auto-clip/discussions
+    about: Ask questions in Discussions / 在讨论区提问
+  - name: Documentation / 文档
+    url: https://github.com/outhsics/openfang-auto-clip/blob/main/docs/
+    about: Read the documentation / 阅读文档

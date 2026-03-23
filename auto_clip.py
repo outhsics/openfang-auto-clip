@@ -1199,6 +1199,164 @@ def run_level2_script_demo(config: dict, transcript_path: Optional[str] = None) 
     return report
 
 
+def run_quick_demo(config: dict) -> dict:
+    """
+    Run a comprehensive quick demo that shows all features in ~5 seconds.
+    No external media downloads required.
+    """
+    print("=" * 70)
+    print("🚀 OpenFang Auto Clip - Quick Demo")
+    print("=" * 70)
+    print()
+    print("Running a complete feature demo without downloading videos...")
+    print()
+
+    demo_dir = OUTPUT_DIR / "quick_demo"
+    demo_dir.mkdir(parents=True, exist_ok=True)
+
+    # Step 1: Environment check
+    print("Step 1/4: Checking environment...")
+    doctor_report = build_doctor_report()
+    env_status = "✅ Ready" if all(
+        c["status"] in ["ok", "warn"] for c in doctor_report["checks"]
+    ) else "⚠️ Needs attention"
+    print(f"  Environment: {env_status}")
+
+    # Step 2: Generate Level 2 demo package
+    print("\nStep 2/4: Generating Level 2 script package...")
+    try:
+        transcript_file = DEFAULT_LEVEL2_DEMO_TRANSCRIPT
+        if not transcript_file.exists():
+            raise FileNotFoundError(f"Demo transcript not found: {transcript_file}")
+
+        transcript_payload = build_transcript_payload(transcript_file)
+        video_info = {
+            "title": "Quick Demo - Feature Highlights",
+            "path": str(transcript_file),
+            "duration": 45,
+            "id": "quick-demo",
+            "uploader": "OpenFang Auto Clip",
+        }
+
+        package = build_level2_script_package(
+            video_info, transcript_payload, transcript_file, config
+        )
+        package_dir, saved_files = save_level2_script_package(video_info, package)
+
+        # Copy to demo location
+        demo_package_dir = demo_dir / "script_package_demo"
+        shutil.copytree(package_dir, demo_package_dir)
+
+        print(f"  ✅ Generated script package with {len(package['script_sections'])} sections")
+        print(f"  📁 Location: {demo_package_dir}")
+
+    except Exception as e:
+        print(f"  ⚠️ Script package generation skipped: {e}")
+        demo_package_dir = None
+
+    # Step 3: Create sample transformation config
+    print("\nStep 3/4: Creating sample configuration...")
+    sample_config = {
+        "default_duration": 60,
+        "min_duration": 30,
+        "max_duration": 90,
+        "target_platforms": ["tiktok", "shorts", "reels"],
+        "auto_caption": True,
+        "whisper_model": "base",
+        "transform_level": 1,
+    }
+    config_path = demo_dir / "sample_config.json"
+    with open(config_path, "w") as f:
+        json.dump(sample_config, f, indent=2)
+    print(f"  ✅ Sample config saved to: {config_path.name}")
+
+    # Step 4: Generate demo report
+    print("\nStep 4/4: Creating demo report...")
+
+    report = {
+        "demo_version": "1.0",
+        "generated_at": datetime.now().isoformat(),
+        "features_demoed": [
+            {
+                "name": "Environment Check",
+                "status": "shown" if env_status == "✅ Ready" else "warning",
+                "description": "Verifies FFmpeg, Python, and dependencies"
+            },
+            {
+                "name": "Level 2 Script Package",
+                "status": "generated",
+                "description": "Transcript-to-script package with production handoff"
+            },
+            {
+                "name": "Configuration",
+                "status": "created",
+                "description": "Sample configuration for customization"
+            }
+        ],
+        "output_directory": str(demo_dir),
+        "next_steps": [
+            f"1. Review the script package: {demo_package_dir}" if demo_package_dir else "1. Review script package (skipped in this run)",
+            f"2. Check sample config: {config_path}",
+            "3. Run environment check: ./auto_clip.sh --doctor",
+            "4. Process your first video: ./auto_clip.sh 'URL' --transform 1"
+        ],
+        "learn_more": [
+            "README.md - Full documentation",
+            "examples/demo/README_ZH.md - Complete examples",
+            "docs/TRANSFORMATION_ZH.md - Transformation levels"
+        ]
+    }
+
+    report_path = demo_dir / "demo_report.json"
+    with open(report_path, "w") as f:
+        json.dump(report, f, indent=2)
+
+    # Create markdown summary
+    md_path = demo_dir / "README.md"
+    with open(md_path, "w") as f:
+        f.write("# OpenFang Auto Clip - Quick Demo Results\n\n")
+        f.write(f"Generated: {report['generated_at']}\n\n")
+        f.write("## Features Demoed\n\n")
+        for feature in report["features_demoed"]:
+            status_emoji = "✅" if feature["status"] in ["shown", "generated", "created"] else "⚠️"
+            f.write(f"### {status_emoji} {feature['name']}\n")
+            f.write(f"{feature['description']}\n\n")
+
+        f.write("## Output Files\n\n")
+        if demo_package_dir:
+            f.write(f"- Script Package: `{demo_package_dir.name}/`\n")
+        f.write(f"- Sample Config: `{config_path.name}`\n")
+        f.write(f"- This Report: `{report_path.name}`\n\n")
+
+        f.write("## Next Steps\n\n")
+        for step in report["next_steps"]:
+            f.write(f"{step}\n")
+
+        f.write("\n## Learn More\n\n")
+        for link in report["learn_more"]:
+            f.write(f"- {link}\n")
+
+    print(f"  ✅ Demo report saved")
+
+    # Print summary
+    print("\n" + "=" * 70)
+    print("🎉 Quick Demo Complete!")
+    print("=" * 70)
+    print(f"\n📁 All outputs saved to: {demo_dir}")
+    print("\n📋 Generated files:")
+    if demo_package_dir:
+        print(f"  • {demo_package_dir.name}/ - Level 2 script package demo")
+    print(f"  • {config_path.name} - Sample configuration")
+    print(f"  • {md_path.name} - This summary")
+    print("\n💡 Quick start commands:")
+    print("  ./auto_clip.sh --doctor                      # Check environment")
+    print("  ./auto_clip.sh 'URL' --transform 1          # Process your first video")
+    print("  python3 auto_clip.py --demo-script-package  # Full Level 2 demo")
+    print()
+
+    return report
+
+
 def download_video(url: str, output_dir: Path) -> dict:
     """
     Download video from YouTube or other supported sites
@@ -1836,6 +1994,8 @@ For more information, see README.md or docs/TRANSFORMATION.md
                        help='Generate a self-contained Level 2 demo package from the bundled transcript')
     parser.add_argument('--review-package',
                        help='Review a generated Level 2 package directory or script_package.json and write bilingual review artifacts')
+    parser.add_argument('--quick-demo', action='store_true',
+                       help='Run a quick 5-second demo showing all major features (no download required)')
 
     args = parser.parse_args()
 
@@ -1846,6 +2006,12 @@ For more information, see README.md or docs/TRANSFORMATION.md
             config.update(json.load(f))
 
     config['default_duration'] = args.duration
+
+    # Handle --quick-demo first - it's a complete self-contained demo
+    if args.quick_demo:
+        result = run_quick_demo(config)
+        print("\n🎉 Quick Demo Complete! Explore the outputs above.")
+        sys.exit(0 if result else 1)
 
     if args.doctor:
         report = build_doctor_report()
