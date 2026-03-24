@@ -1,0 +1,107 @@
+[
+  {
+    "name": "剪映/CapCut",
+    "url": "https://www.capcut.com",
+    "stars": 0,
+    "description": "ByteDance's short video creation tool",
+    "business_model": "Freemium",
+    "strengths": [
+      "Easy to use",
+      "Rich templates",
+      "TikTok integration"
+    ],
+    "weaknesses": [
+      "Cloud-based",
+      "Limited automation",
+      "Privacy concerns"
+    ],
+    "target_users": [
+      "General creators",
+      "TikTok users"
+    ]
+  },
+  {
+    "name": "yt-dlp",
+    "url": "https://github.com/yt-dlp/yt-dlp",
+    "stars": 80000,
+    "description": "Video downloader with broad platform support",
+    "business_model": "Open Source (Donations)",
+    "strengths": [
+      "Stable",
+      "Wide platform support",
+      "Active community"
+    ],
+    "weaknesses": [
+      "Download only",
+      "No editing",
+      "CLI only"
+    ],
+    "target_users": [
+      "Technical users",
+      "Archivists"
+    ]
+  },
+  {
+    "name": "DaVinci Resolve",
+    "url": "https://www.blackmagicdesign.com/products/davinciresolve",
+    "stars": 0,
+    "description": "Professional video editing software",
+    "business_model": "Freemium (Studio version paid)",
+    "strengths": [
+      "Professional features",
+      "Free version generous",
+      "Industry standard"
+    ],
+    "weaknesses": [
+      "Steep learning curve",
+      "Overkill for simple tasks"
+    ],
+    "target_users": [
+      "Professional editors",
+      "Filmmakers"
+    ]
+  },
+  {
+    "name": "Deforum Stable Diffusion",
+    "url": "https://github.com/deforum-art/deforum-for-automatic1111-webui",
+    "stars": 20000,
+    "description": "AI video generation using Stable Diffusion",
+    "business_model": "Open Source",
+    "strengths": [
+      "High quality output",
+      "Customizable",
+      "Active development"
+    ],
+    "weaknesses": [
+      "Complex setup",
+      "Generation is slow",
+      "Limited control"
+    ],
+    "target_users": [
+      "AI artists",
+      "Researchers",
+      "Technical users"
+    ]
+  },
+  {
+    "name": "MoviePy",
+    "url": "https://github.com/Zulko/moviepy",
+    "stars": 12000,
+    "description": "Python video editing library",
+    "business_model": "Open Source",
+    "strengths": [
+      "Pythonic API",
+      "Easy to script",
+      "Good documentation"
+    ],
+    "weaknesses": [
+      "Performance issues",
+      "Limited format support",
+      "Not production-ready"
+    ],
+    "target_users": [
+      "Python developers",
+      "Researchers"
+    ]
+  }
+]

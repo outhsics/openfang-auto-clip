@@ -1,0 +1,96 @@
+[
+  {
+    "niche": "企业宣发素材批量制作",
+    "pain_points": [
+      "需要大量短视频素材",
+      "人工剪辑成本高、效率低",
+      "多平台适配需求",
+      "保密要求（未公开内容）"
+    ],
+    "target_customers": [
+      "电影发行公司",
+      "电视剧制作团队",
+      "MCN 机构",
+      "宣发团队"
+    ],
+    "market_size": "数千万/年",
+    "competition_level": "低",
+    "entry_barrier": "中低",
+    "recommendation_score": 8,
+    "notes": "市场真实存在，付费能力强，竞争不激烈"
+  },
+  {
+    "niche": "教育行业课程视频处理",
+    "pain_points": [
+      "课程数量大",
+      "需要标准化处理",
+      "质量要求高",
+      "合规要求"
+    ],
+    "target_customers": [
+      "在线教育平台",
+      "培训机构",
+      "高校慕课中心"
+    ],
+    "market_size": "千万级/年",
+    "competition_level": "中",
+    "entry_barrier": "中",
+    "recommendation_score": 7,
+    "notes": "需求稳定，付费意愿强"
+  },
+  {
+    "niche": "法律/医疗行业合规处理",
+    "pain_points": [
+      "极高的隐私要求",
+      "必须本地处理",
+      "合规记录",
+      "稳定可靠"
+    ],
+    "target_customers": [
+      "律师事务所",
+      "司法鉴定机构",
+      "医院教学中心"
+    ],
+    "market_size": "百万级/年",
+    "competition_level": "很低",
+    "entry_barrier": "很高",
+    "recommendation_score": 6,
+    "notes": "行业门槛高，但竞争少"
+  },
+  {
+    "niche": "开发者工具/组件库",
+    "pain_points": [
+      "视频处理开发成本高",
+      "需要易用的 API",
+      "稳定性和可靠性"
+    ],
+    "target_customers": [
+      "应用开发者",
+      "技术团队",
+      "其他开源项目"
+    ],
+    "market_size": "不确定",
+    "competition_level": "中",
+    "entry_barrier": "低",
+    "recommendation_score": 7,
+    "notes": "可以作为开源项目运营，通过服务变现"
+  },
+  {
+    "niche": "内容农场/MCN 自动化",
+    "pain_points": [
+      "大量视频需求",
+      "多账号管理",
+      "自动发布"
+    ],
+    "target_customers": [
+      "内容农场",
+      "MCN 机构",
+      "自媒体矩阵"
+    ],
+    "market_size": "百万级/年",
+    "competition_level": "高",
+    "entry_barrier": "低",
+    "recommendation_score": 3,
+    "notes": "合规风险高，不推荐"
+  }
+]
