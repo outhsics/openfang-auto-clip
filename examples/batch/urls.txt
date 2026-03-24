@@ -1,0 +1,7 @@
+# OpenFang Auto Clip - Batch Processing Example
+# Lines starting with # are comments
+# One URL per line
+
+https://www.youtube.com/watch?v=dQw4w9WgXcQ
+https://www.youtube.com/watch?v=9bZkp7q19f0
+https://www.youtube.com/watch?v=kJQP7kiw5Fk

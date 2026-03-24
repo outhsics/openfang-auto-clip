@@ -1,0 +1,20 @@
+{
+  "tasks": [
+    {
+      "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "transform_level": 1,
+      "duration": 60
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=9bZkp7q19f0",
+      "transform_level": 2,
+      "duration": 90,
+      "transcript_path": "/path/to/transcript.srt"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=kJQP7kiw5Fk",
+      "transform_level": 1,
+      "duration": 45
+    }
+  ]
+}

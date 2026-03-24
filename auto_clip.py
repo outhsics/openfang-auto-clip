@@ -1359,10 +1359,18 @@ def run_quick_demo(config: dict) -> dict:
 
 def download_video(url: str, output_dir: Path) -> dict:
     """
-    Download video from YouTube or other supported sites
+    Download video from multiple supported platforms
+
+    Supported platforms:
+    - YouTube
+    - Bilibili
+    - Douyin (TikTok China)
+    - Local files
+    - Direct URLs
+    - Generic (yt-dlp auto-detection)
 
     Args:
-        url: Video URL
+        url: Video URL or file path
         output_dir: Output directory path
 
     Returns:
@@ -1372,55 +1380,64 @@ def download_video(url: str, output_dir: Path) -> dict:
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    cmd = [
-        "yt-dlp",
-        "-f", "best[ext=mp4]",
-        "-o", str(output_dir / "%(title)s.%(ext)s"),
-        "--print", "json",
-        "--remote-components", "ejs:github",
-        "--newline",
-        url
-    ]
-
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
-
-    if result.returncode != 0:
-        raise Exception(f"Download failed: {result.stderr}")
-
+    # Import video sources module
     try:
-        video_info = json.loads(result.stdout)
+        from src.video_sources import get_video_source
+        source = get_video_source(url)
+        print(f"🎯 Detected platform: {source.__class__.__name__}")
+        return source.download(output_dir)
+    except ImportError:
+        # Fallback to original yt-dlp implementation
+        print("⚠️  Video sources module not available, using yt-dlp")
+        cmd = [
+            "yt-dlp",
+            "-f", "best[ext=mp4]",
+            "-o", str(output_dir / "%(title)s.%(ext)s"),
+            "--print", "json",
+            "--remote-components", "ejs:github",
+            "--newline",
+            url
+        ]
 
-        # Sanitize filename
-        safe_title = sanitize_filename(video_info.get('title', 'video'))
-        video_path = output_dir / f"{safe_title}.mp4"
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
 
-        # Rename if needed
-        original_path = output_dir / f"{video_info['title']}.mp4"
-        if original_path.exists() and original_path != video_path:
-            original_path.rename(video_path)
+        if result.returncode != 0:
+            raise Exception(f"Download failed: {result.stderr}")
 
-        print(f"✅ Download complete: {video_path.name}")
+        try:
+            video_info = json.loads(result.stdout)
 
-        return {
-            "path": str(video_path),
-            "title": video_info.get('title', safe_title),
-            "duration": video_info.get('duration', 0),
-            "id": video_info.get('id', 'unknown'),
-            "uploader": video_info.get('uploader', 'unknown'),
-            "upload_date": video_info.get('upload_date', 'unknown')
-        }
-    except json.JSONDecodeError:
-        # Fallback: list downloaded files
-        files = list(output_dir.glob("*.mp4"))
-        if files:
-            video_path = files[-1]
+            # Sanitize filename
+            safe_title = sanitize_filename(video_info.get('title', 'video'))
+            video_path = output_dir / f"{safe_title}.mp4"
+
+            # Rename if needed
+            original_path = output_dir / f"{video_info['title']}.mp4"
+            if original_path.exists() and original_path != video_path:
+                original_path.rename(video_path)
+
+            print(f"✅ Download complete: {video_path.name}")
+
             return {
                 "path": str(video_path),
-                "title": video_path.stem,
-                "duration": 0,
-                "id": "unknown"
+                "title": video_info.get('title', safe_title),
+                "duration": video_info.get('duration', 0),
+                "id": video_info.get('id', 'unknown'),
+                "uploader": video_info.get('uploader', 'unknown'),
+                "upload_date": video_info.get('upload_date', 'unknown')
             }
-        raise
+        except json.JSONDecodeError:
+            # Fallback: list downloaded files
+            files = list(output_dir.glob("*.mp4"))
+            if files:
+                video_path = files[-1]
+                return {
+                    "path": str(video_path),
+                    "title": video_path.stem,
+                    "duration": 0,
+                    "id": "unknown"
+                }
+            raise
 
 
 def sanitize_filename(filename: str) -> str:
@@ -1784,6 +1801,262 @@ def analyze_highlights_simple(video_info: dict, config: dict) -> List[dict]:
 
 
 # ============================================================================
+# BATCH PROCESSING
+# ============================================================================
+
+def load_batch_file(batch_file: str) -> List[dict]:
+    """
+    Load URLs and options from a batch file.
+
+    Supported formats:
+    - Plain text: one URL per line
+    - CSV: url,transform_level,duration,transcript_path
+    - JSON: [{"url": "...", "transform": 1, "duration": 60}, ...]
+
+    Args:
+        batch_file: Path to batch file
+
+    Returns:
+        List of processing tasks
+    """
+    batch_path = Path(batch_file)
+    if not batch_path.exists():
+        raise FileNotFoundError(f"Batch file not found: {batch_file}")
+
+    suffix = batch_path.suffix.lower()
+
+    if suffix == ".json":
+        data = json.loads(batch_path.read_text(encoding="utf-8"))
+        if isinstance(data, list):
+            return data
+        elif isinstance(data, dict) and "tasks" in data:
+            return data["tasks"]
+        else:
+            raise ValueError(f"Invalid JSON batch file format: {batch_file}")
+
+    elif suffix == ".csv":
+        import csv
+        tasks = []
+        with open(batch_path, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                task = {"url": row.get("url", "").strip()}
+                if "transform" in row:
+                    task["transform_level"] = int(row["transform"])
+                if "duration" in row:
+                    task["duration"] = int(row["duration"])
+                if "transcript" in row:
+                    task["transcript_path"] = row["transcript"]
+                if task["url"]:
+                    tasks.append(task)
+        return tasks
+
+    else:
+        # Plain text: one URL per line
+        text = batch_path.read_text(encoding="utf-8")
+        urls = []
+        for line in text.splitlines():
+            line = line.strip()
+            if line and not line.startswith("#"):
+                urls.append({"url": line})
+        return urls
+
+
+def process_batch(
+    tasks: List[dict],
+    config: dict,
+    parallel: int = 1,
+    resume_from: Optional[str] = None,
+) -> dict:
+    """
+    Process multiple videos in batch.
+
+    Args:
+        tasks: List of processing tasks (each with 'url' and optional params)
+        config: Configuration dict
+        parallel: Number of parallel processes (default: 1)
+        resume_from: URL to resume from (skip previous URLs)
+
+    Returns:
+        Batch processing report
+    """
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    import threading
+
+    print("=" * 70)
+    print("📦 OpenFang Auto Clip - Batch Processing")
+    print("=" * 70)
+    print(f"Total tasks: {len(tasks)}")
+    print(f"Parallel workers: {parallel}")
+    print()
+
+    # Create batch output directory
+    batch_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    batch_dir = OUTPUT_DIR / "batches" / batch_timestamp
+    batch_dir.mkdir(parents=True, exist_ok=True)
+
+    # Track results
+    results = {
+        "batch_id": batch_timestamp,
+        "batch_dir": str(batch_dir),
+        "total_tasks": len(tasks),
+        "started_at": datetime.now().isoformat(),
+        "tasks": [],
+        "summary": {
+            "success": 0,
+            "failed": 0,
+            "skipped": 0,
+        }
+    }
+
+    # Thread-safe counter
+    counter = {"value": 0, "lock": threading.Lock()}
+
+    def process_single_task(task: dict, index: int) -> dict:
+        """Process a single task with error handling."""
+        url = task.get("url", "")
+        transform_level = task.get("transform_level", 1)
+        duration = task.get("duration", config.get("default_duration", 60))
+        transcript_path = task.get("transcript_path")
+
+        task_result = {
+            "index": index,
+            "url": url,
+            "transform_level": transform_level,
+            "started_at": datetime.now().isoformat(),
+        }
+
+        # Check resume
+        if resume_from:
+            with counter["lock"]:
+                if counter["value"] > 0:
+                    # Skip if we haven't reached resume point
+                    if url != resume_from and counter["value"] < len(tasks):
+                        task_result["status"] = "skipped"
+                        task_result["message"] = "Skipped (resume mode)"
+                        results["summary"]["skipped"] += 1
+                        counter["value"] += 1
+                        return task_result
+
+        print(f"\n[{index + 1}/{len(tasks)}] Processing: {url[:60]}...")
+
+        try:
+            # Process the video
+            result = process_video(
+                url=url,
+                transform_level=transform_level,
+                config={**config, "default_duration": duration},
+                transcript_path=transcript_path,
+            )
+
+            if result:
+                task_result["status"] = "success"
+                task_result["result"] = result
+                task_result["completed_at"] = datetime.now().isoformat()
+
+                with counter["lock"]:
+                    results["summary"]["success"] += 1
+            else:
+                task_result["status"] = "failed"
+                task_result["message"] = "Processing returned None"
+                task_result["completed_at"] = datetime.now().isoformat()
+
+                with counter["lock"]:
+                    results["summary"]["failed"] += 1
+
+        except Exception as e:
+            task_result["status"] = "failed"
+            task_result["message"] = str(e)
+            task_result["error_type"] = type(e).__name__
+            task_result["completed_at"] = datetime.now().isoformat()
+
+            with counter["lock"]:
+                results["summary"]["failed"] += 1
+
+        with counter["lock"]:
+            counter["value"] += 1
+
+        return task_result
+
+    # Process tasks
+    if parallel > 1:
+        # Parallel processing
+        with ThreadPoolExecutor(max_workers=parallel) as executor:
+            futures = {
+                executor.submit(process_single_task, task, i): i
+                for i, task in enumerate(tasks)
+            }
+
+            for future in as_completed(futures):
+                index = futures[future]
+                try:
+                    task_result = future.result()
+                    results["tasks"].append(task_result)
+
+                    # Print progress
+                    completed = sum(1 for t in results["tasks"] if t["status"] in ["success", "failed", "skipped"])
+                    print(f"Progress: {completed}/{len(tasks)} completed")
+
+                except Exception as e:
+                    print(f"Task {index} failed with exception: {e}")
+                    results["tasks"].append({
+                        "index": index,
+                        "status": "failed",
+                        "message": f"Worker exception: {e}",
+                    })
+                    results["summary"]["failed"] += 1
+    else:
+        # Sequential processing
+        for i, task in enumerate(tasks):
+            task_result = process_single_task(task, i)
+            results["tasks"].append(task_result)
+
+    # Finalize report
+    results["completed_at"] = datetime.now().isoformat()
+
+    # Save batch report
+    report_path = batch_dir / "batch_report.json"
+    with open(report_path, "w", encoding="utf-8") as f:
+        json.dump(results, f, ensure_ascii=False, indent=2)
+
+    # Print summary
+    print("\n" + "=" * 70)
+    print("✅ BATCH PROCESSING COMPLETE")
+    print("=" * 70)
+    print(f"Total tasks: {results['total_tasks']}")
+    print(f"✅ Success: {results['summary']['success']}")
+    print(f"❌ Failed: {results['summary']['failed']}")
+    print(f"⏭️  Skipped: {results['summary']['skipped']}")
+    print(f"\n📁 Report: {report_path}")
+
+    if results["summary"]["failed"] > 0:
+        print("\n❌ Failed tasks:")
+        for task in results["tasks"]:
+            if task["status"] == "failed":
+                print(f"  • [{task['index'] + 1}] {task['url'][:60]}")
+                print(f"    Error: {task.get('message', 'Unknown')}")
+
+    return results
+
+
+def save_batch_resume_file(batch_dir: Path, tasks: List[dict], current_index: int) -> Path:
+    """Save a resume file for batch processing."""
+    resume_data = {
+        "batch_dir": str(batch_dir),
+        "total_tasks": len(tasks),
+        "current_index": current_index,
+        "next_url": tasks[current_index + 1]["url"] if current_index + 1 < len(tasks) else None,
+        "timestamp": datetime.now().isoformat(),
+    }
+
+    resume_path = batch_dir / "resume.json"
+    with open(resume_path, "w", encoding="utf-8") as f:
+        json.dump(resume_data, f, ensure_ascii=False, indent=2)
+
+    return resume_path
+
+
+# ============================================================================
 # MAIN WORKFLOW
 # ============================================================================
 
@@ -1997,6 +2270,37 @@ For more information, see README.md or docs/TRANSFORMATION.md
     parser.add_argument('--quick-demo', action='store_true',
                        help='Run a quick 5-second demo showing all major features (no download required)')
 
+    # Batch processing arguments
+    parser.add_argument('--batch-file',
+                       help='Process multiple URLs from a file (txt/csv/json)')
+    parser.add_argument('--parallel', type=int, default=1,
+                       help='Number of parallel workers for batch processing (default: 1)')
+    parser.add_argument('--resume-from',
+                       help='Resume batch processing from this URL')
+
+    # AIGC arguments
+    parser.add_argument('--aigc-image', metavar='PROMPT',
+                       help='Generate AI image from prompt (requires AIGC provider setup)')
+    parser.add_argument('--aigc-video', metavar='PROMPT',
+                       help='Generate AI video from prompt (requires AIGC provider setup)')
+    parser.add_argument('--aigc-provider', default='stable_diffusion',
+                       choices=['stable_diffusion', 'sd', 'openai_dalle', 'dalle', 'replicate', 'comfyui', 'liblib'],
+                       help='AI provider to use (default: stable_diffusion)')
+    parser.add_argument('--aigc-style',
+                       choices=['realistic', 'anime', 'oil_painting', 'watercolor', 'cyberpunk', 'fantasy',
+                               'minimalist', 'vintage', 'pop_art', 'cinematic'],
+                       help='Style preset for AI generation')
+    parser.add_argument('--aigc-width', type=int, default=1024,
+                       help='Width for AI generation (default: 1024)')
+    parser.add_argument('--aigc-height', type=int, default=1024,
+                       help='Height for AI generation (default: 1024)')
+    parser.add_argument('--aigc-duration', type=float, default=4.0,
+                       help='Duration for AI video generation in seconds (default: 4.0)')
+    parser.add_argument('--aigc-variations', type=int, default=1,
+                       help='Number of variations to generate (default: 1)')
+    parser.add_argument('--list-aigc-presets', action='store_true',
+                       help='List all available AIGC presets and styles')
+
     args = parser.parse_args()
 
     # Load config
@@ -2028,8 +2332,142 @@ For more information, see README.md or docs/TRANSFORMATION.md
         print("\n🎉 Success!")
         sys.exit(0 if result else 1)
 
+    # Handle batch processing
+    if args.batch_file:
+        try:
+            tasks = load_batch_file(args.batch_file)
+            print(f"📋 Loaded {len(tasks)} tasks from {args.batch_file}")
+
+            # Apply default transform level and duration from args
+            for task in tasks:
+                if "transform_level" not in task:
+                    task["transform_level"] = args.transform
+                if "duration" not in task:
+                    task["duration"] = args.duration
+
+            result = process_batch(
+                tasks=tasks,
+                config=config,
+                parallel=args.parallel,
+                resume_from=args.resume_from,
+            )
+
+            # Exit with error code if any tasks failed
+            failed_count = result["summary"]["failed"]
+            sys.exit(min(failed_count, 1))
+
+        except Exception as e:
+            print(f"\n❌ Batch processing failed: {e}")
+            import traceback
+            traceback.print_exc()
+            sys.exit(1)
+
+    # Handle AIGC commands
+    if args.list_aigc_presets:
+        print("\n🤖 AIGC Presets and Styles\n")
+        print("Image Styles:")
+        image_styles = ['realistic', 'anime', 'oil_painting', 'watercolor', 'cyberpunk',
+                       'fantasy', 'minimalist', 'vintage', 'pop_art', 'cinematic']
+        for style in image_styles:
+            print(f"  • {style}")
+        print("\nVideo Styles:")
+        video_styles = ['cinematic', 'anime', 'realistic', 'abstract', 'nature',
+                       'sci_fi', 'vintage', 'slow_motion', 'timelapse', 'loop']
+        for style in video_styles:
+            print(f"  • {style}")
+        print("\n📖 Full guide: docs/AIGC_INTEGRATION.md")
+        sys.exit(0)
+
+    if args.aigc_image or args.aigc_video:
+        try:
+            # Import AIGC modules
+            from src.aigc import ImageGenerator, VideoGenerator, ImageStyle, VideoStyle
+            from src.aigc import get_provider
+
+            provider = get_provider(args.aigc_provider)
+
+            if args.aigc_image:
+                print(f"\n🎨 Generating AI image...")
+                print(f"   Prompt: {args.aigc_image}")
+                print(f"   Provider: {args.aigc_provider}")
+                if args.aigc_style:
+                    print(f"   Style: {args.aigc_style}")
+
+                generator = ImageGenerator(provider=provider)
+
+                # Convert style string to enum
+                image_style = None
+                if args.aigc_style:
+                    try:
+                        image_style = ImageStyle(args.aigc_style)
+                    except ValueError:
+                        print(f"⚠️  Unknown style: {args.aigc_style}")
+
+                # Generate variations if requested
+                if args.aigc_variations > 1:
+                    results = generator.generate_variations(
+                        base_prompt=args.aigc_image,
+                        num_variations=args.aigc_variations,
+                        width=args.aigc_width,
+                        height=args.aigc_height,
+                        style=image_style
+                    )
+
+                    print(f"\n✅ Generated {len(results)} variations:")
+                    for i, result in enumerate(results):
+                        if result.get("success"):
+                            print(f"   {i+1}. {result.get('save_path')}")
+                        else:
+                            print(f"   {i+1}. Failed: {result.get('error')}")
+                else:
+                    result = generator.generate(
+                        prompt=args.aigc_image,
+                        style=image_style,
+                        width=args.aigc_width,
+                        height=args.aigc_height
+                    )
+
+                    if result.get("success"):
+                        print(f"\n✅ Image generated: {result.get('save_path')}")
+                    else:
+                        print(f"\n❌ Generation failed: {result.get('error')}")
+                        sys.exit(1)
+
+            elif args.aigc_video:
+                print(f"\n🎬 Generating AI video...")
+                print(f"   Prompt: {args.aigc_video}")
+                print(f"   Provider: {args.aigc_provider}")
+                print(f"   Duration: {args.aigc_duration}s")
+
+                generator = VideoGenerator(provider=provider)
+
+                result = generator.generate(
+                    prompt=args.aigc_video,
+                    duration=args.aigc_duration,
+                    width=args.aigc_width,
+                    height=args.aigc_height
+                )
+
+                if result.get("success"):
+                    print(f"\n✅ Video generated: {result.get('save_path')}")
+                else:
+                    print(f"\n❌ Generation failed: {result.get('error')}")
+                    sys.exit(1)
+
+        except ImportError:
+            print("\n❌ AIGC modules not available")
+            print("   Make sure src/aigc/ directory exists")
+            sys.exit(1)
+        except Exception as e:
+            print(f"\n❌ AIGC generation failed: {e}")
+            import traceback
+            traceback.print_exc()
+            sys.exit(1)
+
+        sys.exit(0)
+
     if not args.url:
-        parser.error("url is required unless --doctor, --demo-script-package, or --review-package is used")
+        parser.error("url is required unless --doctor, --demo-script-package, --review-package, --batch-file, or AIGC option is used")
 
     if args.dry_run:
         plan = build_processing_plan(args.url, args.transform, config, transcript_path=args.transcript)

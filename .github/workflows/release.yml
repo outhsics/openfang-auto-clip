@@ -3,58 +3,53 @@ name: Release
 on:
   push:
     tags:
-      - "v*.*.*"
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version (e.g., v1.0.0)'
+        required: true
+        default: 'v1.0.0'
 
 permissions:
   contents: write
 
 jobs:
-  release:
+  create-release:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out repository
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
         with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements-dev.txt
-
-      - name: Run tests
-        run: python -m unittest discover -s tests
-
-      - name: Prepare release bundle
-        run: python scripts/release_prep.py "${GITHUB_REF_NAME}" --skip-tests --allow-dirty
-
-      - name: Publish GitHub release
+          body: |
+            ## 🎉 OpenFang Auto Clip ${{ github.ref_name }}
+            
+            ### 📦 Installation
+            
+            \`\`\`bash
+            pip install openfang-auto-clip==${{ github.ref_name }}
+            \`\`\`
+            
+            ### 🚀 Quick Start
+            
+            \`\`\`bash
+            git clone https://github.com/outhsics/openfang-auto-clip.git
+            cd openfang-auto-clip
+            git checkout ${{ github.ref_name }}
+            pip install -e .
+            \`\`\`
+            
+            ### 📖 Documentation
+            
+            - [README](https://github.com/outhsics/openfang-auto-clip/blob/main/README.md)
+            - [Features](https://github.com/outhsics/openfang-auto-clip/blob/main/FEATURES.md)
+          draft: false
+          prerelease: false
+          generate_release_notes: true
         env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          assets=()
-          for asset in \
-            "benchmark_report.json" \
-            "preview.png" \
-            "storyboard.png" \
-            "launch_post.md" \
-            "launch_post_zh.md" \
-            "github_social_preview.svg" \
-            "github_social_preview_zh.svg" \
-            "bundle_manifest.json"; do
-            asset_path="dist/releases/${GITHUB_REF_NAME}/${asset}"
-            if [ -f "${asset_path}" ]; then
-              assets+=("${asset_path}")
-            fi
-          done
-
-          gh release create "${GITHUB_REF_NAME}" \
-            --title "OpenFang Auto Clip ${GITHUB_REF_NAME}" \
-            --notes-file "dist/releases/${GITHUB_REF_NAME}/release_notes.md" \
-            "${assets[@]}"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -5,6 +5,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![CI](https://github.com/outhsics/openfang-auto-clip/actions/workflows/ci.yml/badge.svg)](https://github.com/outhsics/openfang-auto-clip/actions/workflows/ci.yml)
+[![GitHub Stars](https://img.shields.io/github/stars/outhsics/openfang-auto-clip?style=social)](https://github.com/outhsics/openfang-auto-clip/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/outhsics/openfang-auto-clip?style=social)](https://github.com/outhsics/openfang-auto-clip/network/members)
+[![GitHub Issues](https://img.shields.io/github/issues/outhsics/openfang-auto-clip)](https://github.com/outhsics/openfang-auto-clip/issues)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](http://makeapullrequest.com)
+[![Code Style: Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 [English](README_EN.md) | 简体中文
 
@@ -172,16 +177,106 @@ python3 scripts/release_prep.py v0.3.0 --report tmp/demo-benchmark-v030/benchmar
 python3 -m unittest discover -s tests
 ```
 
+## 🤖 AIGC 集成 (NEW!)
+
+OpenFang Auto Clip 现已集成 AI 生成内容功能，支持多种 AI 提供商：
+
+```bash
+# 生成 AI 图像
+python3 -m src.aigc.image_generator \
+    --prompt "赛博朋克城市夜景" \
+    --style cinematic \
+    --width 1024 --height 1024
+
+# 生成 AI 视频
+python3 -m src.aigc.video_generator \
+    --prompt "云层流动的延时摄影" \
+    --duration 4.0
+
+# 快速开始示例
+python3 examples/aigc_quickstart.py
+
+# 查看所有示例
+python3 examples/aigc_example.py
+```
+
+**支持的 AI 提供商：**
+- ✅ Stable Diffusion (本地，免费)
+- ✅ OpenAI DALL-E
+- ✅ Replicate
+- ✅ ComfyUI
+- ✅ LibLib.tv
+
+**完整文档：** [docs/AIGC_INTEGRATION.md](docs/AIGC_INTEGRATION.md)
+
+## 🤖 Agent 技能系统 (NEW!)
+
+OpenFang Auto Clip 现已集成完整的 Agent 技能系统，兼容 OpenClaw 框架：
+
+```python
+from src.agent_skills import Agent, create_video_processing_workflow
+
+# 创建 Agent
+agent = Agent("video_agent")
+agent.add_skill("video_download")
+agent.add_skill("video_transform")
+agent.add_workflow(create_video_processing_workflow())
+
+# 执行工作流
+result = agent.execute("video_processing", {
+    "video_url": "https://youtube.com/watch?v=VIDEO_ID",
+    "clip_segments": [(0, 30), (60, 90)]
+})
+```
+
+**可用技能：**
+- ✅ video_download - 多平台视频下载
+- ✅ video_transform - 版权保护转换
+- ✅ batch_process - 批量处理
+- ✅ aigc_image - AI 图像生成
+- ✅ aigc_video - AI 视频生成
+- ✅ transcript_generate - 字幕生成
+- ✅ clip_extract - 片段提取
+
+**快速开始：**
+```bash
+# 运行示例
+python3 examples/agent_skills_example.py
+
+# 查看文档
+cat docs/AGENT_SKILLS.md
+```
+
+**完整文档：** [docs/AGENT_SKILLS.md](docs/AGENT_SKILLS.md)
+
 ## 文档入口
 
-- [DOCUMENTATION_ZH.md](DOCUMENTATION_ZH.md)
-- [docs/INSTALLATION_ZH.md](docs/INSTALLATION_ZH.md)
-- [docs/TRANSFORMATION_ZH.md](docs/TRANSFORMATION_ZH.md)
-- [docs/SOCIAL_PREVIEW_ZH.md](docs/SOCIAL_PREVIEW_ZH.md)
-- [docs/VERSIONING_ZH.md](docs/VERSIONING_ZH.md)
-- [PROJECT_STATUS.md](PROJECT_STATUS.md)
-- [OPEN_SOURCE_PLAN.md](OPEN_SOURCE_PLAN.md)
-- [AI_CONTEXT.md](AI_CONTEXT.md)
+### 📚 核心文档
+- [FEATURES.md](FEATURES.md) - **NEW!** 功能特性总览 (30+ 新功能)
+- [CONTRIBUTING_GUIDE.md](CONTRIBUTING_GUIDE.md) - **NEW!** 贡献指南
+- [docs/QUICK_REFERENCE.md](docs/QUICK_REFERENCE.md) - **NEW!** 快速参考手册
+- [docs/PROMO.md](docs/PROMO.md) - **NEW!** 推广材料
+- [docs/PUBLISHING_GUIDE.md](docs/PUBLISHING_GUIDE.md) - **NEW!** 发布指南
+
+### 📖 详细文档
+- [DOCUMENTATION_ZH.md](DOCUMENTATION_ZH.md) - 完整文档索引
+- [docs/INSTALLATION_ZH.md](docs/INSTALLATION_ZH.md) - 安装指南
+- [docs/TRANSFORMATION_ZH.md](docs/TRANSFORMATION_ZH.md) - 转换级别说明
+
+### 🚀 新功能文档
+- [docs/AIGC_INTEGRATION.md](docs/AIGC_INTEGRATION.md) - **NEW!** AIGC 集成指南
+- [docs/AGENT_SKILLS.md](docs/AGENT_SKILLS.md) - **NEW!** Agent 技能系统
+- [docs/BATCH_PROCESSING.md](docs/BATCH_PROCESSING.md) - **NEW!** 批量处理
+- [docs/VIDEO_SOURCES.md](docs/VIDEO_SOURCES.md) - **NEW!** 多平台支持
+- [docs/TRANSFORM_PRESETS.md](docs/TRANSFORM_PRESETS.md) - **NEW!** 转换预设
+- [docs/DOCKER_DEPLOYMENT.md](docs/DOCKER_DEPLOYMENT.md) - **NEW!** Docker 部署
+
+### 📋 项目文档
+- [docs/SOCIAL_PREVIEW_ZH.md](docs/SOCIAL_PREVIEW_ZH.md) - 社交预览
+- [docs/VERSIONING_ZH.md](docs/VERSIONING_ZH.md) - 版本管理
+- [PROJECT_STATUS.md](PROJECT_STATUS.md) - 项目状态
+- [OPEN_SOURCE_PLAN.md](OPEN_SOURCE_PLAN.md) - 开源计划
+- [AI_CONTEXT.md](AI_CONTEXT.md) - AI 上下文
 
 ## 对外定位
 

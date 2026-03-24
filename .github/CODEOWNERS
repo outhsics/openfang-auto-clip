@@ -1,0 +1,12 @@
+# Code Owners
+
+# 项目维护者对所有文件拥有审批权限
+* @outhsics
+
+# 特殊目录的所有者
+# docs/ @documentation-team
+# tests/ @qa-team
+
+# 文件扩展名的所有者
+# *.py @python-team
+#*.md @documentation-team

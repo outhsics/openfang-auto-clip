@@ -1,0 +1,89 @@
+{
+  "presets": {
+    "default": {
+      "name": "Default",
+      "description": "Balanced copyright protection with good visual quality",
+      "protection_level": "high",
+      "speed_factor": 1.15
+    },
+    "mild": {
+      "name": "Mild",
+      "description": "Subtle changes, maintains original look",
+      "protection_level": "low",
+      "speed_factor": 1.05
+    },
+    "strong": {
+      "name": "Strong",
+      "description": "Maximum copyright protection",
+      "protection_level": "very_high",
+      "speed_factor": 1.25
+    },
+    "cinematic": {
+      "name": "Cinematic",
+      "description": "Movie-like color grading",
+      "protection_level": "high",
+      "speed_factor": 1.15
+    },
+    "retro": {
+      "name": "Retro",
+      "description": "90s VHS style",
+      "protection_level": "high",
+      "speed_factor": 1.15
+    },
+    "cyberpunk": {
+      "name": "Cyberpunk",
+      "description": "Neon, futuristic look",
+      "protection_level": "high",
+      "speed_factor": 1.15
+    },
+    "vintage": {
+      "name": "Vintage",
+      "description": "Old film, sepia tone",
+      "protection_level": "high",
+      "speed_factor": 1.15
+    },
+    "noir": {
+      "name": "Noir",
+      "description": "Black and white, film noir style",
+      "protection_level": "high",
+      "speed_factor": 1.15
+    },
+    "tiktok": {
+      "name": "TikTok",
+      "description": "Optimized for TikTok (fast-paced, vibrant)",
+      "protection_level": "high",
+      "speed_factor": 1.25
+    },
+    "instagram": {
+      "name": "Instagram",
+      "description": "Clean, aesthetic for Reels",
+      "protection_level": "high",
+      "speed_factor": 1.15
+    },
+    "youtube": {
+      "name": "YouTube",
+      "description": "Balanced for YouTube Shorts",
+      "protection_level": "high",
+      "speed_factor": 1.15
+    },
+    "dramatic": {
+      "name": "Dramatic",
+      "description": "High contrast, intense mood",
+      "protection_level": "high",
+      "speed_factor": 1.15
+    },
+    "dreamy": {
+      "name": "Dreamy",
+      "description": "Soft, ethereal look",
+      "protection_level": "medium",
+      "speed_factor": 1.15
+    },
+    "intense": {
+      "name": "Intense",
+      "description": "Bold, attention-grabbing",
+      "protection_level": "very_high",
+      "speed_factor": 1.25
+    }
+  },
+  "custom_presets": {}
+}

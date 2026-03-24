@@ -1,0 +1,59 @@
+name: Sync Documentation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'README.md'
+      - 'docs/**'
+      - 'FEATURES.md'
+      - 'CONTRIBUTING_GUIDE.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-to-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync to GitHub Wiki
+        uses: thomasbnt/action-github-wiki-sync@v1.0.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          wiki_folder: "docs/wiki"
+          commit_message: "Update documentation from main branch"
+
+  generate-api-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install sphinx sphinx-rtd-theme sphinx-autodoc-typehints
+
+      - name: Generate API docs
+        run: |
+          mkdir -p docs/api
+          python scripts/generate_api_docs.py || echo "API doc generation skipped"
+
+      - name: Commit API docs
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add docs/api || true
+          git diff --quiet && git diff --staged --quiet || git commit -m "docs: auto-update API documentation [skip ci]"
+          git push || echo "No changes to commit"

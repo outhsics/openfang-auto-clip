@@ -8,6 +8,19 @@ yt-dlp>=2024.1.1
 # Audio transcription
 openai-whisper>=20231117
 
+# AIGC / AI Generation (optional)
+# Uncomment the ones you want to use:
+# openai>=1.0.0              # For DALL-E integration
+# replicate>=0.22.0          # For Replicate API
+# pillow>=10.0.0            # Image processing
+# opencv-python>=4.8.0      # Video processing
+
+# Stable Diffusion WebUI API (no pip install needed - runs separately)
+# Run: stable-diffusion-webui --api
+
+# ComfyUI (no pip install needed - runs separately)
+# Download: https://github.com/comfyanonymous/ComfyUI
+
 # Video processing (optional, for advanced features)
 # moviepy>=1.0.3
 

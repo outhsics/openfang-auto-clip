@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  openfang-auto-clip:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: openfang-auto-clip
+    restart: unless-stopped
+    ports:
+      - "5000:5000"  # Web manager
+    volumes:
+      # Mount output directory for persistent clips
+      - ./output:/app/output
+      # Mount config directory for user settings
+      - ./config:/app/config
+      # Mount videos directory for input videos
+      - ./videos:/app/videos:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+      - OPENFANG_OUTPUT_DIR=/app/output
+      - OPENFANG_CONFIG_DIR=/app/config
+      # Optional: Add your API keys here
+      # - OPENAI_API_KEY=your_key_here
+      # - ANTHROPIC_API_KEY=your_key_here
+    command: >
+      sh -c "
+        if [ -f /app/config/startup.sh ]; then
+          bash /app/config/startup.sh
+        else
+          python3 auto_clip.py --doctor
+        fi
+      "
+
+  # Optional: Redis for caching and queue management
+  redis:
+    image: redis:7-alpine
+    container_name: openfang-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+
+  # Optional: PostgreSQL for production database
+  postgres:
+    image: postgres:15-alpine
+    container_name: openfang-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=openfang
+      - POSTGRES_USER=openfang
+      - POSTGRES_PASSWORD=openfang_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  redis_data:
+  postgres_data:
+
+networks:
+  default:
+    name: openfang-network
