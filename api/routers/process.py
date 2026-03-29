@@ -22,6 +22,7 @@ class ProcessRequest(BaseModel):
     level: int = Field(..., ge=1, le=3, description="Transform level (1, 2, or 3)")
     transcript_path: Optional[str] = Field(None, description="Path to transcript file")
     video_url: Optional[str] = Field(None, description="URL to video (YouTube, etc.)")
+    uploaded_file_id: Optional[str] = Field(None, description="Uploaded file ID")
     config: Optional[Dict] = Field(default_factory=dict, description="Processing configuration")
 
     class Config:
@@ -63,11 +64,24 @@ async def process_video(
         Job ID and status
     """
     # Validate request
-    if not request.transcript_path and not request.video_url:
+    if not request.transcript_path and not request.video_url and not request.uploaded_file_id:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Either transcript_path or video_url must be provided"
+            detail="Either transcript_path, video_url, or uploaded_file_id must be provided"
         )
+
+    # Resolve transcript path from uploaded file
+    transcript_path = request.transcript_path
+    if request.uploaded_file_id:
+        from .upload import UPLOAD_DIR
+        import glob
+        matching_files = list(UPLOAD_DIR.glob(f"{request.uploaded_file_id}.*"))
+        if not matching_files:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Uploaded file {request.uploaded_file_id} not found"
+            )
+        transcript_path = str(matching_files[0])
 
     # Create job
     job_id = str(uuid.uuid4())
@@ -91,7 +105,7 @@ async def process_video(
         _process_job,
         job_id,
         request.level,
-        request.transcript_path,
+        transcript_path,
         request.video_url,
         request.config
     )

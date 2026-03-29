@@ -9,8 +9,19 @@ const api = axios.create({
   }
 })
 
+// Multipart API for file uploads
+const multipartApi = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
+})
+
 // Health check
 export const healthCheck = () => api.get('/api/v1/health')
+
+// Upload file
+export const uploadFile = (formData) => multipartApi.post('/api/v1/upload', formData)
 
 // Process video/transcript
 export const processVideo = (data) => api.post('/api/v1/process', data)

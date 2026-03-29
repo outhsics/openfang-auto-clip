@@ -11,7 +11,7 @@ from contextlib import asynccontextmanager
 import logging
 from typing import Dict
 
-from .routers import process, jobs, validate, health
+from .routers import process, jobs, validate, health, upload
 from .config import settings
 
 
@@ -54,6 +54,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(health.router, prefix="/api/v1", tags=["Health"])
+app.include_router(upload.router, prefix="/api/v1", tags=["Upload"])
 app.include_router(process.router, prefix="/api/v1", tags=["Process"])
 app.include_router(jobs.router, prefix="/api/v1/jobs", tags=["Jobs"])
 app.include_router(validate.router, prefix="/api/v1", tags=["Validate"])
