@@ -12,6 +12,7 @@
             <router-link to="/process">Process</router-link>
             <router-link to="/jobs">Jobs</router-link>
             <router-link to="/validate">Validate</router-link>
+            <router-link to="/settings">Settings</router-link>
           </nav>
         </div>
       </el-header>

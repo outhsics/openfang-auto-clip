@@ -25,6 +25,11 @@ const routes = [
     path: '/validate',
     name: 'Validate',
     component: () => import('../views/Validate.vue')
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import('../views/Settings.vue')
   }
 ]
 

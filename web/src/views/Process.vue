@@ -90,47 +90,108 @@
           </div>
         </el-form-item>
 
+        <!-- Template Selection -->
+        <el-form-item label="Template">
+          <el-select
+            v-model="selectedTemplate"
+            placeholder="Select a template (optional)"
+            style="width: 100%;"
+            clearable
+            @change="handleTemplateChange"
+          >
+            <el-option label="📺 YouTube Intro (30s)" value="youtube_intro" />
+            <el-option label="🎵 TikTok Trend (15s)" value="tiktok_trend" />
+            <el-option label="📖 Tutorial (60s)" value="tutorial" />
+            <el-option label="🎓 Educational (90s)" value="educational" />
+          </el-select>
+          <div v-if="selectedTemplate" class="template-info">
+            <el-tag type="info">{{ getTemplateName(selectedTemplate) }}</el-tag>
+            <span class="template-description">{{ getTemplateDescription(selectedTemplate) }}</span>
+          </div>
+          <div class="form-tip">
+            Templates provide pre-configured settings for optimal results
+          </div>
+        </el-form-item>
+
         <!-- Configuration -->
         <el-form-item label="Configuration">
           <el-card shadow="never">
-            <el-form-item label="Content Type">
-              <el-select
-                v-model="form.config.content_type"
-                placeholder="Auto-detect"
-                style="width: 100%;"
-              >
-                <el-option label="🤖 Auto-detect" value="auto" />
-                <el-option label="📚 Educational" value="educational" />
-                <el-option label="🎬 Entertainment" value="entertainment" />
-                <el-option label="📖 Tutorial" value="tutorial" />
-                <el-option label="📝 General" value="general" />
-              </el-select>
-              <div class="form-tip">
-                AI will automatically detect content type if set to "Auto-detect"
-              </div>
-            </el-form-item>
+            <el-collapse v-model="activeCollapse">
+              <el-collapse-item title="Basic Settings" name="basic">
+                <el-form-item label="Content Type">
+                  <el-select
+                    v-model="form.config.content_type"
+                    placeholder="Auto-detect"
+                    style="width: 100%;"
+                  >
+                    <el-option label="🤖 Auto-detect" value="auto" />
+                    <el-option label="📚 Educational" value="educational" />
+                    <el-option label="🎬 Entertainment" value="entertainment" />
+                    <el-option label="📖 Tutorial" value="tutorial" />
+                    <el-option label="📝 General" value="general" />
+                  </el-select>
+                  <div class="form-tip">
+                    AI will automatically detect content type if set to "Auto-detect"
+                  </div>
+                </el-form-item>
 
-            <el-form-item label="Target Duration">
-              <el-slider
-                v-model="form.config.default_duration"
-                :min="30"
-                :max="300"
-                :step="10"
-                show-input
-                :marks="{30: '30s', 60: '60s', 120: '2m', 180: '3m'}"
-              />
-              <div class="form-tip">
-                Target duration for generated short video
-              </div>
-            </el-form-item>
+                <el-form-item label="Target Duration">
+                  <el-slider
+                    v-model="form.config.default_duration"
+                    :min="15"
+                    :max="300"
+                    :step="15"
+                    show-input
+                    :marks="{15: '15s', 30: '30s', 60: '60s', 120: '2m', 180: '3m'}"
+                  />
+                  <div class="form-tip">
+                    Target duration for generated short video
+                  </div>
+                </el-form-item>
 
-            <el-form-item label="Output Format">
-              <el-checkbox-group v-model="form.config.output_formats">
-                <el-checkbox label="json">JSON Package</el-checkbox>
-                <el-checkbox label="srt">SRT Subtitles</el-checkbox>
-                <el-checkbox label="md">Markdown Script</el-checkbox>
-              </el-checkbox-group>
-            </el-form-item>
+                <el-form-item label="Target Platform">
+                  <el-radio-group v-model="form.config.target_platform">
+                    <el-radio-button label="youtube">YouTube</el-radio-button>
+                    <el-radio-button label="tiktok">TikTok</el-radio-button>
+                    <el-radio-button label="instagram">Instagram</el-radio-button>
+                    <el-radio-button label="generic">Generic</el-radio-button>
+                  </el-radio-group>
+                  <div class="form-tip">
+                    Optimize output for specific platform
+                  </div>
+                </el-form-item>
+              </el-collapse-item>
+
+              <el-collapse-item title="Advanced Settings" name="advanced">
+                <el-form-item label="Quality Level">
+                  <el-radio-group v-model="form.config.quality_level">
+                    <el-radio-button label="fast">Fast</el-radio-button>
+                    <el-radio-button label="balanced">Balanced</el-radio-button>
+                    <el-radio-button label="quality">Quality</el-radio-button>
+                  </el-radio-group>
+                  <div class="form-tip">
+                    Trade-off between processing speed and output quality
+                  </div>
+                </el-form-item>
+
+                <el-form-item label="Output Format">
+                  <el-checkbox-group v-model="form.config.output_formats">
+                    <el-checkbox label="json">JSON Package</el-checkbox>
+                    <el-checkbox label="srt">SRT Subtitles</el-checkbox>
+                    <el-checkbox label="md">Markdown Script</el-checkbox>
+                    <el-checkbox label="txt">Plain Text</el-checkbox>
+                  </el-checkbox-group>
+                </el-form-item>
+
+                <el-form-item label="Options">
+                  <el-space wrap>
+                    <el-checkbox v-model="form.config.auto_caption">Auto-generate Captions</el-checkbox>
+                    <el-checkbox v-model="form.config.validate">Validate Quality</el-checkbox>
+                    <el-checkbox v-model="form.config.save_backup">Save Backup</el-checkbox>
+                  </el-space>
+                </el-form-item>
+              </el-collapse-item>
+            </el-collapse>
           </el-card>
         </el-form-item>
 
@@ -200,7 +261,12 @@ const form = ref({
   config: {
     content_type: 'auto',
     default_duration: 60,
-    output_formats: ['json']
+    target_platform: 'youtube',
+    quality_level: 'balanced',
+    output_formats: ['json'],
+    auto_caption: true,
+    validate: true,
+    save_backup: true
   }
 })
 
@@ -212,6 +278,8 @@ const uploadedFile = ref(null)
 const uploadProgress = ref(0)
 const uploadStatus = ref('success')
 const uploadRef = ref(null)
+const selectedTemplate = ref('')
+const activeCollapse = ref(['basic'])
 
 const canSubmit = computed(() => {
   if (inputType.value === 'upload') {
@@ -231,6 +299,52 @@ const getLevelDescription = (level) => {
     3: '🚀 Complete recreation with new narration and visuals'
   }
   return descriptions[level]
+}
+
+const templates = {
+  youtube_intro: {
+    name: 'YouTube Intro',
+    duration: 30,
+    platform: 'youtube',
+    description: 'Professional channel intro with branding'
+  },
+  tiktok_trend: {
+    name: 'TikTok Trend',
+    duration: 15,
+    platform: 'tiktok',
+    description: 'Viral short-form content optimized for engagement'
+  },
+  tutorial: {
+    name: 'Tutorial',
+    duration: 60,
+    platform: 'youtube',
+    description: 'Step-by-step tutorial for teaching skills'
+  },
+  educational: {
+    name: 'Educational',
+    duration: 90,
+    platform: 'youtube',
+    description: 'In-depth educational content'
+  }
+}
+
+const getTemplateName = (templateId) => {
+  return templates[templateId]?.name || templateId
+}
+
+const getTemplateDescription = (templateId) => {
+  return templates[templateId]?.description || ''
+}
+
+const handleTemplateChange = (templateId) => {
+  if (!templateId) return
+
+  const template = templates[templateId]
+  if (template) {
+    form.value.config.default_duration = template.duration
+    form.value.config.target_platform = template.platform
+    ElMessage.success(`Applied ${template.name} template`)
+  }
 }
 
 const handleFileChange = async (file) => {
@@ -296,11 +410,18 @@ const resetForm = () => {
     config: {
       content_type: 'auto',
       default_duration: 60,
-      output_formats: ['json']
+      target_platform: 'youtube',
+      quality_level: 'balanced',
+      output_formats: ['json'],
+      auto_caption: true,
+      validate: true,
+      save_backup: true
     }
   }
   uploadedFile.value = null
   uploadProgress.value = 0
+  selectedTemplate.value = ''
+  activeCollapse.value = ['basic']
 
   if (uploadRef.value) {
     uploadRef.value.clearFiles()
@@ -369,5 +490,25 @@ const formatFileSize = (bytes) => {
   color: #909399;
   margin-top: 5px;
   line-height: 1.4;
+}
+
+.template-info {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.template-description {
+  font-size: 13px;
+  color: #606266;
+}
+
+.el-collapse {
+  border: none;
+}
+
+.el-collapse-item {
+  margin-bottom: 0;
 }
 </style>

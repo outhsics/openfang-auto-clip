@@ -34,4 +34,12 @@ export const deleteJob = (jobId) => api.delete(`/api/v1/jobs/${jobId}`)
 // Validate
 export const validatePackage = (data) => api.post('/api/v1/validate', data)
 
+// Templates
+export const getTemplates = () => api.get('/api/v1/templates')
+export const getTemplate = (templateId) => api.get(`/api/v1/templates/${templateId}`)
+
+// System info
+export const getSystemInfo = () => api.get('/api/v1/system/info')
+export const getSystemStats = () => api.get('/api/v1/system/stats')
+
 export default api
