@@ -5,10 +5,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![CI](https://github.com/outhsics/openfang-auto-clip/actions/workflows/ci.yml/badge.svg)](https://github.com/outhsics/openfang-auto-clip/actions/workflows/ci.yml)
-[![Web Dashboard](https://img.shields.io/badge/Web-Dashboard-success)](https://outhsics.github.io/openfang-auto-clip/)
 [![GitHub Stars](https://img.shields.io/github/stars/outhsics/openfang-auto-clip?style=social)](https://github.com/outhsics/openfang-auto-clip/stargazers)
 
-🌐 **[Live Web Dashboard](https://outhsics.github.io/openfang-auto-clip/)** ⭐ Star us on GitHub!
 
 [English](README_EN.md) | 简体中文
 
