@@ -4,13 +4,18 @@ Process Router
 Video/transcript processing endpoints.
 """
 
-from fastapi import APIRouter, HTTPException, status, BackgroundTasks
+from fastapi import APIRouter, HTTPException, status, BackgroundTasks, Depends
 from pydantic import BaseModel, Field
 from typing import Optional, Dict, List
+from sqlalchemy.orm import Session
 import logging
 import uuid
 from datetime import datetime
 from pathlib import Path
+
+from ..database import get_db, Session
+from ..repositories import JobRepository
+from ..services import get_processing_service
 
 logger = logging.getLogger(__name__)
 
@@ -49,7 +54,8 @@ class ProcessResponse(BaseModel):
 @router.post("/process", response_model=ProcessResponse, status_code=status.HTTP_202_ACCEPTED)
 async def process_video(
     request: ProcessRequest,
-    background_tasks: BackgroundTasks
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(get_db)
 ) -> ProcessResponse:
     """
     Process a video or transcript.
@@ -137,8 +143,9 @@ async def _process_job(
 
     try:
         # Update status to processing
-        _jobs[job_id]["status"] = "processing"
-        _jobs[job_id]["updated_at"] = datetime.now().isoformat()
+        db = get_db().__next__()
+        with JobRepository(db) as repo:
+            repo.update(job_id, {"status": "processing"})
 
         logger.info(f"Job {job_id} starting processing...")
 
@@ -147,8 +154,9 @@ async def _process_job(
 
         # Progress callback
         async def update_progress(percent, message):
-            _jobs[job_id]["progress"] = float(percent)
-            _jobs[job_id]["updated_at"] = datetime.now().isoformat()
+            db = get_db().__next__()
+            with JobRepository(db) as repo:
+                repo.update(job_id, {"progress": float(percent)})
             logger.info(f"Job {job_id} progress: {percent}% - {message}")
 
         # Process transcript
@@ -161,16 +169,18 @@ async def _process_job(
             )
 
             # Complete job
-            _jobs[job_id]["status"] = "completed"
-            _jobs[job_id]["progress"] = 100.0
-            _jobs[job_id]["updated_at"] = datetime.now().isoformat()
-            _jobs[job_id]["result"] = result
+            db = get_db().__next__()
+            with JobRepository(db) as repo:
+                repo.update(job_id, {
+                    "status": "completed",
+                    "progress": 100.0,
+                    "result": result
+                })
 
             logger.info(f"Job {job_id} completed successfully")
 
         elif video_url:
             # TODO: Implement video download and processing
-            # For now, mark as failed
             raise NotImplementedError("Video URL processing not yet implemented")
 
         else:
@@ -178,6 +188,9 @@ async def _process_job(
 
     except Exception as e:
         logger.error(f"Job {job_id} failed: {e}", exc_info=True)
-        _jobs[job_id]["status"] = "failed"
-        _jobs[job_id]["error"] = str(e)
-        _jobs[job_id]["updated_at"] = datetime.now().isoformat()
+        db = get_db().__next__()
+        with JobRepository(db) as repo:
+            repo.update(job_id, {
+                "status": "failed",
+                "error": str(e)
+            })

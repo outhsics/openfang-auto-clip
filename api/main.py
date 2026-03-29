@@ -13,6 +13,7 @@ from typing import Dict
 
 from .routers import process, jobs, validate, health, upload
 from .config import settings
+from .database import init_db
 
 
 # Configure logging
@@ -27,7 +28,13 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
     """Manage application lifespan"""
     logger.info("🚀 OpenFang API Server starting...")
+
+    # Initialize database
+    init_db()
+    logger.info("✅ Database initialized")
+
     yield
+
     logger.info("👋 OpenFang API Server shutting down...")
 
 
@@ -58,6 +65,14 @@ app.include_router(upload.router, prefix="/api/v1", tags=["Upload"])
 app.include_router(process.router, prefix="/api/v1", tags=["Process"])
 app.include_router(jobs.router, prefix="/api/v1/jobs", tags=["Jobs"])
 app.include_router(validate.router, prefix="/api/v1", tags=["Validate"])
+
+# Add repository exports
+from .repositories_uploadedfile import UploadedFileRepository
+JobRepository = None  # Will be imported by routers
+
+# Make repositories available to routers
+app.state.job_repository = None
+app.state.file_repository = None
 
 
 # Root endpoint
