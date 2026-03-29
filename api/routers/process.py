@@ -130,14 +130,10 @@ async def _process_job(
     """
     Background task to process a job.
 
-    This is a placeholder implementation. In the real version, this would:
-    1. Download video (if video_url provided)
-    2. Transcribe (if needed)
-    3. Apply level transformation
-    4. Generate package
-    5. Save results
+    This performs actual processing using the OpenFang pipeline.
     """
     from .jobs import _jobs
+    from ..services import get_processing_service
 
     try:
         # Update status to processing
@@ -146,28 +142,39 @@ async def _process_job(
 
         logger.info(f"Job {job_id} starting processing...")
 
-        # TODO: Implement actual processing
-        # For now, just simulate processing
-        import asyncio
-        await asyncio.sleep(2)
+        # Get processing service
+        service = get_processing_service()
 
-        # Update progress
-        _jobs[job_id]["progress"] = 50.0
-        _jobs[job_id]["updated_at"] = datetime.now().isoformat()
+        # Progress callback
+        async def update_progress(percent, message):
+            _jobs[job_id]["progress"] = float(percent)
+            _jobs[job_id]["updated_at"] = datetime.now().isoformat()
+            logger.info(f"Job {job_id} progress: {percent}% - {message}")
 
-        await asyncio.sleep(2)
+        # Process transcript
+        if transcript_path:
+            result = await service.process_transcript(
+                transcript_path=transcript_path,
+                level=level,
+                config=config,
+                progress_callback=update_progress
+            )
 
-        # Complete job
-        _jobs[job_id]["status"] = "completed"
-        _jobs[job_id]["progress"] = 100.0
-        _jobs[job_id]["updated_at"] = datetime.now().isoformat()
-        _jobs[job_id]["result"] = {
-            "level": level,
-            "output_path": f"/output/{job_id}/package.json",
-            "duration": 60
-        }
+            # Complete job
+            _jobs[job_id]["status"] = "completed"
+            _jobs[job_id]["progress"] = 100.0
+            _jobs[job_id]["updated_at"] = datetime.now().isoformat()
+            _jobs[job_id]["result"] = result
 
-        logger.info(f"Job {job_id} completed successfully")
+            logger.info(f"Job {job_id} completed successfully")
+
+        elif video_url:
+            # TODO: Implement video download and processing
+            # For now, mark as failed
+            raise NotImplementedError("Video URL processing not yet implemented")
+
+        else:
+            raise ValueError("Either transcript_path or video_url must be provided")
 
     except Exception as e:
         logger.error(f"Job {job_id} failed: {e}", exc_info=True)

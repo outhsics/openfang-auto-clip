@@ -58,38 +58,23 @@ async def validate_package(request: ValidateRequest) -> ValidationResult:
         Validation results with scores and recommendations
     """
     try:
-        # Import validation function
-        from scripts.level2_validation import calculate_quality_scores, assess_copyright_risk
-        import json
-        from pathlib import Path
+        # Import processing service
+        from ..services import get_processing_service
 
-        # Load package
-        package_path = Path(request.package_path)
-        if not package_path.exists():
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Package not found: {request.package_path}"
-            )
+        # Get processing service
+        service = get_processing_service()
 
-        with open(package_path, 'r', encoding='utf-8') as f:
-            package = json.load(f)
-
-        # Calculate quality scores
-        quality_result = calculate_quality_scores(
-            package,
-            request.original_transcript or ""
-        )
-
-        # Assess copyright risk
-        copyright_result = assess_copyright_risk(
-            package,
-            request.original_transcript or ""
+        # Validate package
+        result = service.validate_package(
+            package_path=request.package_path,
+            original_transcript=request.original_transcript or ""
         )
 
         # Extract results
-        scores = quality_result.get("scores", {})
-        overall = quality_result.get("overall", 0)
-        grade = quality_result.get("grade", "F")
+        scores = result.get("scores", {})
+        overall = result.get("overall", 0)
+        grade = result.get("grade", "F")
+        copyright_result = result.get("copyright_risk", {})
 
         # Determine production readiness
         production_ready = grade in ["A", "B"]
@@ -119,6 +104,11 @@ async def validate_package(request: ValidateRequest) -> ValidationResult:
             recommendations=recommendations
         )
 
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e)
+        )
     except Exception as e:
         logger.error(f"Validation failed: {e}", exc_info=True)
         raise HTTPException(
