@@ -119,6 +119,119 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Documentation**: ~3,000 lines
 - **Total Commits**: 10 commits for v0.4.0
 
+## [0.5.0] - 2026-03-29
+
+### Added
+
+#### Web Dashboard
+- **Vue.js 3 + Vite Frontend**: Modern, responsive web interface
+- **Real-Time Progress Updates**: Live status tracking during processing
+- **Drag & Drop File Upload**: Intuitive file upload with progress indication
+- **Job Management Interface**: View, filter, and manage processing jobs
+- **Package Validation UI**: Visual quality scores and copyright assessment
+- **Responsive Design**: Mobile-friendly interface with Element Plus components
+- **Dark/Light Mode**: User theme preferences
+- **Configuration Panel**: Visual settings management
+
+#### REST API
+- **FastAPI Backend**: High-performance async API server
+- **Process Endpoint**: POST /api/v1/process for content processing
+- **Jobs Management**: List, get, and delete operations
+- **File Upload**: Multipart file upload with validation
+- **Package Validation**: Quality scoring and copyright risk assessment
+- **Health Check**: System status endpoint
+- **OpenAPI Documentation**: Auto-generated API docs (Swagger UI)
+- **CORS Support**: Cross-origin resource sharing enabled
+- **Background Tasks**: Async job processing with status tracking
+
+#### Python SDK
+- **OpenFang SDK Package**: Official Python client library
+- **Type Hints**: Full type annotation coverage
+- **Error Handling**: Custom exception hierarchy
+- **Retry Logic**: Automatic retry with exponential backoff
+- **Context Manager**: Support for `with` statement
+- **Async Support**: Async client for concurrent operations
+- **Comprehensive Methods**:
+  - health_check()
+  - upload_file()
+  - process()
+  - list_jobs()
+  - get_job()
+  - delete_job()
+  - wait_for_job()
+  - validate_package()
+
+#### Database Integration
+- **SQLAlchemy ORM**: Database models and migrations
+- **SQLite Backend**: Lightweight, file-based database
+- **Job Persistence**: Jobs persist across server restarts
+- **File Tracking**: Uploaded file management
+- **Repository Pattern**: Clean database access layer
+- **Context Managers**: Automatic session management
+- **Database Health**: Connection monitoring and recovery
+
+#### Testing Suite
+- **Pytest Framework**: Modern Python testing setup
+- **SDK Tests**: Comprehensive client library tests
+- **API Endpoint Tests**: All REST endpoints covered
+- **Integration Tests**: End-to-end workflow testing
+- **Fixtures**: Reusable test components
+- **Coverage Reporting**: HTML and terminal coverage reports
+- **Async Testing**: pytest-asyncio integration
+- **CI/CD Ready**: GitHub Actions workflow configuration
+
+#### Enhanced CLI
+- **Subcommands**: init, process, jobs, validate, status
+- **Colored Output**: Rich library integration with fallback
+- **Progress Bars**: tqdm integration for long operations
+- **Table Display**: Formatted data tables
+- **Interactive Wizards**: Setup wizard for initial configuration
+- **System Status Checks**: Dependency and configuration verification
+- **Better Error Messages**: Clear, actionable error reporting
+
+#### Community Features
+- **Contributor Guide**: Comprehensive development documentation
+- **Template Gallery**: Pre-built templates for common use cases
+  - YouTube Intro (30s branding)
+  - TikTok Trend (15s viral content)
+  - Tutorial (60s how-to)
+  - Educational (90s learning)
+- **Success Stories**: Real-world usage examples and case studies
+- **Code of Conduct**: Community guidelines
+- **Recognition System**: Contributor hall of fame
+
+#### Docker Support
+- **Multi-Container Setup**: docker-compose for full stack
+- **API Container**: Python FastAPI server
+- **Web Container**: Node.js frontend
+- **Easy Deployment**: One-command setup
+
+### Changed
+- **API Endpoints**: Standardized REST API paths
+- **Error Responses**: Consistent error format across API
+- **Database**: Moved from in-memory to persistent storage
+- **Configuration**: Centralized config management with pydantic-settings
+
+### Improved
+- **Performance**: Database queries optimized with indexing
+- **Reliability**: Automatic reconnection for database connections
+- **User Experience**: Web interface lowers barrier to entry
+- **Developer Experience**: SDK simplifies integration
+- **Documentation**: 5,000+ lines of new documentation
+
+### Technical Details
+- **New Files Added**: 30+ files
+- **Lines of Code**: ~8,000 lines
+- **Documentation**: ~5,000 lines
+- **Test Coverage**: 80%+ target
+- **Total Commits**: 25+ commits for v0.5.0
+
+### Migration Guide
+- **Database**: Automatic migration on first run
+- **Configuration**: Run `auto_clip init` for setup wizard
+- **API**: Update base URLs to new REST API endpoints
+- **SDK**: Install `openfang-sdk` package separately
+
 ## [Unreleased]
 
 ### Added
