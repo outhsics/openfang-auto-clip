@@ -1,150 +1,79 @@
 # Contributing to OpenFang Auto Clip
 
-Thank you for your interest in contributing! We welcome contributions from everyone.
+感谢您对 OpenFang Auto Clip 项目的关注！我们欢迎各种形式的贡献。
 
-## 🤝 How to Contribute
+---
 
-### Reporting Bugs
+## 🚀 Quick Start
 
-Before creating bug reports, please check existing issues to avoid duplicates.
+### For First-Time Contributors
 
-**Bug Report Template:**
+1. **Fork the repository**
+   ```bash
+   # Click "Fork" button on GitHub
+   git clone https://github.com/YOUR_USERNAME/openfang-auto-clip.git
+   cd openfang-auto-clip
+   ```
 
-```markdown
-**Description**
-A clear description of the bug.
+2. **Set up development environment**
+   ```bash
+   # Create virtual environment
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Command '...'
-2. Error '...'
+   # Install dependencies
+   pip install -r requirements.txt
+   pip install -r requirements-dev.txt
+   ```
 
-**Expected Behavior**
-What should happen.
+3. **Run tests**
+   ```bash
+   pytest
+   ```
 
-**Actual Behavior**
-What actually happened.
+4. **Make your changes**
+   - Create a new branch: `git checkout -b feature/your-feature`
+   - Make your changes
+   - Commit: `git commit -m "feat: add your feature"`
+   - Push: `git push origin feature/your-feature`
 
-**Environment**
-- OS: [e.g. macOS 14.0]
-- OpenFang version: [e.g. 0.1.9]
-- Python version: [e.g. 3.11]
+5. **Create Pull Request**
+   - Go to GitHub and click "New Pull Request"
+   - Fill in the PR template
+   - Wait for review
 
-**Logs**
-Error messages or logs.
+---
+
+## 📋 Development Setup
+
+### Prerequisites
+
+- **Python**: 3.10 or higher
+- **Node.js**: 18+ (for web dashboard)
+- **FFmpeg**: For video processing
+- **Git**: For version control
+
+### Environment Setup
+
+```bash
+# 1. Clone your fork
+git clone https://github.com/YOUR_USERNAME/openfang-auto-clip.git
+cd openfang-auto-clip
+
+# 2. Create virtual environment
+python -m venv venv
+source venv/bin/activate
+
+# 3. Install dependencies
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
+
+# 4. Install pre-commit hooks
+pre-commit install
+
+# 5. Set up pre-commit environment
+pre-commit install-hooks
 ```
-
-### Suggesting Features
-
-We love feature suggestions! Please provide:
-
-- **Use case**: What problem does this solve?
-- **Proposed solution**: How should it work?
-- **Alternatives**: What alternatives did you consider?
-- **Impact**: Who would benefit and how?
-
-### Pull Requests
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes
-4. Write/update tests
-5. Update documentation
-6. Commit: `git commit -m 'Add amazing feature'`
-7. Push: `git push origin feature/amazing-feature`
-8. Open a Pull Request
-
-## 📋 Code Standards
-
-### Python Code
-
-- Follow PEP 8 style guide
-- Use type hints where appropriate
-- Add docstrings to functions/classes
-- Maximum line length: 100 characters
-
-### Example
-
-```python
-def transform_video(
-    input_path: Path,
-    output_path: Path,
-    transform_level: int = 1
-) -> bool:
-    """
-    Transform video to copyright-safe version.
-
-    Args:
-        input_path: Source video file path
-        output_path: Destination file path
-        transform_level: Transformation depth (1-3)
-
-    Returns:
-        True if successful, False otherwise
-
-    Raises:
-        ValueError: If transform_level not in [1, 2, 3]
-    """
-    if transform_level not in [1, 2, 3]:
-        raise ValueError("transform_level must be 1, 2, or 3")
-
-    # Implementation...
-```
-
-### Shell Scripts
-
-- Use ShellCheck for validation
-- Add shebang: `#!/bin/bash`
-- Quote variables: `"$var"`
-- Use `set -euo pipefail`
-
-## 🎨 Priority Areas
-
-We especially welcome contributions in:
-
-### 1. AI Transformation Styles
-Add new visual transformation styles:
-
-```python
-# Example: New style transformation
-class CyberpunkStyle(VisualTransform):
-    """Cyberpunk color grading and effects"""
-
-    def apply(self, video: Video) -> Video:
-        # Neon colors, glitch effects, etc.
-        pass
-```
-
-### 2. Platform Integrations
-Add support for new platforms:
-
-```python
-# Example: New platform
-class XHSProcessor(PlatformProcessor):
-    """Xiaohongshu (Little Red Book) processor"""
-
-    def optimize(self, video: Video) -> Video:
-        # Platform-specific optimization
-        pass
-```
-
-### 3. Performance Optimization
-- Faster video processing
-- Reduced memory usage
-- Parallel processing
-
-### 4. Documentation
-- Translate to other languages
-- Add more examples
-- Create video tutorials
-- Improve guides
-
-### 5. Tests
-- Unit tests
-- Integration tests
-- End-to-end tests
-
-## 🧪 Testing
 
 ### Running Tests
 
@@ -152,126 +81,491 @@ class XHSProcessor(PlatformProcessor):
 # Run all tests
 pytest
 
-# Run specific test
-pytest tests/test_transform.py
-
 # Run with coverage
-pytest --cov=. --cov-report=html
+pytest --cov=api --cov=sdk --cov-report=html
+
+# Run specific test file
+pytest tests/test_sdk/test_client.py
+
+# Run with verbose output
+pytest -v
+
+# Run only fast tests
+pytest -m "not slow"
 ```
 
-### Test Structure
-
-```
-tests/
-├── unit/           # Unit tests
-├── integration/    # Integration tests
-├── e2e/           # End-to-end tests
-└── fixtures/      # Test data
-```
-
-### Writing Tests
-
-```python
-import pytest
-from pathlib import Path
-
-def test_transform_level_1():
-    """Test Level 1 transformation"""
-    input_file = Path("fixtures/sample.mp4")
-    output_file = Path("tmp/output.mp4")
-
-    result = transform_video(input_file, output_file, level=1)
-
-    assert result.success
-    assert output_file.exists()
-```
-
-## 📖 Documentation
-
-### Documentation Standards
-
-- Clear, concise language
-- Code examples for all features
-- Update both Chinese and English versions
-- Include screenshots/visuals where helpful
-
-### Where to Document
-
-1. **README.md**: Project overview, quick start
-2. **docs/**: Detailed guides
-3. **Code comments**: Complex logic
-4. **Docstrings**: All public functions/classes
-5. **CHANGELOG.md**: Version history
-
-## 🎯 Development Workflow
-
-### Setting Up Development Environment
+### Running the Application
 
 ```bash
-# Clone fork
-git clone https://github.com/outhsics/openfang-auto-clip.git
-cd openfang-auto-clip
+# Start API server
+cd api
+python -m uvicorn main:app --reload --port 8000
 
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install dev dependencies
-pip install -r requirements-dev.txt
-
-# Install pre-commit hooks
-pre-commit install
+# Start web dashboard (new terminal)
+cd web
+npm install
+npm run dev
 ```
 
-### Making Changes
-
-1. Create issue (if none exists)
-2. Create branch from main: `git checkout -b feature/issue-123`
-3. Make changes
-4. Write tests
-5. Update docs
-6. Run tests: `pytest`
-7. Commit changes
-8. Push to fork
-9. Open PR
-
-### Pull Request Checklist
-
-- [ ] Tests pass locally
-- [ ] New tests added (if applicable)
-- [ ] Documentation updated
-- [ ] CHANGELOG.md updated
-- [ ] Commits are clear and descriptive
-- [ ] PR description explains changes
-- [ ] No merge conflicts
-
-## 🌍 Community Guidelines
-
-### Code of Conduct
-
-- Be respectful and inclusive
-- Welcome newcomers
-- Provide constructive feedback
-- Focus on what is best for the community
-
-### Communication
-
-- Use GitHub for discussions
-- Be patient with responses
-- Search before asking
-- Share knowledge
-
-## 📜 License
-
-By contributing, you agree that your contributions will be licensed under the MIT License.
-
-## ❓ Questions?
-
-- Check [Documentation](docs/)
-- Search [Issues](https://github.com/outhsics/openfang-auto-clip/issues)
-- Start a [Discussion](https://github.com/outhsics/openfang-auto-clip/discussions)
-- Email: dev@example.com
+The web dashboard will be available at `http://localhost:5173`
 
 ---
 
-**Thank you for contributing! 🎉**
+## 🎨 Code Style Guide
+
+### Python Code Style
+
+We follow **PEP 8** with some modifications:
+
+#### Formatting
+
+```python
+# ✅ Good - Clear naming
+def process_transcript(transcript_path: str, level: int = 2) -> dict:
+    """Process transcript and generate package.
+
+    Args:
+        transcript_path: Path to transcript file
+        level: Transformation level (1, 2, or 3)
+
+    Returns:
+        Generated package dictionary
+    """
+    # Implementation...
+
+# ❌ Bad - Unclear naming
+def proc(tp, l=2):
+    # Implementation...
+```
+
+#### Type Hints
+
+```python
+# ✅ Good - Complete type hints
+from typing import Optional, Dict, List
+
+def generate_package(
+    content: Dict[str, Any],
+    config: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
+    """Generate Level 2 package."""
+    pass
+
+# ❌ Bad - Missing type hints
+def generate_package(content, config=None):
+    pass
+```
+
+#### Documentation
+
+```python
+# ✅ Good - Complete docstring
+def validate_package(package: Dict[str, Any]) -> ValidationResult:
+    """Validate Level 2 package quality.
+
+    Performs comprehensive validation including:
+    - Content coherence analysis
+    - Quality scoring
+    - Copyright risk assessment
+
+    Args:
+        package: Package dictionary to validate
+
+    Returns:
+        ValidationResult with scores and recommendations
+
+    Raises:
+        ValidationError: If package structure is invalid
+
+    Examples:
+        >>> result = validate_package(package)
+        >>> print(result.overall_score)
+        8.5
+    """
+    pass
+```
+
+### JavaScript/Vue Code Style
+
+We use **ESLint** and **Prettier** for consistent formatting:
+
+```javascript
+// ✅ Good - Clear component structure
+<template>
+  <div class="process-form">
+    <el-form @submit="handleSubmit">
+      <!-- Form content -->
+    </el-form>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { processVideo } from '@/api'
+
+const form = ref({
+  level: 2,
+  duration: 60
+})
+
+const handleSubmit = async () => {
+  try {
+    await processVideo(form.value)
+  } catch (error) {
+    console.error('Processing failed:', error)
+  }
+}
+</script>
+
+// ❌ Bad - Mixed concerns, unclear structure
+```
+
+### Commit Message Style
+
+We follow **Conventional Commits**:
+
+```
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer]
+```
+
+#### Types
+
+- `feat`: New feature
+- `fix`: Bug fix
+- `docs`: Documentation changes
+- `style`: Code style changes (formatting, no logic change)
+- `refactor`: Code refactoring
+- `perf`: Performance improvement
+- `test`: Test additions/changes
+- `chore`: Build process or auxiliary tool changes
+
+#### Examples
+
+```bash
+# Feature
+git commit -m "feat(api): add authentication endpoint"
+
+# Bug fix
+git commit -m "fix(web): resolve file upload progress display"
+
+# Documentation
+git commit -m "docs: update API documentation with examples"
+
+# Refactoring
+git commit -m "refactor(sdk): simplify error handling with custom exceptions"
+```
+
+---
+
+## 🔄 Pull Request Workflow
+
+### Before Creating PR
+
+1. **Update your branch**
+   ```bash
+   git fetch upstream
+   git rebase upstream/main
+   ```
+
+2. **Run tests**
+   ```bash
+   pytest
+   pytest --cov
+   ```
+
+3. **Run linters**
+   ```bash
+   # Python
+   black .
+   isort .
+   flake8
+
+   # JavaScript
+   cd web
+   npm run lint
+   npm run format
+   ```
+
+4. **Update documentation**
+   - Update README if needed
+   - Add docstrings to new functions
+   - Update API docs
+
+### Creating PR
+
+1. **Push your changes**
+   ```bash
+   git push origin feature/your-feature
+   ```
+
+2. **Create Pull Request on GitHub**
+   - Go to your fork on GitHub
+   - Click "New Pull Request"
+   - Fill in the PR template
+
+3. **PR Template**
+
+   ```markdown
+   ## Description
+   Brief description of changes...
+
+   ## Type of Change
+   - [ ] Bug fix
+   - [ ] New feature
+   - [ ] Breaking change
+   - [ ] Documentation update
+
+   ## Testing
+   - [ ] Tests added/updated
+   - [ ] All tests pass
+   - [ ] Manual testing completed
+
+   ## Checklist
+   - [ ] Code follows style guide
+   - [ ] Self-review completed
+   - [ ] Documentation updated
+   - [ ] No new warnings generated
+
+   ## Related Issues
+   Closes #123
+   ```
+
+### After Creating PR
+
+1. **Wait for CI checks to pass**
+   - All tests must pass
+   - Code coverage must not decrease
+   - Linters must pass
+
+2. **Address review comments**
+   - Respond to all comments
+   - Make requested changes
+   - Push updates to your branch
+
+3. **Approval and merge**
+   - At least one maintainer approval required
+   - CI must be green
+   - No merge conflicts
+
+---
+
+## 🐛 Bug Reports
+
+### Before Reporting
+
+1. **Search existing issues**
+   - Check if bug is already reported
+   - Add details to existing issue if found
+
+2. **Gather information**
+   - Python version
+   - OpenFang Auto Clip version
+   - Operating system
+   - Error messages
+   - Steps to reproduce
+
+### Bug Report Template
+
+```markdown
+## Bug Description
+Clear description of the bug...
+
+## Environment
+- Python version: 3.10.5
+- OpenFang version: 0.5.0
+- OS: Ubuntu 22.04
+
+## Steps to Reproduce
+1. Step one...
+2. Step two...
+3. Step three...
+
+## Expected Behavior
+What should happen...
+
+## Actual Behavior
+What actually happens...
+
+## Error Messages
+```
+Error traceback...
+```
+
+## Additional Context
+Screenshots, logs, or other relevant information...
+```
+
+---
+
+## 💡 Feature Requests
+
+### Before Requesting
+
+1. **Check if feature exists**
+   - Read documentation
+   - Search issues
+   - Check roadmap
+
+2. **Think about use case**
+   - What problem does it solve?
+   - Who would benefit?
+   - Is it general-purpose or specific?
+
+### Feature Request Template
+
+```markdown
+## Feature Description
+Clear description of the feature...
+
+## Problem Statement
+What problem does this solve?
+
+## Proposed Solution
+How should it work?
+
+## Alternatives Considered
+What other approaches did you consider?
+
+## Additional Context
+Examples, mockups, or references...
+```
+
+---
+
+## 🎯 Areas to Contribute
+
+### Good First Issues
+
+Look for issues labeled `good first issue`:
+- Documentation improvements
+- Simple bug fixes
+- Test additions
+- UI improvements
+
+### High Priority Areas
+
+1. **Testing**
+   - Increase test coverage
+   - Add integration tests
+   - Improve test reliability
+
+2. **Documentation**
+   - Add more examples
+   - Improve API docs
+   - Create tutorials
+
+3. **Web Dashboard**
+   - UI/UX improvements
+   - New features
+   - Performance optimization
+
+4. **Level 1 & Level 3**
+   - Implement Level 1 (basic processing)
+   - Implement Level 3 (advanced processing)
+
+5. **Community**
+   - Template gallery
+   - Success stories
+   - Video tutorials
+
+---
+
+## 📜 Code of Conduct
+
+### Our Pledge
+
+We are committed to making participation in our project a harassment-free experience.
+
+### Our Standards
+
+**Positive behavior includes:**
+- Using welcoming and inclusive language
+- Being respectful of differing viewpoints
+- Gracefully accepting constructive criticism
+- Focusing on what is best for the community
+
+**Unacceptable behavior includes:**
+- Harassment, trolling, or derogatory comments
+- Personal or political attacks
+- Public or private harassment
+- Publishing private information
+
+### Enforcement
+
+Project maintainers may remove/edit comments or ban contributors who do not follow this code of conduct.
+
+---
+
+## 🏆 Recognition
+
+### Contributors Hall of Fame
+
+All contributors are recognized in:
+- README.md contributors section
+- Release notes
+- Annual community posts
+
+### Top Contributors
+
+Special recognition for:
+- Most PRs merged
+- Most issues resolved
+- Most valuable contributions
+- Long-term support
+
+---
+
+## 📚 Additional Resources
+
+### Documentation
+
+- [README](README.md) - Project overview
+- [API Docs](api/API_DOCS.md) - API reference
+- [SDK Docs](sdk/README.md) - SDK guide
+- [Testing Guide](tests/README.md) - Testing instructions
+
+### Communication
+
+- **Issues**: Bug reports and feature requests
+- **Discussions**: General questions and ideas
+- **PRs**: Code contributions
+
+### Learning Resources
+
+- [FastAPI Docs](https://fastapi.tiangolo.com/)
+- [Vue.js Docs](https://vuejs.org/)
+- [pytest Docs](https://docs.pytest.org/)
+
+---
+
+## ❓ Questions?
+
+### Getting Help
+
+1. **Check documentation** - Most questions are answered there
+2. **Search issues** - Similar questions may have been asked
+3. **Create discussion** - For general questions
+4. **Open issue** - For bugs or feature requests
+
+### Contact Maintainers
+
+- **GitHub Issues**: For bugs and features
+- **GitHub Discussions**: For questions
+- **Email**: For private matters (if needed)
+
+---
+
+## 🙏 Thank You!
+
+Every contribution, no matter how small, helps make OpenFang Auto Clip better!
+
+**Together, we're building the best open-source video automation platform!** 🚀
+
+---
+
+**Last Updated**: 2026-03-29
+**Version**: 0.5.0

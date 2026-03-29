@@ -1,0 +1,160 @@
+{
+  "template_name": "Educational Content",
+  "template_id": "educational_v1",
+  "description": "Educational content for teaching concepts and ideas",
+  "version": "1.0.0",
+  "author": "OpenFang Community",
+  "tags": ["educational", "learning", "knowledge", "explanation"],
+
+  "target_platform": "youtube",
+  "target_duration": 90,
+  "content_type": "educational",
+
+  "visual_style": {
+    "color_scheme": "professional",
+    "transition_style": "smooth",
+    "text_animations": true,
+    "graphics": "diagrams, charts, animations",
+    "footage": "b-roll, stock footage"
+  },
+
+  "script_structure": {
+    "hook_duration": 10,
+    "context_duration": 15,
+    "explanation_duration": 45,
+    "examples_duration": 15,
+    "summary_duration": 5
+  },
+
+  "script_sections": [
+    {
+      "section": "hook",
+      "duration": 10,
+      "purpose": "Capture interest and establish relevance",
+      "content": "Interesting fact, question, or real-world application",
+      "visual": "Attention-grabbing imagery, text overlay",
+      "audio": "Engaging tone, perhaps music intro"
+    },
+    {
+      "section": "context",
+      "duration": 15,
+      "purpose": "Provide background and significance",
+      "content": "Why this topic matters, historical context, relevance",
+      "visual": "Timeline, maps, historical images",
+      "audio": "Informative voiceover"
+    },
+    {
+      "section": "explanation",
+      "duration": 45,
+      "purpose": "Deliver core educational content",
+      "content": "Main concept explanation with supporting details",
+      "visual": "Diagrams, animations, expert interview clips",
+      "audio": "Clear, paced narration"
+    },
+    {
+      "section": "examples",
+      "duration": 15,
+      "purpose": "Illustrate with real-world applications",
+      "content": "Practical examples, case studies, demonstrations",
+      "visual": "Real-world footage, demonstrations",
+      "audio": "Connection to explanation"
+    },
+    {
+      "section": "summary",
+      "duration": 5,
+      "purpose": "Reinforce key takeaways",
+      "content": "3-5 key points to remember",
+      "visual": "Bullet points, recap graphics",
+      "audio": "Concise summary"
+    }
+  ],
+
+  "style_guidelines": {
+    "tone": "authoritative yet accessible",
+    "pacing": "measured, allow for comprehension",
+    "language_level": "respect intelligence, explain complexity",
+    "credibility": "cite sources, show expertise"
+  },
+
+  "technical_specs": {
+    "aspect_ratio": "16:9",
+    "resolution": "1080p",
+    "frame_rate": 30,
+    "audio_bitrate": "128kbps"
+  },
+
+  "pedagogical_elements": {
+    "learning_structure": [
+      "Introduction with clear learning objectives",
+      "Scaffolding from simple to complex",
+      "Multiple representations of concepts",
+      "Formative checks for understanding",
+      "Summative recap and synthesis"
+    ],
+    "cognitive_load_management": [
+      "Present information in chunks",
+      "Use dual coding (visual + verbal)",
+      "Avoid extraneous cognitive load",
+      "Build on prior knowledge"
+    ],
+    "engagement_strategies": [
+      "Storytelling to create context",
+      "Questions to prompt reflection",
+      "Real-world connections",
+      "Surprise and novelty"
+    ]
+  },
+
+  "visual_aids": {
+    "types": [
+      "Animated diagrams",
+      "Infographics",
+      "Charts and graphs",
+      "Timelines",
+      "Maps",
+      "Comparisons tables",
+      "Process flows"
+    ],
+    "principles": [
+      "Align visuals with narration",
+      "Use consistent color coding",
+      "Keep designs simple and clear",
+      "Animate to show process, not decoration"
+    ]
+  },
+
+  "credibility_markers": {
+    "sources": [
+      "Academic research",
+      "Expert interviews",
+      "Historical documents",
+      "Reputable publications"
+    ],
+    "transparency": [
+      "Cite sources in video or description",
+      "Acknowledge limitations",
+      "Distinguish fact from theory",
+      "Show credentials when relevant"
+    ]
+  },
+
+  "example_prompts": [
+    "Explain how blockchain technology works",
+    "Teach the history of the Roman Empire",
+    "Break down quantum computing for beginners",
+    "Explain the science of climate change"
+  ],
+
+  "best_practices": [
+    "Start with why this matters",
+    "Use analogies to explain complex ideas",
+    "Provide multiple examples",
+    "Include visual representations",
+    "Check for understanding throughout",
+    "Cite credible sources",
+    "Balance depth with accessibility",
+    "Use storytelling to create engagement",
+    "Provide resources for further learning",
+    "Encourage critical thinking"
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "template_name": "TikTok Trend",
+  "template_id": "tiktok_trend_v1",
+  "description": "Viral TikTok content optimized for engagement",
+  "version": "1.0.0",
+  "author": "OpenFang Community",
+  "tags": ["tiktok", "viral", "trend", "short-form"],
+
+  "target_platform": "tiktok",
+  "target_duration": 15,
+  "content_type": "entertainment",
+
+  "visual_style": {
+    "color_scheme": "vibrant",
+    "transition_style": "snappy",
+    "text_animations": true,
+    "effects": ["zoom", "shake", "glitch"]
+  },
+
+  "script_structure": {
+    "hook_duration": 2,
+    "trend_setup_duration": 3,
+    "main_content_duration": 7,
+    "call_to_action_duration": 3
+  },
+
+  "script_sections": [
+    {
+      "section": "hook",
+      "duration": 2,
+      "purpose": "Instant attention grabber",
+      "content": "Shocking statement, visual surprise, or trending sound",
+      "visual": "Fast cuts, zoom effects, text overlay",
+      "audio": "Trending sound or catchy beat drop"
+    },
+    {
+      "section": "trend_setup",
+      "duration": 3,
+      "purpose": "Establish the trend context",
+      "content": "Show what's trending and why it matters",
+      "visual": "Quick examples, text overlays",
+      "audio": "Continue trending sound"
+    },
+    {
+      "section": "main_content",
+      "duration": 7,
+      "purpose": "Deliver the core content",
+      "content": "Main message, demonstration, or story",
+      "visual": "Dynamic shots, quick transitions",
+      "audio": "Music bed or narration"
+    },
+    {
+      "section": "call_to_action",
+      "duration": 3,
+      "purpose": "Drive engagement",
+      "content": "Follow for more, duet this, stitch this",
+      "visual": "Text overlay with arrow pointing to follow button",
+      "audio": "Music swell or sound effect"
+    }
+  ],
+
+  "style_guidelines": {
+    "tone": "casual, authentic, relatable",
+    "pacing": "fast, energetic",
+    "language_level": "casual, slang-friendly",
+    "engagement": "encourage duets, stitches, comments"
+  },
+
+  "technical_specs": {
+    "aspect_ratio": "9:16",
+    "resolution": "1080x1920",
+    "frame_rate": 30,
+    "audio_bitrate": "128kbps"
+  },
+
+  "viral_optimization": {
+    "first_impression": {
+      "text_overlay": true,
+      "movement": true,
+      "sound": "trending_audio"
+    },
+    "engagement_hooks": [
+      "Wait for it...",
+      "You won't believe this",
+      "Tag someone who needs to see this",
+      "Part 2 coming if this hits 1000 likes"
+    ],
+    "timing": {
+      "best_posting_times": ["7-9 AM", "12-3 PM", "7-11 PM"],
+      "frequency": "2-3 posts per day"
+    }
+  },
+
+  "trend_integration": {
+    "audio": "Use trending sounds from TikTok library",
+    "hashtags": [
+      "#fyp",
+      "#foryou",
+      "#viral",
+      "#trending",
+      "[niche_specific_hashtag]"
+    ],
+    "effects": "Use built-in TikTok effects for extra reach"
+  },
+
+  "example_prompts": [
+    "Create a viral TikTok about a life hack",
+    "Make a trending dance tutorial",
+    "Design a comedy skit in under 15 seconds"
+  ],
+
+  "best_practices": [
+    "Use trending audio within 48 hours of it becoming popular",
+    "Post consistently at optimal times",
+    "Respond to comments to boost engagement",
+    "Use 3-5 relevant hashtags",
+    "Keep text short and readable",
+    "Start with movement or action",
+    "End with clear call-to-action"
+  ]
+}

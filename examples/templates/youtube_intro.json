@@ -1,0 +1,107 @@
+{
+  "template_name": "YouTube Intro",
+  "template_id": "youtube_intro_v1",
+  "description": "Professional YouTube channel intro with branding",
+  "version": "1.0.0",
+  "author": "OpenFang Community",
+  "tags": ["youtube", "intro", "branding", "professional"],
+
+  "target_platform": "youtube",
+  "target_duration": 30,
+  "content_type": "entertainment",
+
+  "visual_style": {
+    "color_scheme": "professional",
+    "transition_style": "smooth",
+    "text_animations": true,
+    "background_music": true
+  },
+
+  "script_structure": {
+    "hook_duration": 3,
+    "intro_duration": 5,
+    "main_content_duration": 17,
+    "outro_duration": 5
+  },
+
+  "script_sections": [
+    {
+      "section": "hook",
+      "duration": 3,
+      "purpose": "Grab attention immediately",
+      "content": "Start with a surprising fact, question, or bold statement",
+      "visual": "Dynamic text overlay, fast cuts",
+      "audio": "Upbeat music intro"
+    },
+    {
+      "section": "intro",
+      "duration": 5,
+      "purpose": "Introduce channel and topic",
+      "content": "Channel name + What this video is about",
+      "visual": "Logo animation, channel branding",
+      "audio": "Voiceover + background music"
+    },
+    {
+      "section": "main_content",
+      "duration": 17,
+      "purpose": "Deliver core message",
+      "content": "Main content of the intro",
+      "visual": "Engaging visuals related to content",
+      "audio": "Voiceover with music bed"
+    },
+    {
+      "section": "outro",
+      "duration": 5,
+      "purpose": "Call to action",
+      "content": "Subscribe, like, and watch next video",
+      "visual": "Subscribe button, next video preview",
+      "audio": "Outro music"
+    }
+  ],
+
+  "style_guidelines": {
+    "tone": "professional yet approachable",
+    "pacing": "energetic but not rushed",
+    "language_level": "accessible to broad audience",
+    "brand_consistency": "use channel colors and fonts"
+  },
+
+  "technical_specs": {
+    "aspect_ratio": "16:9",
+    "resolution": "1080p",
+    "frame_rate": 30,
+    "audio_bitrate": "128kbps"
+  },
+
+  "customization_options": {
+    "branding": {
+      "logo": "path_to_logo.png",
+      "colors": ["#FF0000", "#00FF00", "#0000FF"],
+      "fonts": ["Arial", "Helvetica"]
+    },
+    "music": {
+      "intro_track": "path_to_intro_music.mp3",
+      "background_track": "path_to_bg_music.mp3",
+      "outro_track": "path_to_outro_music.mp3"
+    },
+    "text_overlays": {
+      "lower_third": true,
+      "captions": true,
+      "highlight_text": true
+    }
+  },
+
+  "example_prompts": [
+    "Create a 30-second YouTube intro for a tech review channel",
+    "Make an engaging intro for a cooking channel",
+    "Design an intro for a gaming channel with high energy"
+  ],
+
+  "best_practices": [
+    "Keep branding consistent across all videos",
+    "Include clear call-to-action",
+    "Optimize first 3 seconds for attention",
+    "Use channel-specific colors and logos",
+    "Keep intro under 30 seconds for better retention"
+  ]
+}

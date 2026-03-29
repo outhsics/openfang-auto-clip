@@ -1,0 +1,142 @@
+{
+  "template_name": "Tutorial",
+  "template_id": "tutorial_v1",
+  "description": "Step-by-step tutorial for teaching concepts",
+  "version": "1.0.0",
+  "author": "OpenFang Community",
+  "tags": ["tutorial", "educational", "how-to", "instructional"],
+
+  "target_platform": "youtube",
+  "target_duration": 60,
+  "content_type": "tutorial",
+
+  "visual_style": {
+    "color_scheme": "clean",
+    "transition_style": "smooth",
+    "text_animations": true,
+    "screen_recording": true,
+    "annotations": true
+  },
+
+  "script_structure": {
+    "intro_duration": 10,
+    "overview_duration": 5,
+    "step_demonstration_duration": 35,
+    "summary_duration": 10
+  },
+
+  "script_sections": [
+    {
+      "section": "intro",
+      "duration": 10,
+      "purpose": "Set expectations and hook viewers",
+      "content": "What viewers will learn, why it matters, time commitment",
+      "visual": "Title card, presenter on camera, key learning points",
+      "audio": "Clear, confident voiceover"
+    },
+    {
+      "section": "overview",
+      "duration": 5,
+      "purpose": "Show the end result",
+      "content": "Demonstrate what viewers will be able to do",
+      "visual": "Quick demo of finished product/skill",
+      "audio": "Voiceover with screen recording"
+    },
+    {
+      "section": "step_demonstration",
+      "duration": 35,
+      "purpose": "Teach the content step-by-step",
+      "content": "Break down into 3-5 clear steps with demonstrations",
+      "visual": "Screen recording, close-ups, text overlays for key points",
+      "audio": "Clear narration with pauses for emphasis"
+    },
+    {
+      "section": "summary",
+      "duration": 10,
+      "purpose": "Reinforce learning and provide next steps",
+      "content": "Recap key points, suggest practice, link to related tutorials",
+      "visual": "Bullet points, links to resources",
+      "audio": "Encouraging tone, call-to-action"
+    }
+  ],
+
+  "style_guidelines": {
+    "tone": "patient, clear, encouraging",
+    "pacing": "moderate, allow time to absorb information",
+    "language_level": "beginner-friendly, avoid jargon",
+    "teaching_method": "show, don't just tell"
+  },
+
+  "technical_specs": {
+    "aspect_ratio": "16:9",
+    "resolution": "1080p",
+    "frame_rate": 30,
+    "audio_bitrate": "128kbps"
+  },
+
+  "instructional_design": {
+    "learning_objectives": [
+      "Clearly state what viewers will learn",
+      "Break complex tasks into simple steps",
+      "Provide examples and non-examples",
+      "Include checkpoints for understanding"
+    ],
+    "visual_aids": [
+      "Text overlays for key terms",
+      "Highlighting or circling important elements",
+      "Zoom in for details",
+      "Use arrows and annotations"
+    ],
+    "engagement": [
+      "Ask questions throughout",
+      "Include practice moments",
+      "Provide downloadable resources",
+      "Encourage pausing to practice"
+    ]
+  },
+
+  "step_template": {
+    "format": "Step X: [Step Name]",
+    "components": [
+      {
+        "name": "objective",
+        "description": "What this step accomplishes",
+        "duration": "5-10 seconds"
+      },
+      {
+        "name": "demonstration",
+        "description": "Show how to do it",
+        "duration": "20-30 seconds"
+      },
+      {
+        "name": "explanation",
+        "description": "Explain why it works",
+        "duration": "10-15 seconds"
+      },
+      {
+        "name": "tips",
+        "description": "Common mistakes and pro tips",
+        "duration": "5-10 seconds"
+      }
+    ]
+  },
+
+  "example_prompts": [
+    "Create a tutorial on how to use Python for web scraping",
+    "Make a step-by-step guide to baking sourdough bread",
+    "Teach beginners how to edit videos in Premiere Pro"
+  ],
+
+  "best_practices": [
+    "Start with learning objectives",
+    "Show, don't just tell",
+    "Use clear, simple language",
+    "Break down complex topics",
+    "Include text overlays for key points",
+    "Provide time stamps in description",
+    "Add chapter markers for long tutorials",
+    "Include practice activities",
+    "Link to related resources",
+    "End with a clear call-to-action"
+  ]
+}
