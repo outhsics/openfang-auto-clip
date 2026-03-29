@@ -1,0 +1,31 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    ffmpeg \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements
+COPY api/requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy API code
+COPY api/ ./api/
+COPY auto_clip.py .
+COPY scripts/ ./scripts/
+COPY auto_clip/ ./auto_clip/
+
+# Create output directory
+RUN mkdir -p /root/.openfang/output
+
+# Expose port
+EXPOSE 8000
+
+# Run application
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
