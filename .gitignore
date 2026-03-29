@@ -46,3 +46,9 @@ htmlcov/
 tmp/
 temp/
 *.tmp
+
+# Web / Node.js
+web/node_modules/
+web/dist/
+web/.vite/
+web/.DS_Store
