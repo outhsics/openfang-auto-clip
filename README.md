@@ -210,3 +210,88 @@ python3 -m unittest discover -s tests
 ## License
 
 仓库使用 MIT 许可证。涉及商业化或高风险使用前，请同时阅读 [LICENSE](LICENSE) 和 [DISCLAIMER.md](DISCLAIMER.md)。
+
+---
+
+## 🚀 v0.5.0 增强功能
+
+### 🎤 多种 AI 提供商支持
+
+**语音识别 (STT)**
+- **Groq Whisper** - ⚡ 超快速，部分免费
+- **OpenAI Whisper** - 🎵 高质量，付费
+- **Deepgram** - 🚀 专业级，付费
+- **Local Whisper** - 🏠 完全离线，免费
+
+**语音合成 (TTS)**
+- **Edge TTS** - 💰 完全免费，多语言
+- **OpenAI TTS** - 🎵 高质量，付费
+- **ElevenLabs** - 🎤 专业级，付费
+
+```bash
+# 使用 Groq Whisper（最快）
+./auto_clip.sh "VIDEO_URL" --stt groq_whisper
+
+# 使用本地 Whisper（离线）
+./auto_clip.sh "VIDEO_URL" --stt local_whisper
+
+# 使用 Edge TTS（免费）
+./auto_clip.sh "VIDEO_URL" --tts edge_tts
+```
+
+### 📱 社交平台一键发布
+
+- **Telegram** - 自动发送到频道/群组
+- **WhatsApp** - 发送到个人/群组
+
+```bash
+# 处理并自动发布
+./auto_clip.sh "VIDEO_URL" --publish-telegram --publish-whatsapp
+```
+
+### 💾 本地数据管理
+
+- **SQLite 数据库** - 存储任务历史和元数据
+- **使用统计** - 查看处理历史和性能指标
+- **自动清理** - 定期清理旧数据
+
+```bash
+# 查看使用统计
+python3 -m enhancements.data_management.analytics
+
+# 导出分析报告
+python3 -m enhancements.data_management.analytics --export-report
+```
+
+### 🎨 视频模板和效果
+
+**预设模板**
+- TikTok 热门格式
+- Instagram Reels
+- YouTube Shorts
+- 自定义模板
+
+**视频效果**
+- 颜色调整（亮度、对比度、饱和度）
+- 速度控制（加速/减速）
+- 艺术效果（复古、黑白、模糊等）
+- 变换效果（翻转、旋转）
+
+```bash
+# 使用 TikTok 预设
+./auto_clip.sh "VIDEO_URL" --preset tiktok_viral
+
+# 添加复古效果
+./auto_clip.sh "VIDEO_URL" --effect vintage
+```
+
+### 🔒 隐私和安全
+
+- ✅ 所有数据存储在本地
+- ✅ API 密钥不会上传
+- ✅ 可离线使用（本地模式）
+- ✅ 无数据追踪
+- ✅ 开源透明
+
+---
+

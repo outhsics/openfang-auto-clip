@@ -1,0 +1,99 @@
+{
+  "version": "0.5.0",
+  "description": "OpenFang Auto Clip - 增强功能配置",
+
+  "ai_providers": {
+    "stt": {
+      "default": "local_whisper",
+      "groq_whisper": {
+        "api_key_env": "GROQ_API_KEY",
+        "model": "whisper-large-v3",
+        "language": "auto"
+      },
+      "openai_whisper": {
+        "api_key_env": "OPENAI_API_KEY",
+        "model": "whisper-1",
+        "language": "auto"
+      },
+      "deepgram": {
+        "api_key_env": "DEEPGRAM_API_KEY",
+        "model": "nova-2",
+        "language": "auto"
+      },
+      "local_whisper": {
+        "model_size": "base",
+        "device": "cpu"
+      }
+    },
+
+    "tts": {
+      "default": "edge_tts",
+      "edge_tts": {
+        "voice": "zh-CN-XiaoxiaoNeural"
+      },
+      "openai_tts": {
+        "api_key_env": "OPENAI_API_KEY",
+        "model": "tts-1",
+        "voice": "alloy"
+      },
+      "elevenlabs": {
+        "api_key_env": "ELEVENLABS_API_KEY",
+        "model": "eleven_monolingual_v1",
+        "voice": "rachel"
+      }
+    }
+  },
+
+  "social_publishing": {
+    "telegram": {
+      "enabled": false,
+      "bot_token_env": "TELEGRAM_BOT_TOKEN",
+      "default_chat_id": "",
+      "default_channel_id": ""
+    },
+    "whatsapp": {
+      "enabled": false,
+      "method": "pywhatkit",
+      "twilio": {
+        "account_sid_env": "TWILIO_ACCOUNT_SID",
+        "auth_token_env": "TWILIO_AUTH_TOKEN",
+        "from_number_env": "TWILIO_WHATSAPP_NUMBER"
+      }
+    }
+  },
+
+  "data_management": {
+    "database_path": "~/.openfang/tasks.db",
+    "enable_analytics": true,
+    "auto_cleanup": {
+      "enabled": true,
+      "days": 30
+    }
+  },
+
+  "templates": {
+    "default_preset": "tiktok_viral",
+    "custom_presets": []
+  },
+
+  "processing": {
+    "default_num_clips": 5,
+    "default_transform_level": 1,
+    "default_duration": {
+      "min": 15,
+      "max": 60
+    },
+    "auto_caption": true,
+    "auto_crop": true
+  },
+
+  "advanced": {
+    "parallel_processing": {
+      "enabled": true,
+      "max_workers": 4
+    },
+    "cache_enabled": true,
+    "cache_dir": "~/.openfang/cache",
+    "log_level": "INFO"
+  }
+}

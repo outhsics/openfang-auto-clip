@@ -1,0 +1,38 @@
+# OpenFang Auto Clip - 增强功能依赖
+
+# 核心
+pyyaml>=6.0
+requests>=2.31.0
+
+# AI 提供商 - STT
+groq>=0.4.0
+openai>=1.0.0
+deepgram-sdk>=2.12.0
+openai-whisper>=20230314
+
+# AI 提供商 - TTS
+edge-tts>=6.1.0
+elevenlabs>=0.2.0
+
+# 社交平台发布
+python-telegram-bot>=20.0
+twilio>=8.10.0
+pywhatkit>=5.0
+
+# 数据管理
+sqlite3
+
+# 视频处理（已有）
+# yt-dlp>=2023.0.0
+# ffmpeg-python>=0.2.0
+
+# Web UI（已有）
+# flask>=2.0.0
+# flask-cors>=4.0.0
+
+# 可选：音频处理
+pydub>=0.25.0
+
+# 可选：性能提升
+aiohttp>=3.9.0
+aiofiles>=23.0.0
