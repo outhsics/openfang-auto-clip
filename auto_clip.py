@@ -1942,6 +1942,11 @@ def main():
     """Main entry point"""
     import argparse
 
+    if len(sys.argv) > 1 and sys.argv[1] == "clip":
+        from src.clip_pipeline import clip_main
+
+        raise SystemExit(clip_main(sys.argv[2:]))
+
     parser = argparse.ArgumentParser(
         description="OpenFang Auto Clip - Local Video Repurposing CLI",
         formatter_class=argparse.RawDescriptionHelpFormatter,
