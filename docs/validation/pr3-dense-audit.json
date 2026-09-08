@@ -1,0 +1,188 @@
+{
+  "sha256": "f44d5e1447a81e2f906db6b41c56ff112f7e74862faa3a24158e03152de4cc7f",
+  "frame_count": 1080,
+  "caption_spans": [
+    [
+      6.25,
+      9.25
+    ],
+    [
+      9.75,
+      13.25
+    ],
+    [
+      15.25,
+      16.25
+    ],
+    [
+      16.75,
+      18.75
+    ],
+    [
+      21.75,
+      22.75
+    ],
+    [
+      23.25,
+      25.25
+    ],
+    [
+      29.25,
+      30.25
+    ],
+    [
+      31.25,
+      35.25
+    ],
+    [
+      36.25,
+      37.25
+    ]
+  ],
+  "cues": [
+    {
+      "index": 1,
+      "start": 6.25,
+      "end": 9.25,
+      "sample": 7.75,
+      "visible": true
+    },
+    {
+      "index": 2,
+      "start": 9.75,
+      "end": 11.25,
+      "sample": 10.5,
+      "visible": true
+    },
+    {
+      "index": 3,
+      "start": 11.25,
+      "end": 13.25,
+      "sample": 12.25,
+      "visible": true
+    },
+    {
+      "index": 4,
+      "start": 15.25,
+      "end": 16.25,
+      "sample": 15.75,
+      "visible": true
+    },
+    {
+      "index": 5,
+      "start": 16.75,
+      "end": 18.75,
+      "sample": 17.75,
+      "visible": true
+    },
+    {
+      "index": 6,
+      "start": 21.75,
+      "end": 22.75,
+      "sample": 22.25,
+      "visible": true
+    },
+    {
+      "index": 7,
+      "start": 23.25,
+      "end": 24.25,
+      "sample": 23.75,
+      "visible": true
+    },
+    {
+      "index": 8,
+      "start": 24.25,
+      "end": 25.25,
+      "sample": 24.75,
+      "visible": true
+    },
+    {
+      "index": 9,
+      "start": 29.25,
+      "end": 30.25,
+      "sample": 29.75,
+      "visible": true
+    },
+    {
+      "index": 10,
+      "start": 31.25,
+      "end": 33.25,
+      "sample": 32.25,
+      "visible": true
+    },
+    {
+      "index": 11,
+      "start": 33.25,
+      "end": 35.25,
+      "sample": 34.25,
+      "visible": true
+    },
+    {
+      "index": 12,
+      "start": 36.25,
+      "end": 37.25,
+      "sample": 36.75,
+      "visible": true
+    },
+    {
+      "index": 13,
+      "start": 37.25,
+      "end": 39.25,
+      "sample": 38.25,
+      "visible": false
+    },
+    {
+      "index": 14,
+      "start": 39.25,
+      "end": 40.25,
+      "sample": 39.75,
+      "visible": false
+    },
+    {
+      "index": 15,
+      "start": 40.75,
+      "end": 43.25,
+      "sample": 42.0,
+      "visible": false
+    }
+  ],
+  "audio_alignment": [
+    {
+      "time": 6,
+      "lag_ms": 0.0,
+      "correlation": 0.9967933526533053
+    },
+    {
+      "time": 20,
+      "lag_ms": 0.0,
+      "correlation": 0.9879004653902906
+    },
+    {
+      "time": 34,
+      "lag_ms": 0.0,
+      "correlation": 0.9925847977437208
+    }
+  ],
+  "mp4_atoms": [
+    {
+      "type": "ftyp",
+      "offset": 0,
+      "size": 32
+    },
+    {
+      "type": "moov",
+      "offset": 32,
+      "size": 36049
+    },
+    {
+      "type": "free",
+      "offset": 36081,
+      "size": 8
+    },
+    {
+      "type": "mdat",
+      "offset": 36089,
+      "size": 5928773
+    }
+  ]
+}
